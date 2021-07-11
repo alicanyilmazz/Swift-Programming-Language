@@ -41,11 +41,23 @@ var corse : String = "notation"
 corse = corse.uppercased()
 ```
 
+#### Arrays at Swift
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 >  Swift de array kullanımı
 ```swift
+var numbers = [1,2,3,4,5,6]
 var movies = ["game of thrones","Reservior Dogs","The Witcher"] // Diğer dillerideki gibi Swift de de Array içerisinde tek bir type kullanilabilir.
 
-var everything = ["game of thrones","The Witcher",12.9,44] as [Any] // Fakat bu şekilde generic array yapma yoluda bulunmaktadır.
+movies[0].uppercased() // 0. index elemanının harflerini büyütür
+
+movies.count // dizideki eleman sayısını verir
+
+movies[movies.count-2] // sondan ikinci elemanı verir
+
+movies.last // son elemanı verir
+
+movies.sort() // array i sort eder
 ```
 
 >  Swift de array ler içerisine farklı primitive types etc. de eklenebilir aşağıdaki gibi array sonuna 'as [Any]' denilerek.
