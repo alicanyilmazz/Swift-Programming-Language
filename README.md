@@ -34,3 +34,11 @@ var telephone : Int = Int(10.6) // type casting Double to Int
 var numbers : Double = 123.4;
 var takeNumbers : String = String(numbers); // type casting Double to String
 ```
+
+>  Swift de string sınıfının methodlarının kullanımları
+```swift
+var corse : String = "notation"
+corse = corse.uppercased()
+```
+
+
