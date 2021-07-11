@@ -71,3 +71,11 @@ var everything = ["game of thrones","The Witcher",12.9,44] as [Any]
 everything[0].uppercased() // gets an error
 ```
 
+#### Set at Swift
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>  Tabiki buda let ile tanımlanan variable 'lar değişiklik yapılamaz!
+```swift
+var mySet : Set = [1,2,3,4,5,1,2,12]
+var myStringSet : Set = ["a","b","c","d","e","a","b"]
+```
