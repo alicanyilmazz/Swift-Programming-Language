@@ -74,8 +74,18 @@ everything[0].uppercased() // gets an error
 #### Set at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
->  Tabiki buda let ile tanımlanan variable 'lar değişiklik yapılamaz!
+>  Unordered Collection and Unique variable
+>  Set yapısının array den farkı sırasız karısık bir sekilde elemanları tutar bu yuzden index ile erişim yapılamaz.
+>  Ve Set içerisinde aynı elemandan birden fazla bulunamaz atsak bile Set içerisine eklemez.
 ```swift
-var mySet : Set = [1,2,3,4,5,1,2,12]
-var myStringSet : Set = ["a","b","c","d","e","a","b"]
+var mySet : Set = [1,2,3,4,5,1,2,12] // unordered bir şekilde ve eleman tekrarına düşmeden sıralar
+var myStringSet : Set = ["a","b","c","d","e","a","b"] // unordered bir şekilde ve eleman tekrarına düşmeden sıralar
+
+var myNumberArray = [1,2,3,1,2,5,6,2,1] // array olusturuyoruz
+var myNumberSet = Set(myNumberArray); // Array 'imizi Set olarak convertion yapıyoruz. Böylece array de tekrar eden value ' lardan kurtuluyoruz.
+
+var mySetOne : Set = [1,2,3]
+var mySetTwo : Set = [3,4,5]
+
+var mySetThree : Set = mySetOne.union(mySetTwo) // Union ile iki Set 'i birleştiriyoruz.
 ```
