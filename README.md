@@ -48,3 +48,11 @@ var movies = ["game of thrones","Reservior Dogs","The Witcher"] // Diğer diller
 var everything = ["game of thrones","The Witcher",12.9,44] as [Any] // Fakat bu şekilde generic array yapma yoluda bulunmaktadır.
 ```
 
+>  Swift de array ler içerisine farklı primitive types etc. de eklenebilir aşağıdaki gibi array sonuna 'as [Any]' denilerek.
+>  Fakat şu da unutulmamalıdır ki o zaman everything[0].uppercase() gibi array methodları calısmayacaktır zira array object type da dolayısıyla array method 'ları kullanılamaz.
+```swift
+var everything = ["game of thrones","The Witcher",12.9,44] as [Any] 
+
+everything[0].uppercased() // gets an error
+```
+
