@@ -5,7 +5,9 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-> hangi dosya içerisinde oldugumuzu görebiliyoruz.Bu komut bize dosya yolunu döndürür.
-```Bash
- pwd 
+
+> 
+```swift
+var name = "asd";
+var surname : String = "tanca"
 ```
