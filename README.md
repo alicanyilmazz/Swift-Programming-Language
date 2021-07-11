@@ -89,3 +89,19 @@ var mySetTwo : Set = [3,4,5]
 
 var mySetThree : Set = mySetOne.union(mySetTwo) // Union ile iki Set 'i birleştiriyoruz.
 ```
+
+#### Dictionary at Swift
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> Dictionary yapısı "key : value " pair şeklinde çalışır.
+```swift
+var colorized = ["rose" : "pink" , "sea" : "blue" , "tree" : "green"]
+colorized["sea"] // şeklinde key üzerinden 'blue' value değerine ulasabiliriz.
+colorized["tree"] = "darkgreen" // key imiz üzerinden erişip karşılık gelen value değerini değiştirebiliriz.
+
+colorized["mordens"] = "red" // sonradan dictionary 'imize yeni eleman ekledik.
+
+var activities = ["run" : 100 , "swim" : 200 , "football" : 300] // dictionary yapısı ile çalışırken farklı type ile de çalışabiliriz.
+
+activities["run"] // ekrana 100 sonucunu verir.
+```
