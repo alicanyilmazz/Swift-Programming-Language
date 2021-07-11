@@ -21,6 +21,6 @@ source = "xxx"
 >  Bizim c# vb dillerdeki const ifadesinin Swift deki karşılıgı 'let' reserved keyword ' üdür.
 >  Tabiki buda let ile tanımlanan variable 'lar değişiklik yapılamaz!
 ```swift
-llet url = "htpps://alicanyilmaz.com.tr"
+let url = "htpps://alicanyilmaz.com.tr"
 url = "xxx" // gets an error
 ```
