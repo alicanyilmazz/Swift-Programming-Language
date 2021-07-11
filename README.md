@@ -58,6 +58,9 @@ movies[movies.count-2] // sondan ikinci elemanı verir
 movies.last // son elemanı verir
 
 movies.sort() // array i sort eder
+
+movies.append(9); // append() metodu ile array lere eleman ekleyebiliriz.Mesela c# da arraylere eleman eklemek için böyle bir method yok List yapısında var.
+
 ```
 
 >  Swift de array ler içerisine farklı primitive types etc. de eklenebilir aşağıdaki gibi array sonuna 'as [Any]' denilerek.
