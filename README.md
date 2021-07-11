@@ -41,4 +41,10 @@ var corse : String = "notation"
 corse = corse.uppercased()
 ```
 
+>  Swift de array kullanımı
+```swift
+var movies = ["game of thrones","Reservior Dogs","The Witcher"] // Diğer dillerideki gibi Swift de de Array içerisinde tek bir type kullanilabilir.
+
+var everything = ["game of thrones","The Witcher",12.9,44] as [Any] // Fakat bu şekilde generic array yapma yoluda bulunmaktadır.
+```
 
