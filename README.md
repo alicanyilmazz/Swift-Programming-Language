@@ -10,6 +10,8 @@
 ```swift
 var name = "asd";  // implicitly declaration
 var surname : String = "tanca"  // explicitly declaration
+var numbers : Double = 123.4;
+
 ```
 
 >  Swift de aslında c# da da var (int yerine değişkene var ile de baslayabiliyorduk) olan sadece yazımı farklı olan bir değişken tanımlama şekli var.
