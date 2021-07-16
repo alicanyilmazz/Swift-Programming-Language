@@ -116,6 +116,7 @@ bookmarkName.append("and I realize this sample is very impressive")
 ```
 
 >  print komutunda alt satıra gecebilmek için aşağıdaki gibi kullanım bulunmaktadır.Ayrıca değişken atama stillerine de dikkat edelim.
+```swift
 var name : String = "alican"
 var surname : String = "yılmaz"
 var age : Int = 26
