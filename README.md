@@ -77,6 +77,10 @@ print(Int64.max)
 
 print(Int.min) // Int kullandıgımızda aslında Int64 kullanıyoruz Int = Int64
 print(Int.max) // Bu yuzden Int ile Int64 ün min ve max değerleri aynıdır.
+
+var numbers : Int = 1
+var sizes = MemoryLayout.size(ofValue: numbers) //ekrana basarsak 8 yazar (yani 8 byte = 64 bit oldugunu bize söylüyor)
+
 ```
 
 #### Arrays at Swift
