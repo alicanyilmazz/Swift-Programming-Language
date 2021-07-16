@@ -246,3 +246,16 @@ var activities = ["run" : 100 , "swim" : 200 , "football" : 300] // dictionary y
 
 activities["run"] // ekrana 100 sonucunu verir.
 ```
+#### Swift Programming Null Safety
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+> Öncelikle bizim backend teknolojimiz olan c# da aynı kod yapısı nasıl işliyor kısaca değinelim.
+```swift
+int? num;
+int count = num ?? 2; // Use of unassigned local variable 'num' hatası alırız.
+Console.WriteLine(num);
+
+int? num = 4;
+int count = num ?? 2; // Hata vermez sorun yok
+Console.WriteLine(num); // ekrana 4
+```
+
