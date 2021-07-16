@@ -115,6 +115,33 @@ bookmarkName.replacingOccurrences(of: "a", with: "") //böylece a ların yerine 
 bookmarkName.append("and I realize this sample is very impressive")
 ```
 
+>  print komutunda alt satıra gecebilmek için aşağıdaki gibi kullanım bulunmaktadır.Ayrıca değişken atama stillerine de dikkat edelim.
+var name : String = "alican"
+var surname : String = "yılmaz"
+var age : Int = 26
+var maybe : Bool = true
+
+print("""
+name : \(name)
+surname : \(surname)
+age : \(age)
+isAdult : \(age > 18 ? " adult " : " child ")
+""")
+
+let res = age > 18
+let isActive = maybe == true
+
+
+print("""
+name : \(name)
+surname : \(surname)
+age : \(age)
+isAdult : \(age > 18 ? " adult " : " child ")
+isActive  : \(isActive ? "active" : "passive")
+""")
+
+```
+
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -143,27 +170,6 @@ movies.append(9); // append() metodu ile array lere eleman ekleyebiliriz.Mesela 
 var everything = ["game of thrones","The Witcher",12.9,44] as [Any] 
 
 everything[0].uppercased() // gets an error
-```
-
->  print komutunda alt satıra gecebilmek için aşağıdaki gibi kullanım bulunmaktadır.Ayrıca değişken atama stillerine de dikkat edelim.
-```swift
-print("""
-name : \(name)
-surname : \(surname)
-age : \(age)
-isAdult : \(age > 18 ? " adult " : " child ")
-""")
-
-let res = age > 18
-let isActive = true
-
-print("""
-name : \(name)
-surname : \(surname)
-age : \(age)
-isAdult : \(age > 18 ? " adult " : " child ")
-isActive  : \(isActive ? "active" : "passive")
-""")
 ```
 
 #### Set at Swift
