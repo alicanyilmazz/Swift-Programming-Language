@@ -4,6 +4,43 @@
 #### Swift Programming Language Syntax ####
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+>  Swift basic operations.
+```swift
+let num1 = 5
+let num2 = 20
+
+let addition = num1 + num2
+let subtract = num1 - num2
+let division = num2 / num1
+let multiplication = num2 * num1
+
+let num3 : Int = 90
+let num4 : Int = 7
+var modIntegerResult : Int = num3 % num4
+
+let num5 : Double = 90.2
+let num6 : Double = 7.1
+// Ondalıklı sayılarda mod truncatingRemainder ile alınabilir swift e ait guzel bir özellik.
+var modFloatingPointNumbersResult : Double = num5.truncatingRemainder(dividingBy: num6)
+
+
+var num7 = 10
+num7 += 5
+var num8 = 10
+num8 -= 2
+var num9 = 10
+num9 /= 5
+var num10 = 10
+num10 *= 5
+var num11 = 112
+num11 %= 5
+
+var prefixMessage : String = "this"
+var SuffixMessage : String = "sample"
+var message : String = prefixMessage + " is a " + SuffixMessage
+var interpolationMessage : String = "\(prefixMessage) is a \(SuffixMessage)"
+
+```
 
 
 >  Swift de aslında c# da da var (int yerine değişkene var ile de baslayabiliyorduk) olan sadece yazımı farklı olan bir değişken tanımlama şekli var.
