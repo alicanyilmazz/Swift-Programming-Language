@@ -132,7 +132,6 @@ isAdult : \(age > 18 ? " adult " : " child ")
 let res = age > 18
 let isActive = maybe == true
 
-
 print("""
 name : \(name)
 surname : \(surname)
