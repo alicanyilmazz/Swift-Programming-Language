@@ -89,6 +89,25 @@ var sizes = MemoryLayout.size(ofValue: numbers) //ekrana basarsak 8 yazar (yani 
 
 ```
 
+> String interpolation on Swift 
+> Console.WriteLine($"{name} is {age} year{(age == 1 ? "" : "s")} old."); mesela c# da şekildeki gibi kullanılıyor.
+> Swift de de aşağıdaki gibi "\()" şeklinde kullanılıyor.
+```swift
+var name : String = "alican"
+var surname : String = "yilmaz"
+
+var fullName : String = "\(name) \(surname)"
+```
+
+>  Swift de typeof kullanımı
+```swift
+var numbers : Int = 1
+type(of: numbers)
+var bigNumbers : Float = 1.34
+type(of: bigNumbers)
+```
+
+
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
