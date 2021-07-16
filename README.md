@@ -64,7 +64,7 @@ movies.append(9); // append() metodu ile array lere eleman ekleyebiliriz.Mesela 
 ```
 
 >  Swift de array ler içerisine farklı primitive types etc. de eklenebilir aşağıdaki gibi array sonuna 'as [Any]' denilerek.
->  Fakat şu da unutulmamalıdır ki o zaman everything[0].uppercase() gibi array methodları calısmayacaktır zira array object type da dolayısıyla array method 'ları kullanılamaz.
+>  Fakat şu da unutulmamalıdır ki o zaman everything[0].uppercase() gibi array methodları calısmayacaktır zira array object type olarak değerlendirecek eklenen item'ları dolayısıyla array string method 'ları vs kullanılamaz.
 ```swift
 var everything = ["game of thrones","The Witcher",12.9,44] as [Any] 
 
