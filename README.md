@@ -64,7 +64,6 @@ corse = corse.uppercased()
 print("Int8 max value is : \(Int8.max)")
 print("Int8 min value is : \(Int8.min)")
 
-
 print(Int16.max)
 print(Int16.min)
 print(INT16_MIN)
