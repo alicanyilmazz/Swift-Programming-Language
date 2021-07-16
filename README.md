@@ -15,16 +15,34 @@ var status : Bool = false
 ```
 
 >  Swift de aslında c# da da var (int yerine değişkene var ile de baslayabiliyorduk) olan sadece yazımı farklı olan bir değişken tanımlama şekli var.
+>  var --> mutable (değiştirilebilir)
 ```swift
 var source = "asd"
 source = "xxx"
 ```
 
 >  Bizim c# vb dillerdeki const ifadesinin Swift deki karşılıgı 'let' reserved keyword ' üdür.
->  Tabiki buda let ile tanımlanan variable 'lar değişiklik yapılamaz!
+>  Tabiki buda let ile tanımlanan variable 'larda değişiklik yapılamaz!
+>  let --> immutable (değiştirilemez)
 ```swift
 let url = "htpps://alicanyilmaz.com.tr"
 url = "xxx" // gets an error
+
+let baseUrl : String = "htpps://alicanyilmaz.com.tr"
+baseUrl ="sample.com.tr" // gets an error
+```
+
+>  Hata vermez çünkü değeri değiştirmiyoruz initial value sunu veriyoruz.
+```swift
+let url : String
+url = "sample.com.tr"
+```
+
+>  Swift de değişkenler initialize ederkende value 'su verilebilir sonradan da verebilirsin.
+```swift
+var classNumber : Int = 21
+var courseNumber : Int
+courseNumber = 2
 ```
 
 >  Swift de type casting
