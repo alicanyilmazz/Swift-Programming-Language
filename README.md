@@ -59,6 +59,27 @@ var corse : String = "notation"
 corse = corse.uppercased()
 ```
 
+> Primitive Types (Int)
+```swift
+print("Int8 max value is : \(Int8.max)")
+print("Int8 min value is : \(Int8.min)")
+
+
+print(Int16.max)
+print(Int16.min)
+print(INT16_MIN)
+print(INT16_MAX)
+
+print(INT32_MAX)
+print(Int32.min)
+
+print(Int64.min)
+print(Int64.max)
+
+print(Int.min) // Int kullandıgımızda aslında Int64 kullanıyoruz Int = Int64
+print(Int.max) // Bu yuzden Int ile Int64 ün min ve max değerleri aynıdır.
+```
+
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
