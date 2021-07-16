@@ -107,6 +107,13 @@ var bigNumbers : Float = 1.34
 type(of: bigNumbers)
 ```
 
+>  Swift de string sınıfı ile birtakım işlemler
+```swift
+var bookmarkName : String = "this sample is very simple"
+bookmarkName.replacingOccurrences(of: "is", with: "newvalue") // "is" yerlerine "newvalue" koyar
+bookmarkName.replacingOccurrences(of: "a", with: "") //böylece a ların yerine "" koyarak a 'ları silmiş oluyoruz.
+bookmarkName.append("and I realize this sample is very impressive")
+```
 
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
