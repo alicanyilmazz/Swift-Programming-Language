@@ -249,7 +249,7 @@ activities["run"] // ekrana 100 sonucunu verir.
 #### Swift Programming Null Safety
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 > Öncelikle bizim backend teknolojimiz olan c# da aynı kod yapısı nasıl işliyor kısaca değinelim.
-```swift
+```c#
 int? num;
 int count = num ?? 2; // Use of unassigned local variable 'num' hatası alırız.
 Console.WriteLine(num);
