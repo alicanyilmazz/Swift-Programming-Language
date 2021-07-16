@@ -246,7 +246,7 @@ var activities = ["run" : 100 , "swim" : 200 , "football" : 300] // dictionary y
 
 activities["run"] // ekrana 100 sonucunu verir.
 ```
-#### Swift Programming Null Safety
+#### Optional Variables (Swift Terms) - Swift Programming Null Safety
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 > Öncelikle bizim backend teknolojimiz olan c# da aynı kod yapısı nasıl işliyor kısaca değinelim.
 ```c#
@@ -260,3 +260,22 @@ int count = num ?? 2; // Hata vermez sorun yok
 Console.WriteLine(num); // ekrana 4
 ```
 
+> Swift de optinal variables diye gecen aslında null safety dediğimiz konu.
+```swift
+// Null Safety
+// Force Unwrap
+
+var num : Int?
+var count : Int = num ?? 2 //Herhangi bir hata vermez
+print(count) // ekrana 2 basar
+print(num) // ekrana 'nil' basar
+
+var classNumber : Int? = 10
+var sourceNumber : Int? = classNumber ?? 44
+print(sourceNumber) // ekrana "Optional(10)\n" basar Optinal ile kendini koruma altına almaya çalışıyor.
+print(sourceNumber!) // Force-unwrap işlemi ile değişkenin nil(null) olmayacağını derleyiciye garanti ediyoruz.
+
+var crachNumber : Int?
+print(crachNumber!) // Direkt Fatal Error nedenidir hem variable initialize etmedik hemde bunun nil(null olmayacagını) garanti ettik
+
+```
