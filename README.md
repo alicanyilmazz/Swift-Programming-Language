@@ -51,6 +51,12 @@ var telephone : Int = Int(10.6) // type casting Double to Int
 
 var numbers : Double = 123.4;
 var takeNumbers : String = String(numbers); // type casting Double to String
+
+var exactNumber : Int = 23
+var notExactNumber : Double = 52.1
+
+var floatingNumber : Double = Double(exactNumber)
+var integerNumber : Int = Int(notExactNumber)
 ```
 
 >  Swift de string sınıfının methodlarının kullanımları
