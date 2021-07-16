@@ -250,6 +250,7 @@ activities["run"] // ekrana 100 sonucunu verir.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 > Öncelikle bizim backend teknolojimiz olan c# da aynı kod yapısı nasıl işliyor kısaca değinelim.
 ```c#
+// c# codes
 int? num;
 int count = num ?? 2; // Use of unassigned local variable 'num' hatası alırız.
 Console.WriteLine(num);
