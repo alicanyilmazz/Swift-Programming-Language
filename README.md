@@ -91,6 +91,10 @@ var name = "asd";  // implicitly declaration
 var surname : String = "tanca"  // explicitly declaration
 var numbers : Double = 123.4;
 var status : Bool = false
+
+// Bu sekildeki klasik tanımlamalarda yapılabiliniyor.
+var res1 : Int = 1 , res2 : Bool = false , res3 : String = "message"
+var val1 = 2 , val2 = 21.2 , val3 = true
 ```
 
 >  Swift de aslında c# da da var (int yerine değişkene var ile de baslayabiliyorduk) olan sadece yazımı farklı olan bir değişken tanımlama şekli var.
