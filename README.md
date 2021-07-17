@@ -42,6 +42,48 @@ var interpolationMessage : String = "\(prefixMessage) is a \(SuffixMessage)"
 
 ```
 
+>  Swift Logical Operators
+```swift
+// Logical Operators
+
+var isHigher : Bool = 4 > 1
+print(5>=3)
+print(1>3)
+print(!(2==1))
+
+var num1 : Int = 21
+var num2 : Int = 34
+print(num2==num1)
+
+var sentence1 = "logic"
+var sentence2 = "Logic"
+print(sentence1==sentence2) // return false because this logic is case sensitive.
+print(sentence1.uppercased()==sentence2.uppercased()) // return true
+
+var sample1 : String = "Aesult"
+var sample2 : String = "Communicate"
+print(sample1>sample2) // C nin ASCII değeri > A nın ASCII değeri
+
+print(2 != 7)
+print(3 == 3)
+print(!true)
+print(!(num2==num1))
+
+var myTrue = true
+var myFalse = false
+
+// && -> ve operatörü
+// || -> or operatörü
+var (k1,k2) = ("alican","yilmaz")
+print(!(myTrue && myFalse) && !(k1 != k2))
+
+var isAdult = true
+var age = 22
+var isAccepted : Bool?
+isAccepted = (age >= 21 || isAdult)
+print(isAccepted ?? false)
+
+```
 
 >  Swift de aslında c# da da var (int yerine değişkene var ile de baslayabiliyorduk) olan sadece yazımı farklı olan bir değişken tanımlama şekli var.
 ```swift
