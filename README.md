@@ -228,6 +228,258 @@ isActive  : \(isActive ? "active" : "passive")
 
 ```
 
+#### Conditional Expression and Loops  at Swift
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Conditional Expressions and Loops
+
+// ------------------------------------------- if - else statements --------------------------------------------
+
+var operatingSystem : String = "IOS"
+var usedMemoryRate : Int = 23
+var errorExist : Bool = false
+if operatingSystem == "IOS" && usedMemoryRate > 21 || !errorExist{
+    print("IOS Device launched!")
+}else if  operatingSystem == "ANDROID" && usedMemoryRate > 21 || !errorExist{
+    print("ANDROID Device launched!")
+}
+else{
+    print("No device could be initialized!")
+}
+
+var errorCode : Int = 63
+if errorCode >= 20 && errorCode <= 79 { // [20,79] kapalı aralık yani sınırlar dahil (terminolojide ClosedRange olarak geciyor.)
+    print("warning level")
+} else if (80...100) ~= errorCode {
+    print("danger level")
+}else if (101...112).contains(errorCode){
+    print("fatal level")
+}else{
+    print("there is no active error")
+}
+
+// ------------------------------------------- for loops ------------------------------------------------------
+
+// Swift programlama dilinde for in donguleri kullanılır birçok dilde var ama burda kullanımı daha geniş yerine klasik for yapısı yok.
+
+// 1 den 12 ye kadar olan sayıları ekrana basar 1 ve 10 dahil.
+for mynumber in 1...12 {
+    print(mynumber)
+}
+
+
+// 1 den 4 e kadar olan sayıları ekrana basar.
+for mynumber in 1..<5 {
+    print(mynumber)
+}
+
+var message : String = "The shortest way to make dreams come true is to wake up."
+var numberOfA : Int = 0
+var numberOfAllCharacter : Int = 0
+// string ifade içerisinde her bir karakteri dönüyoruz
+for ch in message {
+    if ch == "a" {
+        numberOfA += 1
+    }
+}
+print("number of a character is \(numberOfA)")
+
+// underscore kullanımı (dart'dada vardı) ilgili parametreyi kullanmayacaksan ihtiyacın yoksa kod daha okunabilir olsun diye kullanılır.
+for _ in message {
+    numberOfAllCharacter += 1
+}
+print("number of all characters is :" + String(numberOfAllCharacter))
+
+// ikinci bir underscore (_) kullanımı örneği
+var baseValue : Int = 2
+var exponentValue : Int = 3
+var result : Int = 1
+
+for _ in 1...exponentValue {
+    result *= baseValue
+}
+print("result is \(result)")
+
+// stride function kullanımı
+
+// 2 den baslayıp 44 e kadar 7 şer şer artırarak ekrana basar fakat to değeri dahil değildir.
+for eachValue in stride(from: 2, to: 44, by: 7) {
+    print(eachValue)
+}
+
+// 2 den baslayıp 44 e kadar 7 şer şer artırarak ekrana basar fakat through değeri dahildir.
+for val in stride(from: 2, through: 44, by: 7) {
+    print(val)
+}
+
+// 20 den geriye dogru 20 , 17 , 14 .... şeklinde geriye sayar.
+for val in stride(from: 20, through: 0, by: -3) {
+    print(val)
+}
+
+// closedRange değişken ile for in kullanımı
+let rangeOfItem = 0...10
+for item in rangeOfItem {
+    print(item)
+}
+
+// Nested Loops Örneği
+for s1 in 1...3 {
+    for s2 in 1...4 {
+        print("---------------> \(s1),\(s2)")
+    }
+}
+
+// ------------------------------------------- while loops -------------------------------------------
+
+var textMessage : String = "alican"
+var i : Int = 0
+
+while i <= textMessage.count {
+    print("every while value is \(i)")
+    i=i+1
+}
+
+var counter : Int = 5
+while counter<10 {
+    print(counter)
+    counter+=1
+}
+
+var randomNumber : Int = Int(arc4random_uniform(9))
+
+// ------------------------------------------- repeat while loops -------------------------------------------
+
+// repeat while loops aslında bildiğimiz klasik do-while yapısıdır.
+
+var contactNumber : Int = 0
+
+repeat{
+    print("contactNumber is \(contactNumber)")
+    contactNumber+=1
+}while contactNumber < 5
+
+// c# da vb de oldugu gibi 'break' ile donguyu kırabiliriz.
+
+var hashList = [21,24,41,32,12,53,56,75,21,11,56,58,84,49]
+var hashCounter : Int = 0
+repeat{
+    if hashList.contains(75) {
+        print("item was founded!")
+        break
+    }
+}while hashCounter <= hashList.count-1
+
+// ------------------------------------------- switch case --------------------------------------------------
+
+let status : String = "warning"
+
+switch status {
+case "error":
+    print("got and error")
+case "danger":
+    print("got and danger")
+case "info":
+    print("got and info")
+case "warning":
+    print("got and warning")
+default:
+    print("status type not defined!")
+}
+
+// İkinci bir örnek
+let apiErrorCode = 1112
+
+switch apiErrorCode {
+case 231:
+    print("authorization error!")
+case 421:
+    print("authentication error!")
+case 1311:
+    print("Server error!")
+case 1112:
+    print("Bad request error!")
+default:
+    print("Opps unknown stuation!")
+}
+
+// Swift de switch case yapısında c# , dart etc. gibi dillerde olmayan case lere condition yazma özelliği vardır
+
+let employeeHourlySalary : Int = 16
+
+switch employeeHourlySalary {
+case 5...10:
+    print("lower salary")
+case 11...14:
+    print("basic salary")
+case 15...17:
+    print("standart salary")
+case 17...23:
+    print("high salary")
+case 23...Int.max:
+    print("upperbound salary")
+default:
+    print("request is not valid")
+}
+
+// ikinci bir switch-case içerisinde condition kullanımı örneği görelim
+var participantAge : Int = 14
+var adultAgeLimit : Int = 23
+var youngAgeLimit : Int = 18
+var childAgeLimit : Int = 12
+
+switch participantAge > 10 {
+case participantAge >= childAgeLimit && participantAge <= youngAgeLimit:
+    print("participant is child")
+case participantAge >= youngAgeLimit && participantAge <= adultAgeLimit:
+    print("participant is young")
+default:
+    print("there is no participant")
+}
+
+// ------------------------------------------- break and continue --------------------------------------------------
+
+// s değeri 5 olunca döngü kırılır ve donguden çıkılır.
+for s in 1...10 {
+    if s==5 {
+        break
+    }
+    print(s)
+}
+
+// c değeri 5 olunca if kosulu sağlanacak ve continue keyword ü sayesinde direkt dongu cycle ına geri dönüp c=6 dan baslayacak 5 değeri print edilmeyecektir.
+var c = 0
+while c < 10 {
+    c+=1
+    if c==5 {
+      continue
+    }
+    print(c)
+}
+
+// bir diğer break kullanım örneği
+let sentence = "this way is hard , this way provide lot of new chance to you."
+var requestedSentences : String = ""
+for eachOf in sentence {
+    if eachOf == "," {
+        break
+    }
+    requestedSentences = requestedSentences + String(eachOf)
+}
+print(requestedSentences)
+
+// İç içe döngülerde break kendisini ilk kapsayan en yakın oldugu döngüyü kırar.
+for s1 in 1...5 {
+    for s2 in 1...10 {
+        if s1==s2 {
+            print("break was runned. s2 : \(s2) - s1 : \(s1)")
+            break
+        }
+    }
+}
+
+
+
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
