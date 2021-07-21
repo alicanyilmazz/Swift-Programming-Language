@@ -6,15 +6,22 @@
 var number : Int = 156
 var arrayOfNumber : [Int] = []
 var reversedArrayOfNumber: [Int] = []
-var counter : Int = 0
 
-while counter<3 {
+while number>0 {
     arrayOfNumber.append(number % 10)
     number = number / 10
-    counter+=1
 }
 
 reversedArrayOfNumber += arrayOfNumber.reversed()
 for num in reversedArrayOfNumber {
     print(num)
 }
+
+
+// 2. Çözüm yolu
+var number : Int = 156
+var stringNumber : String = "\(number)"
+for num in stringNumber {
+   print(num)
+}
+
