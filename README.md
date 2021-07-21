@@ -231,10 +231,8 @@ isActive  : \(isActive ? "active" : "passive")
 #### Conditional Expression and Loops  at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// Conditional Expressions and Loops
-
-// ------------------------------------------- if - else statements --------------------------------------------
-
+>  if - else statements
+```swift
 var operatingSystem : String = "IOS"
 var usedMemoryRate : Int = 23
 var errorExist : Bool = false
@@ -257,16 +255,15 @@ if errorCode >= 20 && errorCode <= 79 { // [20,79] kapalı aralık yani sınırl
 }else{
     print("there is no active error")
 }
-
-// ------------------------------------------- for loops ------------------------------------------------------
-
-// Swift programlama dilinde for in donguleri kullanılır birçok dilde var ama burda kullanımı daha geniş yerine klasik for yapısı yok.
+```
+>  for loops
+>  Swift programlama dilinde for in donguleri kullanılır birçok dilde var ama burda kullanımı daha geniş yerine klasik for yapısı yok.
+```swift
 
 // 1 den 12 ye kadar olan sayıları ekrana basar 1 ve 10 dahil.
 for mynumber in 1...12 {
     print(mynumber)
 }
-
 
 // 1 den 4 e kadar olan sayıları ekrana basar.
 for mynumber in 1..<5 {
@@ -330,8 +327,10 @@ for s1 in 1...3 {
     }
 }
 
-// ------------------------------------------- while loops -------------------------------------------
+```
 
+>  while loops
+```swift
 var textMessage : String = "alican"
 var i : Int = 0
 
@@ -347,9 +346,10 @@ while counter<10 {
 }
 
 var randomNumber : Int = Int(arc4random_uniform(9))
+```
 
-// ------------------------------------------- repeat while loops -------------------------------------------
-
+>  repeat while loops
+```swift
 // repeat while loops aslında bildiğimiz klasik do-while yapısıdır.
 
 var contactNumber : Int = 0
@@ -369,9 +369,10 @@ repeat{
         break
     }
 }while hashCounter <= hashList.count-1
+```
 
-// ------------------------------------------- switch case --------------------------------------------------
-
+>  switch case
+```swift
 let status : String = "warning"
 
 switch status {
@@ -436,9 +437,10 @@ case participantAge >= youngAgeLimit && participantAge <= adultAgeLimit:
 default:
     print("there is no participant")
 }
+```
 
-// ------------------------------------------- break and continue --------------------------------------------------
-
+>  break and continue
+```swift
 // s değeri 5 olunca döngü kırılır ve donguden çıkılır.
 for s in 1...10 {
     if s==5 {
@@ -477,8 +479,7 @@ for s1 in 1...5 {
         }
     }
 }
-
-
+```
 
 #### Arrays at Swift
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
