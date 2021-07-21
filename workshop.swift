@@ -17,7 +17,6 @@ for num in reversedArrayOfNumber {
     print(num)
 }
 
-
 // 2. Çözüm yolu
 var number : Int = 156
 var stringNumber : String = "\(number)"
