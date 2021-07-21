@@ -257,6 +257,7 @@ if errorCode >= 20 && errorCode <= 79 { // [20,79] kapalı aralık yani sınırl
 }
 ```
 >  for loops
+
 >  Swift programlama dilinde for in donguleri kullanılır birçok dilde var ama burda kullanımı daha geniş yerine klasik for yapısı yok.
 ```swift
 
