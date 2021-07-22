@@ -80,7 +80,6 @@ for num in 2...100 {
 
 
 // 5.)  Fibonacci Serisi kodunu yazalım.
-
 var fibonacciLength : Int = 10
 var leftNumber : Int = 0
 var rightNumber : Int = 1
