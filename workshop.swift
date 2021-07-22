@@ -24,3 +24,16 @@ for num in stringNumber {
    print(num)
 }
 
+// 2.) Verilen kelimenin tersten yazılışının yine kendisiyle aynı olup olmadıgını kontrol eden programı yazınız.
+var sentence = "alican"
+var reversedSentence = ""
+for eachCharacter in sentence {
+    reversedSentence = String(eachCharacter) + reversedSentence
+}
+
+if sentence == reversedSentence {
+    print("this word is polindrome!")
+}else{
+    print("this word is not polindrome!")
+}
+
