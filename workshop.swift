@@ -37,3 +37,12 @@ if sentence == reversedSentence {
     print("this word is not polindrome!")
 }
 
+// 3.) Bir sayının faktöriyelini hesaplayan programı yazınız.
+var number : Int = 4
+var result : Int = 1
+for num in 1...number {
+    result = result * num;
+}
+print("\(number)! = \(result)")
+
+
