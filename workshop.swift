@@ -114,4 +114,21 @@ for eachNum in 2...number {
     }
 }
 
+// 7.) Belirlenen bir sayının Polindromik olup olmadıgını kontrol eden programı yazınız. Örneğin : 11 , 202 , 1441 gibi sayılar polindromiktir.
+let number = 202
+let strNumber = String(number)
+
+var reversedNumber : String = ""
+
+for eachChar in strNumber {
+     reversedNumber = String(eachChar) + reversedNumber
+}
+
+if reversedNumber == strNumber{
+    print("\(strNumber) is polindromic.")
+}else{
+    print("\(strNumber) is not polindromic.")
+}
+
+
 
