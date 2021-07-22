@@ -321,6 +321,11 @@ for item in rangeOfItem {
     print(item)
 }
 
+// Bu sekilde de bir kullanımda bulunabiliriz 1 den 8 e kadar olan sayıları ekrana basar.
+for number in 1..<9 {
+    print(number)
+}
+
 // Nested Loops Örneği
 for s1 in 1...3 {
     for s2 in 1...4 {
