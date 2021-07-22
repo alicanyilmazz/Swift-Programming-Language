@@ -95,4 +95,23 @@ while fibonacciLength > 2 {
     fibonacciLength -= 1
 }
 
+// 6.) Bir sayının asal carpanlarını bulan programı yazınız.
+var number : Int = 30
+var isPrime : Bool = true
+
+for eachNum in 2...number {
+    if number % eachNum == 0{
+        isPrime=true
+        for num in 2..<eachNum {
+            if eachNum % num == 0 {
+                isPrime=false
+                break
+            }
+        }
+    }
+    if isPrime {
+        print(eachNum)
+    }
+}
+
 
