@@ -1,3 +1,5 @@
+// ------------------------------------------------- 1.) Verilen kelimeyi tersine çeviren program örneği. ------------------------------------------------------
+
 namespace ProgrammingLanguageSyntax
 {
     class Program
@@ -40,7 +42,6 @@ namespace ProgrammingLanguageSyntax
         }
     }
 }
-
-
 // Detaylı acıklama için lütfen aşağıdaki siteyi ziyaret edin.
 // https://www.arclab.com/en/kb/csharp/replace-or-remove-char-in-string-by-index.html 
+// MSDN : https://social.msdn.microsoft.com/Forums/vstudio/en-US/c88581fc-645b-462b-b0f8-e20512be88ed/add-characters-to-string?forum=csharpgeneral
