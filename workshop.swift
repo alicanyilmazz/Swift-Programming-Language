@@ -78,3 +78,22 @@ for num in 2...100 {
     }
 }
 
+
+// 5.)  Fibonacci Serisi kodunu yazalım.
+
+var fibonacciLength : Int = 10
+var leftNumber : Int = 0
+var rightNumber : Int = 1
+var nextNumber : Int = 0
+
+print(rightNumber)
+
+while fibonacciLength > 2 {
+    nextNumber = leftNumber + rightNumber
+    leftNumber = rightNumber
+    rightNumber = nextNumber
+    print(rightNumber)
+    fibonacciLength -= 1
+}
+
+
