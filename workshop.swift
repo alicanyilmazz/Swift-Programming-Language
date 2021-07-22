@@ -45,4 +45,36 @@ for num in 1...number {
 }
 print("\(number)! = \(result)")
 
+// 4.) Bir sayının asal olup olmadıgını belirleyen programı yazınız.
+var initialNumber : Int = 1
+var endNumber : Int = 8
+var isPrimeNumber : Bool = true
+
+for num in 2..<endNumber {
+    if(endNumber%num == 0){
+        isPrimeNumber = false
+        break
+    }
+}
+
+if isPrimeNumber {
+    print("is prime number")
+}else{
+    print("is not prime number")
+}
+
+// 1 den 100 e kadar olan asal sayıları yazdıran kod.
+var isPrime : Bool
+for num in 2...100 {
+    isPrime=true
+    for eachNum in 2..<num {
+        if num % eachNum == 0{
+            isPrime=false
+            break
+        }
+    }
+    if isPrime {
+        print("\(num) is a prime number.")
+    }
+}
 
