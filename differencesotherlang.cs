@@ -40,6 +40,19 @@ namespace ProgrammingLanguageSyntax
             sentence=sentence.Replace("i", "x");
             Console.WriteLine(sentence);
         }
+        
+        // En optimum çözüm
+        public static void fiveSample()
+        {
+            string sentence = "alican";
+            string reversedSentence = "";
+            string[] arr = new string[10];
+            foreach (var eachLetter in sentence)
+            {
+                reversedSentence = eachLetter + reversedSentence;
+            }
+            Console.WriteLine(reversedSentence);
+        }
     }
 }
 // Detaylı acıklama için lütfen aşağıdaki siteyi ziyaret edin.
