@@ -344,6 +344,11 @@ for s1 in 1...3 {
     }
 }
 
+// tuple with for loops
+for (index,value) in numbers3.enumerated() {
+    print("number3[\(index)] = \(value)")
+}
+
 ```
 
 ```diff
