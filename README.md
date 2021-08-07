@@ -337,12 +337,25 @@ for number in 1..<9 {
     print(number)
 }
 
-// Nested Loops Örneği
+// Nested Loops Sample
 for s1 in 1...3 {
     for s2 in 1...4 {
         print("---------------> \(s1),\(s2)")
     }
 }
+
+// Nested Loops Sample
+var fruit : [String] = ["orange","banana","melon","cucumber","tomato"]
+var numberOfA : Int = 0
+
+for eachfruit in fruit {
+    for eachLetter in eachfruit {
+        if eachLetter == "a" {
+            numberOfA += 1
+        }
+    }
+}
+print(numberOfA)
 
 // tuple with for loops
 var numbers3 : [Int] = [10,20,39,140,50,60]
