@@ -233,10 +233,14 @@ isActive  : \(isActive ? "active" : "passive")
 
 ```
 
-#### Conditional Expression and Loops  at Swift
+```diff
+@@ Conditional Expression and Loops  at Swift @@
+```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
->  if - else statements
+```diff
+@@ if - else statements @@
+```
 ```swift
 var operatingSystem : String = "IOS"
 var usedMemoryRate : Int = 23
@@ -261,8 +265,10 @@ if errorCode >= 20 && errorCode <= 79 { // [20,79] kapalı aralık yani sınırl
     print("there is no active error")
 }
 ```
->  for loops
 
+```diff
+@@ for loops @@
+```
 >  Swift programlama dilinde for in donguleri kullanılır birçok dilde var ama burda kullanımı daha geniş yerine klasik for yapısı yok.
 ```swift
 
@@ -340,7 +346,10 @@ for s1 in 1...3 {
 
 ```
 
->  while loops
+```diff
+@@ while loops @@
+```
+
 ```swift
 var textMessage : String = "alican"
 var i : Int = 0
@@ -358,8 +367,10 @@ while counter<10 {
 
 var randomNumber : Int = Int(arc4random_uniform(9))
 ```
+```diff
+@@ repeat while loops @@
+```
 
->  repeat while loops
 ```swift
 // repeat while loops aslında bildiğimiz klasik do-while yapısıdır.
 
@@ -381,8 +392,9 @@ repeat{
     }
 }while hashCounter <= hashList.count-1
 ```
-
->  switch case
+```diff
+@@ switch case @@
+```
 ```swift
 let status : String = "warning"
 
@@ -450,7 +462,10 @@ default:
 }
 ```
 
->  break and continue
+```diff
+@@ break and continue @@
+```
+
 ```swift
 // s değeri 5 olunca döngü kırılır ve donguden çıkılır.
 for s in 1...10 {
@@ -492,7 +507,9 @@ for s1 in 1...5 {
 }
 ```
 
-#### Arrays at Swift
+```diff
+@@ Arrays at Swift @@
+```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 >  Swift de array kullanımı
@@ -521,8 +538,9 @@ var everything = ["game of thrones","The Witcher",12.9,44] as [Any]
 
 everything[0].uppercased() // gets an error
 ```
-
-#### Set at Swift
+```diff
+@@ Set at Swift @@
+```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 >  Unordered Collection and Unique variable
@@ -540,8 +558,9 @@ var mySetTwo : Set = [3,4,5]
 
 var mySetThree : Set = mySetOne.union(mySetTwo) // Union ile iki Set 'i birleştiriyoruz.
 ```
-
-#### Dictionary at Swift
+```diff
+@@ Dictionary at Swift @@
+```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 > Dictionary yapısı "key : value " pair şeklinde çalışır.
@@ -556,7 +575,10 @@ var activities = ["run" : 100 , "swim" : 200 , "football" : 300] // dictionary y
 
 activities["run"] // ekrana 100 sonucunu verir.
 ```
-#### Optional Variables (Swift Terms) - Swift Programming Null Safety
+
+```diff
+@@ Optional Variables (Swift Terms) - Swift Programming Null Safety @@
+```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 > Öncelikle bizim backend teknolojimiz olan c# da aynı kod yapısı nasıl işliyor kısaca değinelim.
 ```c#
