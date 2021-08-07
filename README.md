@@ -4,6 +4,16 @@
 #### Swift Programming Language Syntax ####
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
+
+
+
 >  Swift basic operations.
 ```swift
 let num1 = 5
