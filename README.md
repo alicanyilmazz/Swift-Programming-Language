@@ -45,7 +45,9 @@ var interpolationMessage : String = "\(prefixMessage) is a \(SuffixMessage)"
 
 ```
 
->  Swift Logical Operators
+```diff
+@@ > Swift Logical Operators @@
+```
 ```swift
 // Logical Operators
 
