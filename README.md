@@ -345,6 +345,7 @@ for s1 in 1...3 {
 }
 
 // tuple with for loops
+var numbers3 : [Int] = [10,20,39,140,50,60]
 for (index,value) in numbers3.enumerated() {
     print("number3[\(index)] = \(value)")
 }
