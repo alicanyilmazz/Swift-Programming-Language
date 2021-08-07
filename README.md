@@ -8,9 +8,6 @@
 @@ > Swift basic operations @@
 ```
 
-
-
->  Swift basic operations.
 ```swift
 let num1 = 5
 let num2 = 20
