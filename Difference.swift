@@ -23,6 +23,10 @@ int[] intArray2 = new int[5]{1, 2, 3, 4, 5};
 int[] intArray3 = {1, 2, 3, 4, 5};
 
 // Swift - Array
+// !Önemli : c# ve Dart da List yapısı vardır ve boyutu dynamic olarak değişir. ve c# da Array ler ise boyut sabittir , Dart da ise Sabit uzunluklu List ler vardır.
+// Fakat List kavramının Swift tarafında karsılıgıda array lerdir.Ama Swift deki arrayler dynamic tir yani append ve Insert methodları ile eleman ekleyebiliriz.
+// Yani gelişmiş list özellikleri tasıyan bir array yapısı vardır swift de.Mesela c# da array lere index değerine eleman atarsın ama tanımlanan index değerinin dışına çıkamazsın bu yüzden ve apped veya insert gibi bir methodu yoktur.
+// link https://stackoverflow.com/questions/202813/adding-values-to-a-c-sharp-array
 var numbers1 : [Int] = [] // Değer vermeyip tip vererek boş array olusturduk.
 var numbers2 = [Int]() // tip vermeyip boş array oluşturduk (automatic cast edecek)
 var numbers3 : [Int] = [10,20,39,140,50,60] // Hem değer verdik hemde tipini belirttik.
