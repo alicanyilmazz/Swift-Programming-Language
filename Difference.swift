@@ -34,7 +34,7 @@ var numbers4 = [1,2,3,4,5,6,7] // Bu şekilde de tanımlama yapabiliriz xcode
 var numbers5 : [Int] = Array(repeating: 0, count: 5) // 5 tane sıfır elemanı olan bir dizi olusturur.
 var booleanNumbers : [Bool] = Array(repeating: true, count: 5); // 5 tane elemanı true olan dizi olusturur.
 
-@@ Array in Swift - .Net - Dart @@
+@@ object in Swift - .Net - Dart @@
 
 // object in Dart
 Object a;
