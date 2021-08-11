@@ -372,7 +372,7 @@ for index in stride(from: brands.count-1, to: -1, by: -1){
 }
 print(reversedBrand)
 
-// Birden Fazla Array in Bir arada Kullanımı
+// Birden Fazla Array in bir arada Kullanımı
 // 3 Farklı veri tipindeki Array i for içerisinde kullanma
 var persons : [String] = ["Jack","Morgot","Robie","Mia","Michael","Roselin","Nana"]
 var ages : [Int] = [28,32,12,23,21,45,64]
