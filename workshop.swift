@@ -130,5 +130,31 @@ if reversedNumber == strNumber{
     print("\(strNumber) is not polindromic.")
 }
 
+// 8.) Belirtilen array in algoritma kurarak tersini almamızı sağlayan programı yazınız.
 
+// Algoritma kurarak bir int array in tersini almak
+var confusedNumbers = [1,2,4,10,3,6,7,9]
+var confusedNumberLastIndex = confusedNumbers.count-1
+
+let confusedNumberMiddle = confusedNumberLastIndex / 2
+var counterIndex = 0
+
+while counterIndex <= confusedNumberMiddle {
+    let stepperIndex = confusedNumberLastIndex - counterIndex
+    let temporalValue = confusedNumbers[counterIndex]
+    confusedNumbers[counterIndex] = confusedNumbers[stepperIndex]
+    confusedNumbers[stepperIndex] = temporalValue
+    counterIndex+=1
+}
+print("Reversed Array with Algorithm is \(confusedNumbers)")
+
+// Yukarıdaki algoritmayı Refactor ederek daha efektif hale getirelim , kısaltalım.
+var concordNumbers = [1,2,4,10,3,6,7,9]
+var concordNumbersIndex = 0
+
+while concordNumbersIndex <= (concordNumbers.count-1)/2 {
+    concordNumbers.swapAt(concordNumbersIndex, (concordNumbers.count-1)-concordNumbersIndex)
+    concordNumbersIndex += 1
+}
+print(concordNumbers)
 
