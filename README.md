@@ -363,6 +363,26 @@ for (index,value) in numbers3.enumerated() {
     print("number3[\(index)] = \(value)")
 }
 
+// for kullanarak bir arrayin tersini nasıl alabiliriz.
+var brands : [String] = ["Ford","Fiat","Hyundai","Honda","Ferrari"]
+var reversedBrand = [String]()
+
+for index in stride(from: brands.count-1, to: -1, by: -1){
+    reversedBrand.append(brands[index])
+}
+print(reversedBrand)
+
+// Birden Fazla Array in Bir arada Kullanımı
+// 3 Farklı veri tipindeki Array i for içerisinde kullanma
+var persons : [String] = ["Jack","Morgot","Robie","Mia","Michael","Roselin","Nana"]
+var ages : [Int] = [28,32,12,23,21,45,64]
+var isMarried : [Bool] = [true,true,false,true,false,false,true]
+
+for (index,eachPerson) in persons.enumerated() {
+    print("\(index+1). person name : \(eachPerson) , age : \(ages[index]) is Married : \(isMarried[index] ? "Married" : "Not Married")")
+}
+
+
 ```
 
 ```diff
