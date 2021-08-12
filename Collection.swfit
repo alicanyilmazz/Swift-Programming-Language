@@ -1,0 +1,297 @@
+// Array Tanımlama Şekilleri
+var numbers1 : [Int] = [] // Değer vermeyip tip vererek boş array olusturduk.
+var numbers2 = [Int]() // tip vermeyip boş array oluşturduk (automatic cast edecek)
+var numbers3 : [Int] = [10,20,39,140,50,60] // Hem değer verdik hemde tipini belirttik.
+var numbers4 = [1,2,3,4,5,6,7] // Bu şekilde de tanımlama yapabiliriz xcode
+var numbers5 : [Int] = Array(repeating: 0, count: 5) // 5 tane sıfır elemanı olan bir dizi olusturur.
+var booleanNumbers : [Bool] = Array(repeating: true, count: 5); // 5 tane elemanı true olan dizi olusturur.
+
+// Array elemanlarına erişim
+let firstMember = numbers3[0]
+
+// dizideki eleman sayısı
+print("the number of element in the array is \(numbers3.count)")
+
+// dizinin type ini ögrenme
+print(type(of: numbers3))
+
+//diziye eleman ekleme
+numbers3.append(120)
+
+//dizinin 3. elemanını değiştirme
+numbers3[2] = 111
+
+//dizinin 3. elemanına 35 ekleme
+numbers3[2] += 35
+
+// number3 dizisinin en büyük ve enküçük elemanları
+let maxValue = numbers3.max()
+let minValue = numbers3.min()
+
+// dizi içerisinde eleman var mı?
+if numbers3.isEmpty {
+    print("array is empty")
+}else{
+    print("the number of element in the array is \(numbers3.count)")
+}
+
+// diziyi sort etmek
+let sortedArray = numbers3.sorted()
+
+
+// String dizisindeki kelimelerde gecen toplam a sayısı.
+var fruit : [String] = ["orange","banana","melon","cucumber","tomato"]
+var numberOfA : Int = 0
+
+for eachfruit in fruit {
+    for eachLetter in eachfruit {
+        if eachLetter == "a" {
+            numberOfA += 1
+        }
+    }
+}
+print(numberOfA)
+
+// String Array lerde sorting işlemi
+let sortedStringArray = fruit.sorted()
+
+
+// number3 array indeki sayıların ortalamasını bulma
+var sum : Double = 0.0
+for eachNum in numbers3 {
+    sum += Double(eachNum)
+}
+let avarageOfArray = Double(sum) / Double(numbers3.count)
+
+// C de deki gibi duyarlılık virgülden sonraki iki basamak olacak sekilde formatlama işlemi yapar
+let formattedavarageOfArray = String(format: "%.2f", avarageOfArray)
+
+// tuple
+for (index,value) in numbers3.enumerated() {
+    print("number3[\(index)] = \(value)")
+}
+
+//diziye eleman ekleme aşağıdaki gibi idi.
+numbers3.append(21)
+
+// bir diziye baska bir diziyi ekleme
+numbers3.append(contentsOf: numbers4)
+
+// dizilerde method kullanımı
+var personNames = ["Allen","Jack","Sophia","Michael","Jordan","Demi","Launa"]
+let isPersonExist = personNames.contains("Jack")
+if isPersonExist {
+    print("exist")
+}else{
+    print("not exist")
+}
+
+// append den farklı olarak insert methodu ile belirtilen indexe elemanı ekler
+personNames.insert("Alican", at: 2)
+
+// belirtilen index deki elemanı siler
+// 3.index de bulunan elemanı siler
+numbers3.remove(at: 3)
+
+// dizinin ilk elemanını diziden siler ve return olarakta silinen elemanı döner.
+numbers3.removeFirst()
+
+// dizinin son elemanını diziden siler ve return olarakta silinen elemanı döner.
+numbers3.removeLast()
+
+// dizinin tüm elemanlarını siler
+numbers3.removeAll()
+
+var numbers8 : [Int] = [10,20,39,140,50,60]
+
+// dizinin son elemanının index değerini bulma
+// number8 dizisindeki elemanın index ini bulmak istersek bize 6 döner yanı son elemanın index değerinden sonraki index değeri (60 ın index değeri 5 tir.)
+print("last index is \(numbers8.endIndex)")
+
+// yukarıdaki method sayesinde dizinin sonuna index değerinide kullanarak elemen eklemek için aşağıdaki gibi bir kullanımda da bulunabiliriz.
+numbers8.insert(3, at: numbers8.endIndex)
+
+//dizinin ilk elemanının index değerini verir yani 0
+print("last index is \(numbers8.startIndex)")
+
+
+// dizinin ilk ve son elemanına erişmek için first ve last kullanılır.
+print(numbers8.first!)
+print(numbers8.last!)
+
+var sampleArr : [Int] = [10,20,31,39,140,31,50,4,1,3,22,31,177,190,51,12,60]
+// sampleArr içerisinde 31 in ilk gectiği index değerini bize döner yani '2' değerini
+print(sampleArr.firstIndex(of: 31)!)
+// sampleArr içerisinde 31 in son gectiği (isterse 2 den fazla olsun farketmez sonuncunun index ini alır) index değerini bize döner yani '11' değerini
+print(sampleArr.lastIndex(of: 31)!)
+
+// Array ler ile closure kullanarak bazı yetenekler kazandıralim kodlarımıza
+// sampleArr array inde bulunan elemanları gezer ve 151 den buyuk olan ilk elemanı gördüğünde bize döner.(177 değerini döner)
+let member = sampleArr.first(where: {$0 > 151})
+print(member!)
+
+// first yerine firstIndex methodunu kullanırsakta bu sefer sartı sağlayan member ı değil onun index değerini bize döner.(12 değerini döner)
+let memberIndex = sampleArr.firstIndex(where: {$0 > 151})
+print(memberIndex!)
+
+
+let personsInfo = ["Jack","Mia","Clara","Camela","Allen","Carta","Rosetta","Robin","Harper"]
+
+// Aşağıda ise "a" içeren ilk ismi bize geriye döndürür.
+let existingPerson = personsInfo.first(where: {$0.contains("a")})
+print(existingPerson!) // Jack
+
+// Aşağıda ise "a" içeren son ismi bize geriye döndürür.
+let existingLastPerson = personsInfo.last(where: {$0.contains("a")})
+print(existingLastPerson!) // Harper
+
+// Aşağıda ise "a" içeren ilk ismin index değerini bize geriye döndürür.
+let existingPersonIndex = personsInfo.firstIndex(where: {$0.contains("a")})
+print(existingPersonIndex!)
+
+// Aşağıda ise "a" içeren son ismin index değerini bize geriye döndürür.
+let existingPersonLastIndex = personsInfo.lastIndex(where: {$0.contains("a")})
+print(existingPersonLastIndex!)
+
+// array içerisindeki elemanlara index bazlı erişme
+var sectionNumber : [Int] = [21,32,34,2,12,45,66,33]
+var _counter : Int = 0
+for _ in sectionNumber {
+    sectionNumber[_counter] = sectionNumber[_counter]+1
+    _counter+=1
+}
+print(sectionNumber)
+
+// Any Reserved Keyword Kullanımı
+
+// Başlangıç değeri Int
+var anyValue : Any = -12
+print(anyValue)
+print(type(of: anyValue))
+
+// Double yapalım
+anyValue = 12.3
+print(anyValue)
+print(type(of: anyValue))
+
+// boolean yapalım
+anyValue = false
+print(anyValue)
+print(type(of: anyValue))
+
+// Any tipinden dizi tanımlayalım
+// böylece farklı veri türlerini aynı array de tutmamıza izin verir.(bu durum unsafe dir)
+var difArray : [Any] = [1,2,3,4,5,true,false,"air","cloud","pencil",10.2,2.3,0.3]
+
+for d in difArray {
+    print("value type is \(type(of: d)) - value is \(d)")
+}
+
+// Character veri tipine diziler üzerinde bakalım.
+
+let letter1 = "a"
+let letter2 : Character = "a"
+
+// let letter3 : Character = "ab"  --> gets an error.
+
+let letters : [Character] = ["A","g","C","f","K","j"]
+
+let sentence : String = "Today the weather is very hot."
+var characters = [Character]()  // boş bir karakter dizisi olusturduk.
+for k in sentence {
+    characters.append(k)
+}
+print(characters) // Output is : ["T", "o", "d", "a", "y", " ", "t", "h", "e", " ", "w", "e", "a", "t", "h", "e", "r", " ", "i", "s", " ", "v", "e", "r", "y", " ", "h", "o", "t", "."]
+
+
+// Character Array Kullanımı Samples
+// sentence değişkenine ait cümleyi tersine çevirelim.
+// 1.yol //////
+var reversedText1 = ""
+var reversedTextIndex1 = characters.count-1
+
+while reversedTextIndex1 >= 0 {
+    reversedText1 += "\(characters[reversedTextIndex1])"
+    reversedTextIndex1 -= 1
+}
+print(reversedText1)
+
+// 2.yol //////
+let sentence2 = "I will do what I must."
+var characterArr = Array(sentence2) // Array() methodu String i Character Dizisine dönüştürür.
+characterArr.reverse()
+print(characterArr)
+// Bunu tekrardan Character dizisinden String e nasıl cevirebiliriz dersekte aşağıdaki gibi casting işlemi yapmamız yeterlidir.
+let unreversed = String(characterArr)
+
+
+//Not reverse() methodu sadece String ifadelerde değil sayıları da tersine cevirmek için kullanılabilir (order etmez sıralamaz yani)
+var sampleNumbers = [91,3,44,2,1,123,3,42,9]
+sampleNumbers.reverse()
+print(sampleNumbers)
+
+let reversedNum = Array(sampleNumbers.reversed())  //sampleNumbers.reversed() ifadesi tersine cevirmez bu ReversedCollectionArray den kaynaklanır sekildeki gibi yapılmalıdır.
+print(reversedNum)
+
+// 3.yol //////
+// Bu örnek diğerlerinden biraz farklı bir String array in tersini alıp baska bir array e copyalayacağız.Üstekiler Character Array idi.
+var brands : [String] = ["Ford","Fiat","Hyundai","Honda","Ferrari"]
+var reversedBrand = [String]()
+
+for index in stride(from: brands.count-1, to: -1, by: -1){
+    reversedBrand.append(brands[index])
+}
+print(reversedBrand)
+
+// Birden Fazla Array in Bir arada Kullanımı
+var persons : [String] = ["Jack","Morgot","Robie","Mia","Michael","Roselin","Nana"]
+var ages : [Int] = [28,32,12,23,21,45,64]
+var isMarried : [Bool] = [true,true,false,true,false,false,true]
+
+for (index,eachPerson) in persons.enumerated() {
+    print("\(index+1). person name : \(eachPerson) , age : \(ages[index]) is Married : \(isMarried[index] ? "Married" : "Not Married")")
+}
+
+// Bir Array e başka bir Array i ekleme //
+var prefixNumbers : [Int] = [2,34,1,24]
+var suffixNumbers : [Int] = [6,32,12,8]
+var postfixNUmbers : [Int] = [11,25,32,44]
+
+// 1. Yol Method Kullanarak
+prefixNumbers.append(contentsOf: suffixNumbers)
+// 2.Yol Method Kullanmadan
+prefixNumbers+=postfixNUmbers
+prefixNumbers += [99,100]
+
+
+// Bir diziye eleman eklemek append ve insert kullanıyorduk
+prefixNumbers.append(120)
+// append den farklı olarak insert methodu ile belirtilen indexe elemanı ekler
+prefixNumbers.insert(77, at: 2)
+// Fakat tek elemanı yukarıdaki gibi ekleyebilir miyiz?
+let ordinaryNumber = 21
+prefixNumbers += [ordinaryNumber] //prefixNumbers += ordinaryNumber / gets an error tekil elemanıda += kullanmak istiyorsak sanki tek elemanlı bir diziymiş gibi ekleyebiliriz ancak.
+
+// swapAt methodu ile Array de bulunan elemanları yer değiştirtir.
+// Mesela aşağıdaki Array in ilk elemanı ile son elemanını yer değiştirtelim
+var counterNumber = [4,35,64,12,11]
+counterNumber.swapAt(0, counterNumber.count-1) // dizinin ilk ve son elemanı yer değiştirdi.
+
+// drop methodları ile örneğin bir Array belirlediğimiz elemanından sonraki elemanlarını alıp yeni array ler olusturabiliriz.
+var selectionArray = [2,4,523,53,21,67,43]
+var firtDropArray = selectionArray.dropFirst(2) // [523, 53, 21, 67, 43] --> ilk iki elemanı almayıp yeni diziyi öyle oluşturmuş olduk.
+var lastDropArray = selectionArray.dropLast(3) //  [2, 4, 523, 53] --> Array in son 3 elemanını almadan yeni bir Array olusturmus olduk.
+var extendedSelection = selectionArray[0...4] // [2, 4, 523, 53, 21] --> Array in 0,1,2,3 .index elemanlarını
+var allSelectionArray = selectionArray[0...(selectionArray.count-1)]
+// dropFirst ve dropLast belirtilen elemanlar hariç gerisini almak içindi
+// şimdi ise belirtilen elemanları almak için ne kullanacağız ona bakalım
+var firstThreeElements = selectionArray.prefix(upTo: 2) // [2, 4] --> ilk 2 elemanı alır.
+var lastThreeElements = selectionArray.suffix(3) // [21, 67, 43] --> son 3 elemanı alır.
+
+var customerNames : [String] = ["Asana","Arthur","Rob","Marie","Morgot","Mellicue","Amber","Alice","Harper"]
+
+// Array in son 3 elemanını bize getirir.
+var selectedCustomers = customerNames[(customerNames.count-3)...(customerNames.count-1)] // ["Amber", "Alice", "Harper"] --> sondan 3 elemanı getirir.
+var result = customerNames.prefix(while: {$0.contains("A")}) // ["Asana", "Arthur"] --> bu predicate ile şu olur ilk elemandan itibaren A içeren elemanları getirir eğer A içeren bulamadıgı yerden
+// itibaren reject eder ve null döner eğer ilk elemandan itibaren kosul sağlanmazsa sonrasındaki eleman şartı sağlasada bile reject edip cıkar yani şartın en bastan itibaren sürekli sağlanması lazım
+print(result)
