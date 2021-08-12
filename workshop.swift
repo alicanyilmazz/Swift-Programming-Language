@@ -158,3 +158,20 @@ while concordNumbersIndex <= (concordNumbers.count-1)/2 {
 }
 print(concordNumbers)
 
+
+// 9.) Belirtilen dizideki çift ve tek sayıları ayıran programı yazınız.
+var allNumbers : [Int] = [2,4,5,1,22,12,37,39]
+var evenNumbers = [Int]()
+var oddNumbers = [Int]()
+
+for eachNumbers in allNumbers {
+    if eachNumbers % 2 == 0 {
+        evenNumbers.append(eachNumbers)
+    }else{
+        oddNumbers.append(eachNumbers)
+    }
+}
+print(evenNumbers)
+print(oddNumbers
+
+
