@@ -1096,6 +1096,27 @@ for (key,value) in techSigth {
  
  */
 
+// Dictionary de Update ve Delete İşlemleri
+var notes = [String : Int]()
+print(notes.count)
+
+notes["jack"] = 21
+notes["morgot"] = 87
+notes["isabelle"] = 45
+notes["daniel"] = 65
+print(notes)
+
+//1.Yol Dictioanary Güncelleme
+notes["jack"] = 79
+
+//2.Yol Dictioanary Güncelleme
+notes.updateValue(44, forKey: "jack")
+
+//1.Yol Silme İşlemi
+notes.removeValue(forKey: "jack")
+
+//2.Yol Silme İşlemi
+notes["daniel"] = nil
 
 ```
 
