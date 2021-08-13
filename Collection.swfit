@@ -1,3 +1,5 @@
+// ARRAY
+
 // Array Tanımlama Şekilleri
 var numbers1 : [Int] = [] // Değer vermeyip tip vererek boş array olusturduk.
 var numbers2 = [Int]() // tip vermeyip boş array oluşturduk (automatic cast edecek)
@@ -295,3 +297,222 @@ var selectedCustomers = customerNames[(customerNames.count-3)...(customerNames.c
 var result = customerNames.prefix(while: {$0.contains("A")}) // ["Asana", "Arthur"] --> bu predicate ile şu olur ilk elemandan itibaren A içeren elemanları getirir eğer A içeren bulamadıgı yerden
 // itibaren reject eder ve null döner eğer ilk elemandan itibaren kosul sağlanmazsa sonrasındaki eleman şartı sağlasada bile reject edip cıkar yani şartın en bastan itibaren sürekli sağlanması lazım
 print(result)
+
+// DICTIONARY
+
+// var/let sözlükAdı : [keyTipi : valueTipi]
+// var/let sözlükAdı = [keyTipi : valueTipi]()  --> boş bir dictionary yapısı olusturur.
+
+var numbers = [String : Int]()
+numbers["one"]=1
+numbers["two"]=2
+numbers["three"]=3
+numbers["four"]=4
+
+// !ÖNEMLİ : Swift de Dictionary lerde verilere erişmeye çalıştığımızda verileri çekme sırası rastgeledir veri sırayla gelmez.
+for (key,value) in numbers {
+    print("key is : \(key) -- value is : \(value)")
+}
+
+// keys leri yazdıralım
+let _keys = numbers.keys
+for eachKey in _keys {
+    print(eachKey)
+}
+
+// value ları yazdıralım
+let _values = numbers.values
+for eachValue in _values {
+    print(eachValue)
+}
+
+// Dictionary nin values larının değerlerinin toplamlarını bulalım.
+let valuesOfDictionary = Array(numbers.values)
+var sum = 0
+for _sum in valuesOfDictionary {
+    sum += _sum
+}
+print("Sum of the values is \(sum)")
+
+// Dictionary nin keylerinden bir Array olusturalım.
+let keysOfDictionary = Array(numbers.keys)
+print(keysOfDictionary) // ["one", "two", "four", "three"]
+
+// Any keyword unun Dictionary yapısı ile kullanımı
+var persons = [String : Any]();
+persons["name"] = "alican"
+persons["surname"] = "yilmaz"
+persons["isMarried"] = false
+persons["age"] = 26
+
+for (key,value) in persons {
+    print("\(key) : \(value)")
+}
+
+// Dictionary deki tüm verileri siler.
+persons = [:]
+
+if persons.isEmpty {
+    print("Dictionary is empty!")
+}else{
+    print("Dictionary is not empty and number of elements is \(persons.count)")
+}
+
+let users = [["first": "Lucy","last": "Johnson"],["first": "John","last": "Williams"]]
+print(users[0]) // ["first": "Lucy", "last": "Johnson"]
+print(users[0]["first"]!) // Lucy
+
+let ordinaryNumbers: [[String:Int]] = [["first": 1,"second": 2],["third": 3,"fourth": 4]]
+print(ordinaryNumbers) // [["first": 1, "second": 2], ["fourth": 4, "third": 3]]
+print(ordinaryNumbers[0]) // ["second": 2, "first": 1]
+print(ordinaryNumbers[0]["second"]!) // 2
+
+typealias erorCodeType = [String:Int]
+let erorCode : [erorCodeType] = [["UnhandledException": 1 , "Authorization": 2 ],["Authentication" : 3]]
+print("The error code is : \(erorCode[0]["Authorization"]!)")
+
+var countries = ["Turkey" : "Ankara","Germany" : "Berlin","England" : "London","France" : "Paris","Netherlands" : "Amsterdam"]
+var citiesPopulation = ["İstanbul" : 20, "Ankara" : 5, "İzmir" : 3]
+
+var h1 = ["name" : "arslan" , "age" : "24" , "gender" : "male"]
+var h2 = ["name" : "ali" , "age" : "21" , "gender" : "male"]
+var h3 = ["name" : "lara" , "age" : "18" , "gender" : "female"]
+
+var arr = [[String : String]()] // Array içerisinde Dictionary ler alabilecek şekilde bir Array yapısı tasarlıyoruz.
+arr.append(h1) // Array imize h1 Dictionary sini ekliyoruz.
+arr.append(h2) // Array imize h2 Dictionary sini ekliyoruz.
+arr.append(h3) // Array imize h3 Dictionary sini ekliyoruz.
+print(arr)
+print(arr.count) // 4 döner ilk initialize edilirken de boş bir dictionary olusturulduğu için onu da sayıyor.
+//!Önemli print(dizi[0]["name"]!) dersek hata alırız çünkü h1 e değil dizi initialize edilirken boş olarak olusturulan dictionary e erişmeye çalıştık oysaki 2. index de h1 3.index de h2 4. index de h3 var
+// Yukarıdaki hatadan kurtulmak dizinin 1.index elemanının h1 dictioanary sinden baslamasını sağlamak için ilk nil olan ilk elemanı silelim.
+arr.removeFirst()
+print(arr.count) // artık 3 değerini görüyoruz.
+
+// yukarıdaki durum kafamızı karıstırmasın mesela bir örnek daha verelim.
+let numbers1 = [Int]()
+let numbers2 = [Int()] // [12] girmem ile [Int()] arasında bir fark yoktur.
+print(numbers1.count)  // 0 değeri verir.
+print(numbers2.count)  // 1 değeri verir ilk eleman nil dir fakat mevcuttur yani.
+
+var student = [[String : String]()]
+student.removeFirst()
+student.append(h1)
+student.append(h2)
+student.append(h3)
+
+
+var frontendAngular = ["owner" : "google" , "technology" : "angular" , "programminglanguage" : "typescript"]
+var frontendReact = ["owner" : "facebook" , "technology" : "react" , "programminglanguage" : "javascript"]
+var frontendVueJS = ["owner" : "evanyu" , "technology" : "vuejs" , "programminglanguage" : "javascript"]
+
+var backendMicrosoft = ["owner" : "microsoft" , "technology" : ".net" , "programminglanguage" : "c#"]
+var backendOracle = ["owner" : "oracle" , "technology" : "springboot" , "programminglanguage" : "java"]
+var backendJS = ["owner" : "opensource" , "technology" : "nodejs" , "programminglanguage" : "JavaScript"]
+
+var mobileIOS = ["owner" : "apple" , "technology" : "ios" , "programminglanguage" : "swift"]
+var mobileAndroid = ["owner" : "google" , "technology" : "android" , "programminglanguage" : "kotlin"]
+var mobileCrossPlatform = ["owner" : "google" , "technology" : "flutter" , "programminglanguage" : "dart"]
+
+var techSigth = [String : Array<Dictionary<String,String>>]()
+var frontend = [[String : String]()]
+var backend = [[String : String]()]
+var mobile = [[String : String]()]
+
+frontend.removeFirst()
+frontend.append(frontendAngular)
+frontend.append(frontendReact)
+frontend.append(frontendVueJS)
+
+backend.removeFirst()
+backend.append(backendMicrosoft)
+backend.append(backendOracle)
+backend.append(backendJS)
+
+mobile.removeFirst()
+mobile.append(mobileIOS)
+mobile.append(mobileAndroid)
+mobile.append(mobileCrossPlatform)
+
+techSigth["frontendTechSight"] = frontend
+techSigth["backendTechSight"] = backend
+techSigth["mobileTechSight"] = mobile
+
+for (key,value) in techSigth {
+    print("---------------------------")
+    print(key)
+    print(value)
+}
+/*
+OUTPUT :
+---------------------------
+mobileTechSight
+[[:], ["owner": "apple", "technology": "ios", "programminglanguage": "swift"], ["owner": "google", "technology": "android", "programminglanguage": "kotlin"], ["programminglanguage": "dart", "owner": "google", "technology": "flutter"]]
+---------------------------
+frontendTechSight
+[[:], ["programminglanguage": "typescript", "owner": "google", "technology": "angular"], ["owner": "facebook", "programminglanguage": "javascript", "technology": "react"], ["programminglanguage": "javascript", "owner": "evanyu", "technology": "vuejs"]]
+---------------------------
+backendTechSight
+[[:], ["owner": "microsoft", "programminglanguage": "c#", "technology": ".net"], ["technology": "springboot", "programminglanguage": "java", "owner": "oracle"], ["technology": "nodejs", "programminglanguage": "JavaScript", "owner": "opensource"]]
+*/
+
+for (key,value) in techSigth {
+    print("***************************")
+    print("\(key)")
+    for eachValue in value {
+        print("-----------------------")
+        print("owner : \(eachValue["owner"]!)")
+        print("technology : \(eachValue["technology"]!)")
+        print("programminglanguage : \(eachValue["programminglanguage"]!)")
+    }
+}
+
+/*
+
+ OUTPUT :
+ 
+ ***************************
+ backendTechSight
+ -----------------------
+ owner : microsoft
+ technology : .net
+ programminglanguage : c#
+ -----------------------
+ owner : oracle
+ technology : springboot
+ programminglanguage : java
+ -----------------------
+ owner : opensource
+ technology : nodejs
+ programminglanguage : JavaScript
+ ***************************
+ frontendTechSight
+ -----------------------
+ owner : google
+ technology : angular
+ programminglanguage : typescript
+ -----------------------
+ owner : facebook
+ technology : react
+ programminglanguage : javascript
+ -----------------------
+ owner : evanyu
+ technology : vuejs
+ programminglanguage : javascript
+ ***************************
+ mobileTechSight
+ -----------------------
+ owner : apple
+ technology : ios
+ programminglanguage : swift
+ -----------------------
+ owner : google
+ technology : android
+ programminglanguage : kotlin
+ -----------------------
+ owner : google
+ technology : flutter
+ programminglanguage : dart
+ 
+ */
+
