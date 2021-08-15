@@ -862,16 +862,100 @@ print(result)
 >  Set yapısının array den farkı sırasız karısık bir sekilde elemanları tutar bu yuzden index ile erişim yapılamaz.
 >  Ve Set içerisinde aynı elemandan birden fazla bulunamaz atsak bile Set içerisine eklemez.
 ```swift
-var mySet : Set = [1,2,3,4,5,1,2,12] // unordered bir şekilde ve eleman tekrarına düşmeden sıralar
-var myStringSet : Set = ["a","b","c","d","e","a","b"] // unordered bir şekilde ve eleman tekrarına düşmeden sıralar
+// Set yapısında veri tekrarı olmaz aynı veriden iki kere eklenemez!
+var languages = Set<String>()
+languages.insert("german")
+languages.insert("turkish")
+languages.insert("dutch")
+languages.insert("arabic")
+languages.insert("Franch")
 
-var myNumberArray = [1,2,3,1,2,5,6,2,1] // array olusturuyoruz
-var myNumberSet = Set(myNumberArray); // Array 'imizi Set olarak convertion yapıyoruz. Böylece array de tekrar eden value ' lardan kurtuluyoruz.
+print("the number of the \(languages.count)")
 
-var mySetOne : Set = [1,2,3]
-var mySetTwo : Set = [3,4,5]
+let (isAded , valueToBeAdded) = languages.insert("italiano")
 
-var mySetThree : Set = mySetOne.union(mySetTwo) // Union ile iki Set 'i birleştiriyoruz.
+if isAded {
+    print("\(valueToBeAdded) was added.")
+}else{
+    print("\(valueToBeAdded) was not added.")
+}
+
+// Set içerisindeki belirtilen elemanı Set yapısından siler.
+let deletionResult = languages.remove("german") ?? "there is not any issue."
+
+var searchingLanguage = "dutch"
+if languages.contains(searchingLanguage) {
+    print("language was found.")
+}else{
+    print("language was not found.")
+}
+
+//1.Yol Set yapısı içerisindeki tüm elemanları Set içerisinden siler.
+languages.removeAll()
+
+//2.Yol Set yapısı içerisindeki tüm elemanları Set içerisinden siler.
+languages = []
+
+var ordinaryNumbers1 : Set<Int> = [1,2,3,4,5,6]
+var ordinaryNumbers2 : Set<Int> = [4,5,6,7,8,9]
+var ordinaryNumbers3 : Set<Int> = [4,5,99]
+var ordinaryNumbers4 : Set<Int> = [99,100,10]
+var values = [1,2,3,4,5]
+
+// a.union(b)
+// a.symmetricDifference(b)
+// a.intersection(b)
+// a.subracting(b)
+
+// a.intersection(b)
+let intersectionResult = ordinaryNumbers1.intersection(ordinaryNumbers2)
+let sortedIntersectionResult = ordinaryNumbers1.intersection(ordinaryNumbers2).sorted()
+for val in intersectionResult{
+  print("intersection result : \(val)")
+}
+
+// a.union(b)
+let unionResult = ordinaryNumbers1.union(ordinaryNumbers2).sorted()
+for val in unionResult{
+  print("union result : \(val)")
+}
+
+// a.symmetricDifference(b)
+let symmetricDifferenceResult = ordinaryNumbers1.symmetricDifference(ordinaryNumbers2).sorted()
+for val in symmetricDifferenceResult{
+  print("symmetric difference result : \(val)")
+}
+
+// a.subracting(b)
+let subractingResult = ordinaryNumbers1.subtracting(ordinaryNumbers2).sorted()
+for val in subractingResult{
+  print("subracting result : \(val)")
+}
+
+// İki kümenin kesişim kümesi boş ise ayrık kümedir.
+if ordinaryNumbers1.isDisjoint(with: ordinaryNumbers4) {
+    print("disjoint")
+}else{
+    print("not disjoint")
+}
+
+// Bir kümenin tüm elemanları başka bir kümede var ise
+if ordinaryNumbers3.isSubset(of: ordinaryNumbers1) {
+    print("is subset")
+}else{
+    print("is not subset")
+}
+
+let s1 : Set = [1,2,3,4,5]
+let s2 : Set = [4,2,3,1,5]
+let s3 : Set = [1,2,3,4,5]
+
+if s1 == s2 {
+    print("equal")
+}else{
+    print("not equal")
+}
+
 ```
 ```diff
 @@ Dictionary at Swift @@
