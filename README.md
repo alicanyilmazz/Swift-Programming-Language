@@ -1203,6 +1203,101 @@ notes.removeValue(forKey: "jack")
 notes["daniel"] = nil
 
 ```
+```diff
+@@ Tupples in Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+>--Named Tuple--
+
+```swift
+let nameAndAge = (name:"Midhun", age:7)
+ nameAndAge.name
+ nameAndAge.age
+ 
+ //Named Tuple da parametre adlarını verip değerlerini başlangıçta vermek zorunda değiliz.
+ var book : (Name : String , Author : String)
+
+```
+> --Unnamed Tuple--
+
+```swift
+ // Başlangıçta Unnamed Tuple olarak tanımlanan tuple'ı sonradan etiket veremeyiz named tuple yapamayız.
+ let nameAndAge = ("Midhun", 7)
+ nameAndAge.0
+ nameAndAge.1
+
+```
+
+> Major difference:
+If you need to return multiple values from a method you can use tuple.
+Tuple won't need any key value pairs like Dictionary.
+A tuple can contain only the predefined number of values, in dictionary there is no such limitation.
+A tuple can contain different values with different datatype while a dictionary can contain only one datatype value at a time
+Tuples are particularly useful for returning multiple values from a function. A dictionary can be used as a model object.
+
+```swift
+var _authors : (String,String)?
+var _writers = ("gogol","victor hugo")
+
+print(_writers.0)
+print(_writers.1)
+
+let webSite = (statusCode : 404 , statusMessage : "page not found!")
+print("oops code \(webSite.statusCode) \(webSite.statusMessage)")
+
+print(webSite.0)
+print(webSite.1)
+
+var book : (Name : String , Author : String)
+book.Name = "Vadideki Zambak"
+book.Author = "Balzac"
+
+var authorName : String = ""
+var bookName : String = ""
+(bookName,authorName) = book
+print("\(bookName) and \(authorName)")
+
+var num1,num2 : Int
+(num1,num2) = (3,5)
+// yine tupple yapısı ile num1 ile num2 nin değerlerini yer değiştirtelim.
+(num1,num2) = (num2,num1)
+
+
+// Tupple içerisinde tupple kullanımı.
+var person1 = (personName : "laura" , personSurname : "clark" , familyInformation : (isMarried : false ,numberofChildren : 0))
+var person2 = (personName : "merve" , personSurname : "noyan" , familyInformation : (isMarried : true ,numberofChildren : 2))
+print(person2.familyInformation.isMarried ? "Married" : "Single")
+print(person2.familyInformation.numberofChildren)
+print(person2.personName)
+// yada yukarıdaki bilgilere index değerleri üzerinden de ulasabiliriz.
+print(person2.2.0 ? "Married" : "Single")
+print(person2.2.1)
+print(person2.0)
+
+// Tupple ile Array lerin bir arada Kullanımı
+var technologies = (frontend : ["React JS","Angular","Vue JS"],githubStars : [120,111,142])
+for (index,front) in technologies.frontend.enumerated() {
+    print("technologies : \(front) and github stars \(technologies.githubStars[index])")
+}
+
+// fonksiyonlarda parametre olarak tupple kullanımı
+func distancebetweentwopoints(firstPoint : (xCordinate : Int , yCordinate : Int), secondPoint : (xCordinate : Int , yCordinate : Int)){
+    var xDifference = firstPoint.xCordinate - secondPoint.xCordinate
+    var yDifference = firstPoint.yCordinate - secondPoint.yCordinate
+    
+    xDifference *= xDifference
+    yDifference *= yDifference
+    
+    let distance : Double = Double(xDifference+yDifference).squareRoot()
+    print("Distance of this points is \(distance)")
+}
+
+var cordinate1 = (xCordinate : 6 , yCordinate : 8)
+var cordinate2 = (xCordinate : 3 , yCordinate : 4)
+distancebetweentwopoints(firstPoint: cordinate1, secondPoint: cordinate2)
+
+
+```
 
 ```diff
 @@ Optional Variables (Swift Terms) - Swift Programming Null Safety @@
