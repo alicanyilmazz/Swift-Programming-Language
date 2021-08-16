@@ -1207,7 +1207,7 @@ notes["daniel"] = nil
 @@ Tupples in Swift @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
->--Named Tuple--
+> Named Tuple
 
 ```swift
 let nameAndAge = (name:"Midhun", age:7)
@@ -1218,7 +1218,7 @@ let nameAndAge = (name:"Midhun", age:7)
  var book : (Name : String , Author : String)
 
 ```
-> --Unnamed Tuple--
+> Unnamed Tuple
 
 ```swift
  // Başlangıçta Unnamed Tuple olarak tanımlanan tuple'ı sonradan etiket veremeyiz named tuple yapamayız.
@@ -1229,11 +1229,16 @@ let nameAndAge = (name:"Midhun", age:7)
 ```
 
 > Major difference:
-If you need to return multiple values from a method you can use tuple.
-Tuple won't need any key value pairs like Dictionary.
-A tuple can contain only the predefined number of values, in dictionary there is no such limitation.
-A tuple can contain different values with different datatype while a dictionary can contain only one datatype value at a time
-Tuples are particularly useful for returning multiple values from a function. A dictionary can be used as a model object.
+
+> If you need to return multiple values from a method you can use tuple.
+
+> Tuple won't need any key value pairs like Dictionary.
+
+> A tuple can contain only the predefined number of values, in dictionary there is no such limitation.
+
+> A tuple can contain different values with different datatype while a dictionary can contain only one datatype value at a time
+
+> Tuples are particularly useful for returning multiple values from a function. A dictionary can be used as a model object.
 
 ```swift
 var _authors : (String,String)?
