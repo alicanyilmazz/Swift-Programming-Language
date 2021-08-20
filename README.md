@@ -1339,3 +1339,656 @@ var crachNumber : Int?
 print(crachNumber!) // Direkt Fatal Error nedenidir hem variable initialize etmedik hemde bunun nil(null olmayacagını) garanti ettik
 
 ```
+
+```diff
+@@ Functions at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+
+// void function tanımlama
+func basicPrint(){
+    // code blocks
+    print("hello world.")
+}
+
+basicPrint()
+
+// fonksiyonlara parametre tanımlama
+func parameterPrint(message : String){
+    print(message)
+}
+
+parameterPrint(message: "coffee for awake!")
+
+func multiplyNumber(number1 : Int , number2 : Int){
+    print(number1*number2)
+}
+
+multiplyNumber(number1: 2, number2: 4)
+
+// Basic Calculator
+func calculator(numberOne : Double , numberTwo : Double , process : String){
+    let process = process.lowercased()
+    var result : Double = 0
+    switch process {
+    case "sum":
+        result = numberOne + numberTwo
+        print(result)
+    case "multiply":
+        result = numberOne * numberTwo
+        print(result)
+    case "sub":
+        result = numberOne - numberTwo
+        print(result)
+    case "divide":
+        result = numberOne / numberTwo
+        print(result)
+    default:
+        print("Undefined Process!")
+    }
+}
+
+calculator(numberOne: 4, numberTwo: 6, process: "sum")
+
+// fonksiyonlarda parametre olarak array kullanımı
+func ageAnalysis(ages : [Int]){
+    var minAge : Int = ages[0]
+    var maxAge : Int = ages[0]
+    
+    for age in ages {
+        if age < minAge {
+            minAge = age
+        }
+        if maxAge < age {
+            maxAge = age
+        }
+    }
+    print("min age is : \(minAge)")
+    print("max age is : \(maxAge)")
+}
+
+var myAgeSet : [Int] = [21,15,19,36,54,10,71,94,81]
+print(myAgeSet.min()!) // Yukaridaki fonksiyonun yaptıgı iş için hazır method da var biz kendi fonksiyonumuzu yazıp gösterelim diye yaptık sadece
+print(myAgeSet.max()!)
+// Fonksiyonumuzu çağıralım
+ageAnalysis(ages: myAgeSet)
+
+
+// fonksiyonlarda parametre olarak array kullanımı 2.Örnek
+func repeatingNames(names : [String]){
+    var numberOfRepetingNames : [String : Int] = [:]
+    
+    for name in names {
+        if numberOfRepetingNames[name] != nil {
+            numberOfRepetingNames[name]! += 1
+        }else{
+            numberOfRepetingNames[name] = 1
+        }
+    }
+    
+    for name in numberOfRepetingNames {
+        print("\(name.key) \(name.value)")
+    }
+}
+
+var names : [String] = ["Jack","Morgon","Sam","Daniel","Morgon","Laura","Daniel","Clara","Morgon","James","Clara"]
+repeatingNames(names: names)
+
+
+// fonksiyonlarda parametre olarak kompleks array tipi kullanımı - key String value Float array
+func mostSuccessfulStudent(lectureClass : [String : [Float]]){
+    var maxAvarage : Float = -1.0
+    var bestStudent = ""
+    for student in lectureClass {
+        let visaGrade : Float = student.value[0]
+        let finalGrade : Float = student.value[1]
+        let avarage : Float = visaGrade * 0.4 + finalGrade * 0.6
+        
+        if avarage > maxAvarage {
+            bestStudent = student.key // name of the best student
+            maxAvarage = avarage
+        }
+        
+    }
+    
+    let visaGrade : Float = lectureClass[bestStudent]![0]
+    let finalGrade : Float = lectureClass[bestStudent]![1]
+    print("""
+     Name of the best student name is \(bestStudent)
+     and visa grade is \(visaGrade)
+     and final grade is \(finalGrade)
+    """)
+    
+}
+
+var studentGrades : [String : [Float]] = ["Mike" : [45,12] ,"Daniel" : [56,87],"Jack":[88,99],"Ramsay":[45,66],"Nora":[86,54],"Fiona":[42,38]]
+mostSuccessfulStudent(lectureClass: studentGrades)
+
+// Int Parametre Alıp Geriye String Değer Döndüren Fonksiyon
+func isOddOrEven(number : Int) -> String{
+    if number % 2 == 0 {
+        return "even"
+    }else{
+        return "odd"
+    }
+}
+
+for counter in (1...10) {
+    print("\(counter) is \(isOddOrEven(number: counter))")
+}
+
+// Parametre Olarak Int Array Alıp Geriyede Int Array Döndüren Fonksiyonlar
+func isNegativeInteger(numbers : [Int]) -> [Int]{
+    var negativeNumbers : [Int] = [Int]()
+    
+    for val in numbers {
+        if val < 0 {
+            negativeNumbers.append(val)
+        }
+    }
+    return negativeNumbers
+}
+
+var complexNumbers : [Int] = [10,-20,0,-10,40,60]
+var negatives = isNegativeInteger(numbers: complexNumbers) // [-20, -10]
+
+
+// Parametre Olarak String Array Alıp Geriyede String Array Döndüren Fonksiyonlar
+func makeUppercase(letters : [String]) -> [String]{
+    var _letters : [String] = [String]()
+    
+    for var val in letters {
+        val = val.uppercased()
+        
+        if _letters.contains(val) == false {
+            _letters.append(val)
+        }
+    }
+    return _letters
+}
+
+var sampleObjects = ["penCil","PenCil","Car","phone","Table","door","Mount","aNimal","Phone","game","Laptop","caR","bowl"]
+makeUppercase(letters: sampleObjects)
+
+// Fonksiyonlarda Tupple Yapısı ile Birden Fazla Parametre Döndürmek
+func calculateValue(values : [Int]) -> (minVal : Int , maxVal : Int , sumOfVal : Int , multiplyVal : Int){
+   var _minVal = values[0]
+   var _maxVal = values[0]
+   var _sumOfVal = 0
+   var _multiplyVal = 1
+    
+    for num in values {
+        if num < _minVal {
+            _minVal = num
+        }
+        else if num > _maxVal{
+            _maxVal = num
+        }
+        
+        _sumOfVal += num
+        _multiplyVal *= num
+    }
+    return (_minVal,_maxVal,_sumOfVal,_multiplyVal)
+}
+let numbersToCalculate : [Int] = [1,-2,3,4,5,6,20]
+let numbersToCalculated = calculateValue(values: numbersToCalculate)
+print(" min value is : \(numbersToCalculated.minVal) max value is \(numbersToCalculated.maxVal) sum of the numbers is \(numbersToCalculated.sumOfVal) multiply of the numbers is \(numbersToCalculated.multiplyVal)")
+
+
+// Yukarıdaki örneği bu seferde Array kullanarak yapalım.
+func calculateArray(values : [Int]) -> [Int]{
+    var _minVal = values[0]
+    var _maxVal = values[0]
+    var _sumOfVal = 0
+    var _multiplyVal = 1
+     
+     for num in values {
+         if num < _minVal {
+             _minVal = num
+         }
+         else if num > _maxVal{
+             _maxVal = num
+         }
+         
+         _sumOfVal += num
+         _multiplyVal *= num
+     }
+     return [_minVal,_maxVal,_sumOfVal,_multiplyVal]
+}
+
+let calculatedArray = calculateArray(values: numbersToCalculate)
+print(" min value is : \(calculatedArray[0]) max value is \(calculatedArray[1]) sum of the numbers is \(calculatedArray[2]) multiply of the numbers is \(calculatedArray[3])")
+
+
+// Fonksiyonlarda İç İçe Tupple döndürmek
+func classInformation(data : [String : Int]) -> (heaviestPerson : (name : String , weight : Int),avarageWeight : Double){
+    var mostHeaviest = -1
+    var avarage : Double = 0.0
+    var sum : Int = 0
+    var name : String = ""
+    
+    for person in data {
+        if person.value > mostHeaviest {
+            mostHeaviest = person.value
+            name = person.key
+        }
+        sum += person.value
+    }
+    avarage = Double(sum) / Double(data.count)
+    return ((name,mostHeaviest),avarage);
+}
+
+var weights : [String : Int] = ["Jack" : 55 , "Morgot" : 39 , "Belluci" : 44, "Ferra" : 45 ,"Michael" : 54]
+var weightResult = classInformation(data: weights)
+print("\(weightResult.heaviestPerson.name) and \(weightResult.heaviestPerson.weight) and \(weightResult.avarageWeight)")
+
+
+// Function Overloading
+func sumNumbers(pNumber1 : Int , pNumber2 : Int){
+    print(pNumber1 + pNumber2)
+}
+func sumNumbers(number1 : Int , number2 : Int) -> Int{
+    return  number1 + number2
+}
+func sumNumbers(number1 : Double , number2 : Double) -> Double{
+    return  number1 + number2
+}
+func sumNumbers(numbers : [Int]) -> Int{
+    var sum : Int = 0
+    for val in numbers {
+        sum += val
+    }
+    return sum
+}
+var myExamGrades = [10,20,30,45,64,21]
+print(sumNumbers(numbers: myExamGrades))
+
+
+// Bir Tane Daha Function Overloading Örneği Yapalım
+func calculateArea(edge : Double){
+    print("Area of square \(edge*edge)")
+}
+
+func calculateArea(edge1 : Double , edge2 : Double){
+    print("Area of Rectangle \(edge1*edge2)")
+}
+
+func calculateArea(radius : Double){
+    var area = Double.pi * radius * radius
+    print("Area of Circle \(area)")
+}
+
+func calculateArea(edge1 : Double , edge2 : Double ,edge3 : Double){
+    var circumference : Double = edge1 + edge2 + edge3
+    var u : Double = circumference / 2
+    var area = (u * (u-edge1) * (u-edge2) * (u-edge3)).squareRoot()
+    print("Area of triangle \(area)")
+}
+
+calculateArea(edge: 4)
+calculateArea(radius: 4)
+calculateArea(edge1: 4, edge2: 3)
+calculateArea(edge1: 3, edge2: 4, edge3: 5)
+
+// Optional Parameters and Variadic Function (c# da da var) -> Parametrelere Varsayılan Değer Atama 'Variadic Function' Kavramı
+func printData(message : String = "There is not any message!"){
+    print(message)
+}
+printData()
+printData(message: "Call to RollBack function.")
+
+// Diğer Optional Parameters Örneğimiz
+func calculateExponent(base : Int , exponent : Int = 2) -> Int{
+    var result = 1
+    for _ in 1...exponent {
+        result *= base
+    }
+    return result
+}
+print(calculateExponent(base: 3))
+print(calculateExponent(base: 3, exponent: 3))
+
+// Swift de Variadic Function Kullanımı -> C# daki params keywordu yani
+
+/*
+ 
+ Kısaca c# da nasıldı bunu görmek için aşağıdaki linki kullanınız.
+ public static void UseParams(params int[] list){}
+ public static void UseParams2(params object[] list){}
+ 
+ UseParams(1, 2, 3, 4);
+ UseParams2(1, 'a', "test");
+ 
+ daha detaylı örnekler için aşağıdaki msdn linkini kullanınız.
+ https://docs.microsoft.com/tr-tr/dotnet/csharp/language-reference/keywords/params
+
+*/
+
+// Fonksiyonu Variadic Function Kullanarak Aşağıdaki gibi yazalım.
+func employeeGradesAvarage (notes : [Double]) -> Double{
+    var sum : Double = 0
+    for note in notes {
+       sum += note
+    }
+    return sum / Double(notes.count)
+}
+
+// Yukarıdaki Fonksiyonu Variadic Function Kullanarak Yazalım.
+func classGradesAvarage (notes : Double...) -> Double{
+    var sum : Double = 0
+    for note in notes {
+       sum += note
+    }
+    return sum / Double(notes.count)
+}
+
+print(classGradesAvarage(notes: 10,22,11,30,23,45,21))
+
+// Önemli! : print() methodu tanımına da bakarsanız onunda Variadic Function oldugunu görürsünüz.
+
+// Fonksiyonların 'inout' özelliği
+
+/*
+Bunu Göstermeden önce c# da bu işlem nasıl olurdu ona bakalım isterseniz
+
+ public static void change(int a , int b)
+         {
+             int temp = a;
+             a = b;
+             b = temp;
+             Console.WriteLine($"a is {a} and b is {b}");
+         }
+ change(2,31);
+ --> c# da herhangi bir sorun olmadan değerler değişir herhangi bir problemde olmaz.
+ 
+*/
+
+/*
+// SWIFT de aynı işlemi yapmaya çalışırsak.
+Cannot assign to value: 's1' is a 'let' constant ve Cannot assign to value: 's2' is a 'let' constant hatası verir
+Çünkü Swift de s1 ve s2 gibi parametrelerin onunde yazılmasada default 'let' tanımlayıcısı vardır o yuzdende swap func gibi func yazmak istediğimizde variable larda değişiklik yapamayız.
+Bu problemi aşmak için inout özelliğini kullanacağız.
+func valueChange1(s1 : Int , s2 : Int)
+{
+    var temp = s1
+    s1 = s2
+    s2 = temp
+}
+ 
+*/
+
+// inout --> c# daki, ref veya out kelimeleri aynı şeydir yani inout ile değişkenin değerini değil referansını fonksiyona gönderiyoruz.
+// yani call by value değil call by reference yapmamızı sağlıyor.
+// Önemli! : inout ile call by reference(&) yaptıgımızdan değişkenlerdeki değişimler değişkenin kendisinde de gerçekleşir.
+func valueChange2(s1 : inout Int , s2 : inout Int)
+{
+    var temp = s1
+    s1 = s2
+    s2 = temp
+}
+
+var n1 : Int = 3
+var n2 : Int = 6
+valueChange2(s1: &n1, s2: &n2)
+
+// inout kullanımına bir örnek daha
+func doubleIt(s1 : inout Int , s2 : inout Int){
+    s1 = s1 * 2
+    s2 *= 2
+}
+
+func doubleIt(numbers : inout [Int]){
+    for i in (0...(numbers.count-1)) {
+        numbers[i] *= 2
+    }
+}
+
+var s1 = 2 , s2 = 3 , s3 = 4
+doubleIt(s1: &s1, s2: &s2)
+print("1. number is : \(s1)")
+print("2. number is : \(s2)")
+var sArray = [2,3,4]
+doubleIt(numbers: &sArray)
+
+
+// * if let Yapısı * //
+
+var sentence : String = "12" // 12 girdiğimizde -> if içerisi çalışır 'a' girdiğimizde ise -> else içerisine girer.
+var sentence1 = Int(sentence)
+
+if let sentence2 = Int(sentence){
+    // sentence2 değişkene bir değer atanır ise
+    print("This is a number and number's value is  \(sentence2)")
+}else{
+    // sentence2 değişkene bir değer atanmadı
+}
+
+// Swift VS c# karşılaştırması
+
+// A.) Swift
+// Dikkat -> Variable 'kubernates' used before being initialized hatası alırız.
+/*
+ var kubernates : String
+ print(kubernates)
+*/
+
+// A.) c#
+// Dikkat -> Local variable 'name' might not be initialized before accessing hatası alırız.
+/*
+ string name;
+ Console.WriteLine(name);
+*/
+
+// B.) Swift
+var salary : [String : Int] = ["Jack" : 2700 , "Michael" : 9700 , "Rose" : 1580]
+let employeeName = "Rosse"
+let _salary = salary[employeeName] // _salary : Int? --> şeklinde optional dır.Çünkü ilgili employee name bulunamıyabilir de o zaman nil olacaktır _salary.
+//print(_salary) // Optional(1580) --> çıktısını verir yukarıdaki nedenden dolayı
+//print(_salary!) // 1580 --> Optional ifadesinden kurtulmak için Force Unwrapped yapıyoruz. Çünkü swiftde nil gelebilme ihtimali oldugundan swift optional olarak işaretler.
+
+// Bunun gibi durumlarda daha güvenli bir şekilde yukardaki sorunu if let yapısı ile çözelim.
+if let salaries = salary[employeeName]{
+    print(salaries)
+}else{
+    print("salaries is nil.")
+}
+
+// A.) c#
+// Dikkat -> c# da ilgili dictionary de bu key olmayıp null gelebilir fakat bundan kaynaklanacak hatayı ancak run time da alırız.
+/*
+ Dictionary<string, string> openWith = new Dictionary<string, string>();
+ openWith.Add("txt", "notepad.exe");
+ openWith.Add("bmp", "paint.exe");
+ Console.WriteLine(openWith["olmaz"]);
+*/
+
+// Optional olarak tanımlanan değişkenlere kod akışı içerisinde nil değer atanabilir burda yaşanabilecek hatalardan if let yapısı ile kurtulabiliriz.
+var myFavouriteSong : String? = "Day and night."
+myFavouriteSong = nil
+
+if let favouriteSong = myFavouriteSong{
+    print("\(favouriteSong)")
+}else{
+    print("myFavouriteSong is nil")
+}
+
+// Array ler de if let yapısı kullanımı
+
+var oceanNumbers : [Double] = [10,20,30,40,50]
+var firstVal = oceanNumbers.first
+print(firstVal) // Optional(10.0) --> Çünkü array in içi boş olabilir ve .first ile ilk elemanı aldıgımızda bu da nil gelebilir.
+print(firstVal!) // 10.0 --> Force Unwrap ile dizinin ilk elemanının nil olmayacağını garanti ettik
+print(firstVal ?? 0) // Bu şekilde de nil olma durumuna karsı bir önlem almış oluruz.
+// En mantıklı çözüm ise if let ile optional dan kaynaklanabilecek bu problemin önlemini almış oluruz.
+if let val = firstVal{
+    print("The first element is \(val)")
+}else{
+    print("There is not any element in the array.")
+}
+
+// Şöyle bir örnek daha verelim,
+let lastVal = oceanNumbers.last
+// let squreOfArr = pow(lastVal!, 3) --> Value of optional type 'Double?' must be unwrapped to a value of type 'Double' hatası alırız.
+let squreOfArr = pow(lastVal!, 3) // Forde Unwrap ile lastVal nin boş olmadıgı garanti ediyoruz derleyiciye fakat array bos cıkarsa vs hata alırız unutmayalım.
+let squreOfArr2 = pow(lastVal ?? 0, 3) // Yada default value atayarak çözmeye çalışırız.
+// Yada en efektif yol olan 'if let' yapısı ile sorunu çözebiliriz.
+if let endOfElement = oceanNumbers.last{
+    print(endOfElement)
+}else{
+    print("The array is empty.")
+}
+
+// Note !
+// Optional Varible 3 farklı şekilde tanımlanabilir.
+let str1 : String?
+let str2 : Optional<String>
+let str3 : Optional = ""
+
+// Fonksiyonlarda Optional Parametre Kullanmak Veya Optional Değer Döndürmek
+
+// Fonksiyonlardan Optional Parametre Döndürme (null döndürebilme) nasıl yapılır.
+func numberOfEdge(shape : String) -> Int?{
+    switch shape {
+    case "triange":
+        return 3
+    case "rectangle":
+        return 4
+    case "pentagon":
+        return 5
+    case "hexagon":
+        return 6
+    default:
+        return nil
+    }
+}
+
+func writeNumberOfEdge(shape : String){
+    if let numberOfEdge = numberOfEdge(shape: shape){
+        print("\(shape) -> \(numberOfEdge)")
+    }else{
+        print("this shape not defined by system!")
+    }
+}
+
+let k1 = "pentagon"
+writeNumberOfEdge(shape: k1)
+let k2 = "poligon"
+writeNumberOfEdge(shape: k2)
+
+// Başka bir optinal parametre döndürme örneği verelim.
+func getFirstMember(data : [String]) -> String?{
+    if data.count > 0 {
+        return data[0] // dizinin en azından bir elemanı oldugu için 0. indisi döndürürken hata vermez.
+    }
+    return nil
+}
+
+let browser = ["google","yahoo","yandex"]
+
+if let first = getFirstMember(data : browser){
+    print("first element is \(first)")
+}else{
+    print("browser not found!")
+}
+
+// Fonksiyonlarda Optional Parametre Kullanmak
+// İç içe if let ler kullanmamız gerekirse aşağıdaki gibi değilde sonraki örnekdeki gibi yapabilirsiniz.
+/*
+func hypotenuse(edge1 : Double? , edge2 : Double?) -> Double? {
+    if let _edge1 = edge1{
+        if let _edge2 = edge2 {
+          
+        }
+    }else{
+        
+    }
+}
+*/
+
+func hypotenuseCalculate(edge1 : Double? , edge2 : Double?) -> Double? {
+    if let _edge1 = edge1 , let _edge2 = edge2{
+        var hypotenuse = pow(_edge1,2) + pow(_edge2, 2)
+        hypotenuse = hypotenuse.squareRoot()
+        return hypotenuse
+    }
+    return nil
+}
+
+
+var nmr1 = Double("5") // nmr1 : Double? --> nmr1 in Double Optional oldguna dikkat edelim.
+
+// var nmr2 : Double = Double("sa") // nmr2 : Double --> nmr2 in de Optinal olmadığına dikkat edelim ve hata alırız o yuzden tipi biz belirlemek yerine yukarıdaki gibi otomatiğe castinge bırakalım
+
+var nmr2 = Double("7a")
+
+var nmr3 = Double("3")! // nmr3 artık Optinal değil bu şekilde de kullanabiliriz.
+
+if let hipo = hypotenuseCalculate(edge1: nmr1, edge2: nmr3) {
+    print("hypotenuse is \(hipo)")
+}else{
+    print("edge data is wrong.")
+}
+
+// Swift de Recursive Fonksiyonlar
+
+// 1.Örnek
+func countBackwards(number : Int){
+    print(number)
+    if number > 0 {
+        countBackwards(number: number-1)
+    }
+}
+
+countBackwards(number: 5)
+
+// 2.Örnek
+func callableFunc(numberOfFunc : Int){
+    print("call was begin.")
+    if numberOfFunc > 1 {
+        print("callableFunc(\(numberOfFunc)) --> callableFunc(\(numberOfFunc-1))")
+        callableFunc(numberOfFunc: numberOfFunc-1)
+    }
+    print("callableFunc(\(numberOfFunc)) == \(numberOfFunc)")
+}
+
+callableFunc(numberOfFunc: 5)
+
+// 3.Örnek
+func calculateFactoriel(val : Int) -> Int {
+    if val == 1 {
+        return 1
+    }else{
+        return val * calculateFactoriel(val: val - 1)
+    }
+}
+
+print(calculateFactoriel(val: 4))
+
+// 4.Örnek
+func calculateFibonacci(numberOfStep : Int) -> Int {
+    if numberOfStep <= 2 {
+        return 1
+    }else{
+        return calculateFibonacci(numberOfStep: numberOfStep - 1) + calculateFibonacci(numberOfStep: numberOfStep - 2)
+    }
+}
+
+print(calculateFibonacci(numberOfStep: 7))
+
+// 5.Örnek
+func takePower(x : Int , y : Int) -> Int{
+    if y==0 {
+        return 1
+    }else{
+        return x * takePower(x: x, y: y - 1)
+    }
+}
+
+print(takePower(x: 2, y: 5))
+
+
+```
+
