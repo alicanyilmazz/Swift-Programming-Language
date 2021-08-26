@@ -2264,7 +2264,7 @@ building1.addApartment(apartment: &d1, floorNumber: 32)
 building1.showBuildingInformation()
 
 // The mutating keyword is only required if you are changing any state contained within the struct.
-
+// mutating keyword u struct dan nesneler olusturup kullanabilirsin fakat field alanı içerisindeki değişkenleri mesela struct içine bir method yazıp değiştiremezsin işte mutating ile bunu değiştirilebilir yapıyoruz yoksa static ile hiçbir benzerliği yok mutating olunca struct a ait değişken olmuyor yapılan her değişiklik o struct nesnesi için kendisine özeldir.   
 
 
 
