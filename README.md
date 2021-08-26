@@ -1992,3 +1992,280 @@ print(takePower(x: 2, y: 5))
 
 ```
 
+
+```diff
+@@ Struct at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+struct Car{
+    var brandName : String
+    var model : String
+    var brandReleasedYear : Int
+    var fuelConsumption : Double
+    var ncap : Double
+}
+
+var car1 : Car = Car(brandName: "mercedes", model: "sclass", brandReleasedYear: 1992, fuelConsumption: 4.7, ncap: 4.7)
+var car2 : Car = Car(brandName: "bmw", model: "m3", brandReleasedYear: 1910, fuelConsumption: 5.2 , ncap: 4.67)
+var car3 : Car = Car(brandName: "audi", model: "a4", brandReleasedYear: 1907, fuelConsumption: 4.2 , ncap: 4.34)
+
+if car1.fuelConsumption > car2.fuelConsumption {
+    print("car1 fuel consumption is higher than car2")
+}else{
+    print("car2 fuel consumption is higher than car1")
+}
+
+func compareCar(firstCar : Car , secondCar : Car) -> Car{
+    var carScore = (firstCarScore : 0 , secondCarScore : 0)
+    
+    if firstCar.fuelConsumption > secondCar.fuelConsumption {
+        carScore.secondCarScore += 1
+    }else{
+        carScore.firstCarScore += 1
+    }
+    
+    if firstCar.ncap > secondCar.ncap {
+        carScore.firstCarScore += 1
+    }else{
+        carScore.secondCarScore += 1
+    }
+    
+    if carScore.firstCarScore > carScore.secondCarScore {
+        return firstCar
+    }
+    return secondCar
+}
+
+var betterCar = compareCar(firstCar: car1, secondCar: car2)
+print("Better car model : \(betterCar.model) and brandName : \(betterCar.brandName)")
+
+
+// Struct İçerisinde Fonksiyon ve Başka Bir Struct Tanımlama
+struct Person{
+    var name : String
+    var surname : String
+    var yearOfBirth : Int
+    
+    func calculateAge(age : Int) -> Int {
+        return 2020 - age
+    }
+    
+    func printPersonalInformation() {
+        print("name : \(name) surname : \(surname) year of the birth : \(yearOfBirth)")
+    }
+}
+
+var person1 = Person(name: "alican", surname: "yilmaz", yearOfBirth: 1995)
+person1.printPersonalInformation()
+
+
+// Şimdide iç içe struct kullanalım.
+struct Student {
+    var studentId : Int
+    var studentInfomation : Person
+}
+
+var student1 : Student = Student(studentId: 231, studentInfomation: person1)
+student1.studentInfomation.printPersonalInformation()
+print(student1.studentInfomation.calculateAge(age: person1.yearOfBirth))
+
+// Struct içerisinde Array olarak struct kullanalım.
+
+struct StudentClass{
+    var classNumber : String
+    var classGroup : [Student]
+    
+    func printClass() {
+        for eachClass in classGroup {
+            print(eachClass.studentInfomation.printPersonalInformation())
+        }
+    }
+}
+
+// Struct larda init Kullanımı
+struct OperatingSystem{
+    var name : String
+    var publisher : String
+    var numberOfVersion : Int
+    var numberOfUser : Double
+    var isActive : Bool
+    var lastVersionName : String // Bunu init parametrelerine eklemedik
+    var isOpenSource : Bool = false // eğer parametreli init içerisinde de initialize etmek istemiyorsak direrk field alanında default value atayarak da bu işlemi yapabiliriz.
+    
+    init(name : String , publisher : String , numberOfVersion : Int , numberOfUser : Double , osIsActive : Bool){
+        self.name = name
+        self.publisher = publisher
+        self.numberOfVersion = numberOfVersion
+        self.numberOfUser = numberOfUser
+        isActive = osIsActive
+        lastVersionName = "version is not defined." // Parametrelere eklemedik ama initialize etmek zorundayız.
+    }
+    
+    init() {
+        name = "macos"
+        publisher = "apple"
+        numberOfVersion = 12
+        numberOfUser = 4.2
+        isActive = true
+        lastVersionName = "Monterey"
+        isOpenSource = false
+    }
+}
+
+var windows : OperatingSystem = OperatingSystem(name: "windows", publisher: "microsoft", numberOfVersion: 11, numberOfUser: 5.2, osIsActive: true)
+print("\(windows.name) \(windows.publisher) \(windows.numberOfUser) \(windows.lastVersionName)")
+var macos : OperatingSystem = OperatingSystem()
+print("\(macos.name) \(macos.publisher) \(macos.numberOfUser) \(macos.lastVersionName)")
+
+
+// BUYUK STRUCT ÖRNEĞİ
+
+struct Apartment {
+    var numberOfRoom : Int
+    var numberOfHall : Int
+    var sizeOfApartment : Int
+    var numberOfBathroom : Int
+    var numberOfRestroom : Int
+    var isSale : Bool
+    var isHire : Bool
+    var isTenantExist : Bool
+    var apartmentOwnerName : String
+    var apartmentOwnerPhoneNumber : String
+    var floorNumber : Int?
+    var apartmentNumber : Int?
+    var theBuildingLocated : Building?
+    
+    func showApartmenInformation() {
+        
+        guard let _floorNumber = floorNumber else { return } // Bu field değişkenleri için Guard Let kullanmasaydık ı zaman print içerisindeki değişkenlere Force Unwrap uygulamak zorunda kalacaktık.
+        guard let _apartmentNumber = apartmentNumber else { return }
+        
+        print("""
+        --------- Apartment Information ---------
+        Number of room : \(numberOfRoom)
+        Number of hall : \(numberOfHall)
+        Number of bathroom : \(numberOfBathroom)
+        Number of restroom : \(numberOfRestroom)
+        Floor Number : \(_floorNumber)
+        Apartment Number : \(_apartmentNumber)
+        """)
+        
+        if isSale {
+            print("Apartment for sale")
+        }else{
+            print("Apartment for hire")
+        }
+    }
+    
+    init(numberOfRoom : Int , numberOfHall : Int , sizeOfApartment : Int ,numberOfBathroom : Int , numberOfRestroom : Int , isSale : Bool , isHire : Bool , isTenantExist : Bool ,  apartmentOwnerName : String , apartmentOwnerPhoneNumber : String , floorNumber : Int? , apartmentNumber : Int?) {
+        self.numberOfRoom = numberOfRoom
+        self.numberOfHall = numberOfHall
+        self.sizeOfApartment = sizeOfApartment
+        self.numberOfBathroom = numberOfBathroom
+        self.numberOfRestroom = numberOfRestroom
+        self.isSale = isSale
+        self.isHire = isHire
+        self.isTenantExist = isTenantExist
+        self.apartmentOwnerName = apartmentOwnerName
+        self.apartmentOwnerPhoneNumber = apartmentOwnerPhoneNumber
+    }
+}
+
+struct AddressInformation{
+    var city : String
+    var state : String
+    var zipCode : Int
+    var street : String
+    
+    func returnAddressInformation() -> String {
+        return """
+            city : \(city)
+            state : \(state)
+            zipCode : \(zipCode)
+            street : \(street)
+        """
+    }
+}
+
+struct Building{
+    var nameOfBuilding : String = ""
+    var numberOfFloor : Int = -1
+    var buildingAddress : AddressInformation
+    var numberOfApartment : Int = 0
+    var apartments : [Apartment]
+    
+    mutating func addFloor() {
+        numberOfFloor += 1
+    }
+    
+    mutating func addFloor(numberOfFloorsToAdd : Int) {
+        numberOfFloor += numberOfFloorsToAdd
+    }
+    
+    // inout kullandık cunku struct value type dır dolayısıyla reference ile işlem yapmazsak o struct ' a ait değişkenleri değiştiremeyiz.
+    mutating func addApartment(apartment : inout Apartment , floorNumber : Int) {
+        if floorNumber > numberOfFloor {
+            print("request is invalid!")
+        }else{
+            apartment.theBuildingLocated = self
+            apartment.floorNumber = floorNumber
+            self.numberOfApartment += 1
+            apartments.append(apartment)
+        }
+    }
+    
+    func showBuildingInformation() {
+        print("""
+        --------------BUILDING-------------------
+        Number of apartment : \(apartments.count)
+        Number of floor : \(numberOfFloor)
+        ******** Address ***********************
+        \(buildingAddress.returnAddressInformation())
+        """)
+    }
+    
+    func findPersonAdress(name : String) {
+        var isFinded : Bool = false
+        
+        for apartment in apartments {
+            if apartment.apartmentOwnerName == name {
+                isFinded = true
+                
+                print("""
+                --------Finded Person's Adress----------
+                \(buildingAddress.returnAddressInformation())
+                \(nameOfBuilding)
+                \(apartment.floorNumber!)
+                \(apartment.apartmentNumber!)
+                \(apartment.apartmentOwnerName)
+                \(apartment.apartmentOwnerPhoneNumber)
+                ----------------------------------------
+                """)
+                break
+            }
+            if !isFinded {
+                print("there is no record in this building!")
+            }
+        }
+    }
+}
+
+
+var d1 = Apartment(numberOfRoom: 2, numberOfHall: 3, sizeOfApartment: 210, numberOfBathroom: 3, numberOfRestroom: 2, isSale: false, isHire: true, isTenantExist: true, apartmentOwnerName: "Jack", apartmentOwnerPhoneNumber: "98764722", floorNumber: 34, apartmentNumber: 55)
+var d2 = Apartment(numberOfRoom: 4, numberOfHall: 5, sizeOfApartment: 510, numberOfBathroom: 2, numberOfRestroom: 2, isSale: true, isHire: false, isTenantExist: true, apartmentOwnerName: "Michael", apartmentOwnerPhoneNumber: "9485920", floorNumber: 3, apartmentNumber: 3)
+var d3 = Apartment(numberOfRoom: 3, numberOfHall: 4, sizeOfApartment: 444, numberOfBathroom: 2, numberOfRestroom: 1, isSale: false, isHire: false, isTenantExist: false, apartmentOwnerName: "Rose", apartmentOwnerPhoneNumber: "3847199", floorNumber: 35, apartmentNumber: 12)
+
+var building1 : Building = Building(nameOfBuilding: "MOROR", numberOfFloor: 12, buildingAddress: AddressInformation(city: "Santa Clara", state: "California", zipCode: 41, street: "Beveral Hills"), numberOfApartment: 21, apartments: [Apartment]())
+        
+building1.addApartment(apartment: &d1, floorNumber: 32)
+building1.showBuildingInformation()
+
+// The mutating keyword is only required if you are changing any state contained within the struct.
+
+
+
+
+```
