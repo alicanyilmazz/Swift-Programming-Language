@@ -2269,3 +2269,48 @@ building1.showBuildingInformation()
 
 
 ```
+
+```diff
+@@ Swift Tricky Notes @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+```swift
+// Fonksiyonlarda parametre basına underscore koymak.
+func a1(_ core : String){
+    
+}
+
+func a2(core : String){
+    
+}
+
+a1("alican")
+a2(core: "kemal")
+
+// Swift Fonksiyonlarda Default Parametre Kullanımı
+func Isknown(source : String = "unknown"){
+    print(source)
+}
+
+Isknown()
+
+// Swift Function larda parametre adında ekstra label kullanma
+func showInside(with identifier : String){
+    var ID = identifier
+    print(ID)
+}
+
+showInside(with: "AESF312")
+
+// Bu şekilde for , while gibi döngülerde bu sekilde de 
+let phoneBook = ["Kemal","Suna","Ceren","Alkan","Yakup"]
+for person in phoneBook where person.hasPrefix("Ceren") {
+    print("person finded! Person is \(person)")
+}
+
+
+```
+
+
