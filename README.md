@@ -2310,6 +2310,24 @@ for person in phoneBook where person.hasPrefix("Ceren") {
     print("person finded! Person is \(person)")
 }
 
+// Tupple ile guzel bir bakıs acısı
+var cordinate : (Double, Double)
+cordinate.0 = 31
+cordinate.1 = 0
+
+switch cordinate {
+case (0,0):
+    print("origin")
+case (let x,0):
+    print("x axis")
+case (0,let y):
+    print("y axis")
+case let (x,y):
+    print("on the cordinate")
+default:
+    print("non")
+}
+
 
 ```
 
