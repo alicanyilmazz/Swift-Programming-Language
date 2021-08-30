@@ -88,3 +88,46 @@ object b;
         
         
     }
+
+// swift de static kullanımı aynı örneğin swift ile yazılısı
+
+class Gamer{
+    var name : String
+    var nickName : String
+    var password : String
+    var age : Int
+    
+    init(name : String , nickname : String , password : String , age : Int) {
+        self.name = name
+        self.nickName = nickname
+        self.password = password
+        self.age = age
+    }
+}
+
+
+class BronzLevelGamers{
+   static var _roomName : String = "Bronz Level"
+   static var _numberOfGamers : Int = 0
+   static var _members : [Gamer] = [Gamer]()
+    
+    init(gamer : Gamer) {
+        BronzLevelGamers._members.append(gamer)
+        BronzLevelGamers._numberOfGamers += 1
+    }
+}
+
+var gamer1 : Gamer = Gamer(name: "alican", nickname: "darkerorblue", password: "asdmda", age: 25)
+var gamer2 : Gamer = Gamer(name: "jack", nickname: "jack93", password: "asdmda", age: 32)
+var gamer3 : Gamer = Gamer(name: "michael", nickname: "michael7619", password: "asdmda", age: 24)
+var gamer4 : Gamer = Gamer(name: "rose", nickname: "rosetta32", password: "asdmda", age: 45)
+
+var bronzLevelGamers1 : BronzLevelGamers = BronzLevelGamers(gamer: gamer1)
+var bronzLevelGamers2 : BronzLevelGamers = BronzLevelGamers(gamer: gamer2)
+var bronzLevelGamers3 : BronzLevelGamers = BronzLevelGamers(gamer: gamer3)
+var bronzLevelGamers4 : BronzLevelGamers = BronzLevelGamers(gamer: gamer4)
+
+for member in BronzLevelGamers._members {
+    print("\(member.name) \(member.nickName) \(member.password) \(member.password)")
+}
+print(BronzLevelGamers._numberOfGamers)
