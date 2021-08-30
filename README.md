@@ -2328,6 +2328,33 @@ default:
     print("non")
 }
 
+// Swift Random Numbers tutorial --> https://learnappmaking.com/random-numbers-swift/
+// In Swift 4.2. and higher, the way you work with random numbers has changed. Instead of using the imported C function arc4random(), you can now use Swift’s own native functions.
+let randNumber1 = Int.random(in: 0..<10)
+let randNumber2 = Int.random(in: 0...10)
+let randNumber3 = Float.random(in: 0..<1)
+let randNumber4 = Bool.random()
+
+// What about picking a random element from an array? You can do that like this:
+let names = ["Ford", "Zaphod", "Trillian", "Arthur", "Marvin"]
+let randomName = names.randomElement()
+// In the above code you use randomElement() on the names array. You can use this function on any Collection, such as arrays and dictionaries. Keep in mind that the returned random element is an optional.
+
+// Can you also use the new random functions in Swift 4.2. to shuffle an array? Yes! Randomizing the order of an array is surprisingly simple:
+var characterNames = ["Ford", "Zaphod", "Trillian", "Arthur", "Marvin"]
+characterNames.shuffle()
+// `names` can now be: ["Zaphod", "Marvin", "Arthur", "Ford", "Trillian"]
+
+//The shuffle functions use Swift’s typical naming structure, so shuffle() shuffles the array in-place, mutating the original array, and shuffled() returns a copy of the shuffled array.
+//You can even shuffle a Sequence, like this:
+let sequence = 0 ..< 7
+let shuffledSequence = sequence.shuffled()
+// `shuffledSequence` can now be: [0, 6, 2, 3, 4, 1, 5]
+
+// Are you using a Swift version lower than 4.2? Then use the random number functions in the chapters below.
+// Please check this website for example : https://learnappmaking.com/random-numbers-swift/
+
+
 
 ```
 
