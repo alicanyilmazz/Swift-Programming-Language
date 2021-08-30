@@ -40,3 +40,51 @@ var booleanNumbers : [Bool] = Array(repeating: true, count: 5); // 5 tane eleman
 Object a;
 // object in c#
 object b;
+
+
+// c# da static kullanımı
+
+ public static void Main(string[] args)
+        {
+            Gamer gamer1 = new Gamer(nickName:"Kemal");
+            Gamer gamer2 = new Gamer(nickName:"Cemal");
+            Gamer gamer3 = new Gamer(nickName:"Ulas");
+            Gamer gamer4 = new Gamer(nickName:"Murat");
+
+            BronzLevel bronzLevel = new BronzLevel(gamer1);
+            BronzLevel bronzLevel2 = new BronzLevel(gamer2);
+            BronzLevel bronzLevel3 = new BronzLevel(gamer3);
+            BronzLevel bronzLevel4 = new BronzLevel(gamer4);
+
+            Console.WriteLine(BronzLevel.numberOfGamer);
+
+            foreach (var gamer in BronzLevel.gamers)
+            {
+                Console.WriteLine(gamer.nickName);
+            }
+        }
+
+        class Gamer
+        {
+            public String nickName;
+
+            public Gamer(string nickName)
+            {
+                this.nickName = nickName;
+            }
+        }
+
+        class BronzLevel
+        {
+            public static int numberOfGamer;
+            public static List<Gamer> gamers = new List<Gamer>();
+
+           public BronzLevel(Gamer gamer)
+            {
+                numberOfGamer++;
+                gamers.Add(gamer);
+            }
+        }
+        
+        
+    }
