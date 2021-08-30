@@ -131,3 +131,33 @@ for member in BronzLevelGamers._members {
     print("\(member.name) \(member.nickName) \(member.password) \(member.password)")
 }
 print(BronzLevelGamers._numberOfGamers)
+
+
+// c# da getter ve setter ile computed property yapma
+        public static void Main(string[] args)
+        {
+            var _square = new Square();
+            _square.number = 5;
+            Console.WriteLine(_square.squareOfNumber);
+            _square.number = 9;
+            Console.WriteLine(_square.squareOfNumber);
+        }
+
+        public class Square
+        {
+          
+            public double number = 0;
+            
+           
+            public double squareOfNumber
+            {
+                get
+                {
+                    return Math.Pow(number,2);
+                }
+                set
+                {
+                    number = Math.Sqrt(value);
+                }
+            }
+        } 
