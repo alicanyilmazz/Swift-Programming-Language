@@ -161,3 +161,21 @@ print(BronzLevelGamers._numberOfGamers)
                 }
             }
         } 
+
+// c# da Array Reference Types iken swift de value type'dır.
+
+// Bu şekilde swap yapamazsın bunu ancak c# da yapabilirsin.
+// Input arguments to functions are immutable inside the function body
+// https://stackoverflow.com/questions/47310863/cannot-assign-through-subscript-dict-is-a-let-constant 
+// Yukarıdaki linki incele.
+ func swapNumbers(numbers : [Int]){
+    var swap : Int
+    
+    swap = numbers[0]
+    numbers[0] = numbers[1]
+    numbers[1] = swap
+}
+
+// Bu sekilde yapabilirsin.
+var xxx = ["Paul", "John", "George", "Ringo"]
+xxx.swapAt(0, 1)
