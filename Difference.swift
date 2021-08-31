@@ -179,3 +179,25 @@ print(BronzLevelGamers._numberOfGamers)
 // Bu sekilde yapabilirsin.
 var xxx = ["Paul", "John", "George", "Ringo"]
 xxx.swapAt(0, 1)
+
+// c# da ise aşağıdaki kod sorunsuz calısır ve orjinal gönderilen arr array inde yapılan değişiklik kalıcı olarak gerçekleşir.
+internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            int[] arr = new[] {11, 23, 45, 21};
+            swap(arr);
+            foreach (var val in arr)
+            {
+                Console.WriteLine(val);
+            }
+        }
+
+        public static void swap(int[] arr)
+        {
+            int swap = 0;
+            swap = arr[0];
+            arr[0] = arr[1];
+            arr[1] = swap;
+        }
+    }
