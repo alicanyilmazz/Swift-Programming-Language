@@ -2358,4 +2358,1113 @@ let shuffledSequence = sequence.shuffled()
 
 ```
 
+```diff
+@@ Object Oriented Programming at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+```swift
+
+
+// 1.) Bölüm Class lara Giriş
+class Person{
+    var name : String
+    var surname : String
+    var age : Int
+    var city : String
+    var car : Car?
+    
+    init(name : String , surname : String , age : Int , city : String) {
+        self.name = name
+        self.surname = surname
+        self.age = age
+        self.city = city
+    }
+}
+
+class Car{
+    var carType : String?
+    var model : Int?
+    var price : Double?
+    var kilometer : Int?
+    var owner : Person?
+    
+    init() {
+        
+    }
+    
+    init(carType : String , model : Int , price : Double , kilometer : Int , owner : Person) {
+        self.carType = carType
+        self.model = model
+        self.price = price
+        self.kilometer = kilometer
+        self.owner = owner
+        owner.car = self
+    }
+}
+
+var alican : Person = Person(name: "alican", surname: "yilmaz", age: 21, city: "hatay")
+
+var tesla : Car = Car()
+var mercedes : Car = Car(carType: "sport", model: 2019, price: 572000, kilometer: 0, owner: alican)
+print(alican.car?.price)
+
+// 2.) Bölüm Class init İle İlgili Örnekler
+
+class Recipe{
+    var recipeName : String = ""
+    var recipeDescription : String = ""
+    var recipeScore : Int = 0
+    
+    init(recipeName : String , recipeDescription : String , recipeScore : Int) {
+        self.recipeName = recipeName
+        self.recipeDescription = recipeDescription
+        self.recipeScore = recipeScore
+    }
+    
+    func showRecipeInformation() {
+        print("""
+          recipeName : \(recipeName)
+          recipeDescription : \(recipeDescription)
+          recipeScore : \(recipeScore)
+        """)
+    }
+}
+
+let chickenSalad : Recipe = Recipe(recipeName: "Chicken Salad", recipeDescription: "Chicken - Onion - Paper - Tomato", recipeScore: 5)
+let chineseSoup : Recipe = Recipe(recipeName: "Chinese Soup", recipeDescription: "Honey - Tomato - lentil - salt", recipeScore: 7)
+
+class RecipeBook{
+    var categories : [String]
+    var recipes : [Recipe]
+    init(recipes : [Recipe] , categories : [String]) {
+        self.recipes = recipes
+        self.categories = categories
+    }
+    
+    func showFavouriteRecipe() {
+        var maxRecipeIndex = 0
+        for index in (0...(recipes.count-1)) {
+            if recipes[index].recipeScore > recipes[maxRecipeIndex].recipeScore {
+                maxRecipeIndex = index
+            }
+        }
+        print("The best recipe is : ....")
+        recipes[maxRecipeIndex].showRecipeInformation()
+    }
+}
+
+let dishes : [Recipe] = [chickenSalad,chineseSoup]
+let mostLikedRecipes : RecipeBook = RecipeBook(recipes: dishes, categories: ["Korean Food","Chinese Food"])
+mostLikedRecipes.showFavouriteRecipe()
+
+// 2.) Bölüm Class lardaki Convenience init özelliği
+
+class Human{
+    var name : String
+    
+    init(name : String) {
+        self.name = name
+    }
+    
+    convenience init(){
+        self.init(name : "undefined human")
+    }
+}
+
+var human1 : Human = Human()
+print(human1.name)
+var human2 : Human = Human(name: "alican")
+print(human2.name)
+
+// convenience init ile önceki inite ait isteiğimiz özellikleri doldururuz istemediklerimize default değerler atayabiliriz aşağıdaki senaryodaki gibi.
+class Customer{
+    var name : String
+    var surname : String
+    var age : Int
+    var city : String
+    
+    init(name : String ,surname : String , age : Int , city : String) {
+        self.name = name
+        self.surname = surname
+        self.age = age
+        self.city = city
+    }
+    
+    convenience init(city : String){
+        self.init(name : "unknown" , surname : "unknown" , age : 0 , city : city.uppercased())
+    }
+}
+
+var customer1 : Customer = Customer(city: "New Jersey")
+var customer2 : Customer = Customer(name: "Mike", surname: "Pompeo", age: 43, city: "New York")
+
+
+// 3.) Class 'larda Inheritence (Kalıtım) Özelliği
+
+struct CourseNote{
+    var courseName : String
+    var letterGrade : Character
+    var Grade : Int
+    var credit : Int
+}
+
+class Individual {
+    var name : String
+    var surname : String
+    var yearOfBirth : Int
+    init(name : String , surname : String , yearOfBirth : Int) {
+        self.name = name
+        self.surname = surname
+        self.yearOfBirth = yearOfBirth
+    }
+}
+
+// Swift deki kalıtım c# ile aynı sekilde : nokta ile sağlanır.
+class Student : Individual{
+    var courses : [CourseNote] = []
+    func saveNote(courseNote : CourseNote) {
+        courses.append(courseNote)
+    }
+    
+    func listTheLesson() {
+        for course in courses {
+            print("Name of course : \(course.courseName)")
+            print("Grade of letter : \(course.letterGrade)")
+            print("Grade : \(course.Grade)")
+            print("Credit : \(course.credit)")
+            print("----------------------------------------")
+        }
+    }
+}
+
+let Rose : Individual = Individual(name: "Rose", surname: "Louras", yearOfBirth: 1994)
+let michael : Student = Student(name: "Michael", surname: "Cordon", yearOfBirth: 1999)
+
+let math = CourseNote(courseName: "Math", letterGrade: "B", Grade: 88, credit: 4)
+michael.saveNote(courseNote: math)
+michael.listTheLesson()
+
+// 4.) Class 'larda Inheritence (Kalıtım) da Method Overriding
+class Employee{
+    var fullName : String
+    var age : Int
+    var department : String
+    var salary : Int
+    
+    init(fullName : String ,age : Int ,department : String , salary : Int) {
+        self.fullName = fullName
+        self.age = age
+        self.department = department
+        self.salary = salary
+    }
+    
+    func showEmployeeInformation() {
+        print("fullName : \(self.fullName) age : \(self.age) department : \(self.department) salary : \(self.salary)")
+    }
+}
+
+class Manager : Employee{
+    var assignment : String
+    
+     init(fullName: String, age: Int, department: String, salary: Int , assignment : String) {
+        self.assignment = assignment // Dikkat -> Property 'self.assignment' not initialized at super.init call hatası almamak içi unutma base class ın değişkenlerini parent class dan önce initialize yapman lazım
+        super.init(fullName: fullName, age: age, department: department, salary: salary)
+    }
+    
+    /* Eğer dogrudan super class ın constructor ını override edip kullanabiliriz fakat parametereler vs birseyler eklersek override annotation ını yukardaki gibi silmelisin.
+    override init(fullName: String, age: Int, department: String, salary: Int) {
+        
+    }
+   */
+    
+    override init(fullName: String, age: Int, department: String, salary: Int) {
+        self.assignment = "Manager" // yada yukardaki gibi kullanıcıdan bu bilgiyi alman (yani parametre eklemen gerekmiyorsa bu sekilde de kullanabilirsin.)
+        super.init(fullName: fullName, age: age, department: department, salary: salary)
+    }
+    
+    override func showEmployeeInformation() {
+        print("fullName : \(self.fullName) age : \(self.age) department : \(self.department) salary : \(self.salary) assignment : \(assignment)")
+    }
+}
+
+let employee : Employee = Employee(fullName: "Barbara Palvin", age: 22, department: "Fashion", salary: 10000)
+employee.showEmployeeInformation()
+let manager : Manager = Manager(fullName: "Lara Croft", age: 24, department: "Computer Engineering", salary: 4000, assignment: "Department manager")
+manager.showEmployeeInformation() // Eğer base class daki bir method override edilmişse onu çalıştırır eğer override edilmemişse en yakındaki super class(base class) a gidip o method u çalıştırır.
+
+
+// Aşağıda c# ile karıstırma yapabilmen için iki örnek bıraktım. //////
+class A {
+    init() {
+        print("A runned!")
+    }
+}
+
+class B : A {
+    override init() {
+        print("B runned!")
+    }
+}
+
+var b : B = B()
+/*
+ B runned!
+ A runned!
+*/
+
+
+class Y {
+    init() {
+        print("Y runned!")
+    }
+}
+
+class X : Y {
+    init(some : String) {
+        print("X runned!")
+    }
+}
+
+var x : X = X(some: "")
+/*
+ X runned!
+ Y runned!
+*/
+
+// 5.) Polymorpishm Kavramı //
+class GeometricShape{
+    var shapeName : String
+    
+    init(shapeName : String) {
+        self.shapeName = shapeName
+    }
+    
+    func calculateArea() -> Double {
+        return 0.0
+    }
+    
+    func calculateEnvironment() -> Double {
+        return 0.0
+    }
+}
+
+class Rectangle : GeometricShape{
+    var edge1 : Double
+    var edge2 : Double
+    
+    init(edge1 : Double , edge2 : Double) {
+        self.edge1 = edge1
+        self.edge2 = edge2
+        super.init(shapeName: "Rectangle")
+    }
+    override func calculateArea() -> Double {
+        return edge1*edge2
+    }
+    
+    override func calculateEnvironment() -> Double {
+        return 2 * (edge1 + edge2)
+    }
+}
+
+
+class Square : Rectangle{
+     init(edge1: Double) {
+        super.init(edge1: edge1, edge2: edge1) // shapeName = "Rectangle" olmus oldu.
+        self.shapeName = "Square" // shapeName = "Square" olarak güncelledik.
+    }
+}
+
+class Circle : GeometricShape{
+    var radius : Double
+    init(radius : Double) {
+        self.radius = radius
+        super.init(shapeName: "Circle")
+    }
+    
+    override func calculateArea() -> Double {
+        return Double.pi*radius*pow(radius, 2)
+    }
+    
+    override func calculateEnvironment() -> Double {
+        return 2*Double.pi*radius
+    }
+    
+}
+
+var rectangle1 : Rectangle = Rectangle(edge1: 12, edge2: 13)
+print(rectangle1.calculateArea())
+print(rectangle1.calculateEnvironment())
+print(rectangle1.shapeName)
+print(rectangle1.edge1)
+print(rectangle1.edge2)
+
+
+var square1 : Square = Square(edge1: 5)
+print("shapeName : \(square1.shapeName) area : \(square1.calculateArea()) environment : \(square1.calculateEnvironment()) edge1 : \(square1.edge1) edge2 : \(square1.edge2)")
+
+var circle1 : Circle = Circle(radius: 2.4)
+print("shapeName : \(circle1.shapeName) area : \(circle1.calculateArea()) environment : \(circle1.calculateEnvironment())")
+
+
+func compareArea(d1 : Rectangle , d2 : Rectangle){
+    if d1.calculateArea() > d2.calculateArea() {
+        print("\(d1.shapeName)  area is bigger than \(d2.shapeName).")
+    }else{
+        print("\(d2.shapeName)  area is bigger than \(d1.shapeName).")
+    }
+}
+
+func compareArea(d1 : GeometricShape , d2 : GeometricShape){
+    if d1.calculateArea() > d2.calculateArea() {
+        print("\(d1.shapeName)  area is bigger than \(d2.shapeName).")
+    }else{
+        print("\(d2.shapeName)  area is bigger than \(d1.shapeName).")
+    }
+}
+
+compareArea(d1: rectangle1, d2: square1)
+compareArea(d1: square1, d2: circle1)
+
+// 6.) Statik Kavramı ve Statik Method Kavramı //
+// Mantık c# ile aynı
+class MathematicalProcess{
+    
+    func generateRandomInt(lowerBound : Int , upperBound : Int) -> Int {
+        let result = Int.random(in: lowerBound ... upperBound)
+        return result
+    }
+    
+   static func generateRandomDouble(lowerBound : Double , upperBound : Double) -> Double {
+        let result = Double.random(in: lowerBound ... upperBound)
+        return result
+    }
+    
+}
+
+var mathObj : MathematicalProcess = MathematicalProcess()
+print("method result : \(mathObj.generateRandomInt(lowerBound: 5, upperBound: 88))")
+print("static method result \(MathematicalProcess.generateRandomDouble(lowerBound: 2, upperBound: 78))")
+
+// Static Property ler --> Aşağıdaki örneğin c# versiyonu swift karsılastırma kodlarında mevcuttur.
+class Gamer{
+    var name : String
+    var nickName : String
+    var password : String
+    var age : Int
+    
+    init(name : String , nickname : String , password : String , age : Int) {
+        self.name = name
+        self.nickName = nickname
+        self.password = password
+        self.age = age
+    }
+}
+
+
+class BronzLevelGamers{
+   static var _roomName : String = "Bronz Level"
+   static var _numberOfGamers : Int = 0
+   static var _members : [Gamer] = [Gamer]()
+    
+    init(gamer : Gamer) {
+        BronzLevelGamers._members.append(gamer)
+        BronzLevelGamers._numberOfGamers += 1
+    }
+}
+
+var gamer1 : Gamer = Gamer(name: "alican", nickname: "darkerorblue", password: "asdmda", age: 25)
+var gamer2 : Gamer = Gamer(name: "jack", nickname: "jack93", password: "asdmda", age: 32)
+var gamer3 : Gamer = Gamer(name: "michael", nickname: "michael7619", password: "asdmda", age: 24)
+var gamer4 : Gamer = Gamer(name: "rose", nickname: "rosetta32", password: "asdmda", age: 45)
+
+var bronzLevelGamers1 : BronzLevelGamers = BronzLevelGamers(gamer: gamer1)
+var bronzLevelGamers2 : BronzLevelGamers = BronzLevelGamers(gamer: gamer2)
+var bronzLevelGamers3 : BronzLevelGamers = BronzLevelGamers(gamer: gamer3)
+var bronzLevelGamers4 : BronzLevelGamers = BronzLevelGamers(gamer: gamer4)
+
+for member in BronzLevelGamers._members {
+    print("\(member.name) \(member.nickName) \(member.password) \(member.password)")
+}
+print(BronzLevelGamers._numberOfGamers)
+
+
+
+// 7.) Computed Property Kavramı // --> c# daki property kavramının karsılıgıdır.
+/*
+ 
+ c# daki kullanımına örnek veriyorum daha sonra swift deki karsılıgı olan computed property leri işleyeceğiz.
+ Properties expose fields. Fields should (almost always) be kept private to a class and accessed via get and set properties.
+ Properties provide a level of abstraction allowing you to change the fields while not affecting the external way they are accessed by the things that use your class.
+
+ public class MyClass
+ {
+     // this is a field.  It is private to your class and stores the actual data.
+     private string _myField;
+
+     // this is a property. When accessed it uses the underlying field,
+     // but only exposes the contract, which will not be affected by the underlying field
+     public string MyProperty
+     {
+         get
+         {
+             return _myField;
+         }
+         set
+         {
+             _myField = value;
+         }
+     }
+
+     // This is an AutoProperty (C# 3.0 and higher) - which is a shorthand syntax
+     // used to generate a private field for you
+     public int AnotherProperty { get; set; }
+ }
+ 
+*/
+
+// Computed Property First Sample
+class PowerOfTheNumbers{
+    var number : Double = 0
+    var squareOfNumber : Double {
+        get{
+            return pow(number, 2)
+        }
+        set{
+            number = sqrt(newValue)
+        }
+    }
+}
+
+var powerNumber : PowerOfTheNumbers = PowerOfTheNumbers()
+powerNumber.number = 5
+print(powerNumber.number)
+print(powerNumber.squareOfNumber)
+powerNumber.number = 9
+print(powerNumber.number)
+print(powerNumber.squareOfNumber)
+
+// Computed Property Second Sample --> yarıcap değerini değiştirdiğimizde çap değeride otomatik olarak güncellenmektedir.
+class Circles{
+    var radius : Int = 10
+    
+    var diameter : Int {
+        get{
+           return radius * 2
+        }
+        set{
+            radius = newValue / 2
+        }
+    }
+}
+
+var circles1 : Circles = Circles()
+print(circles1.diameter)
+print(circles1.radius)
+circles1.radius = 20
+print(circles1.diameter)
+print(circles1.radius)
+
+
+
+// 8.)  Property Observer //
+
+/*
+ newValue ve oldValue reserved keywordlerini değilde kendi keywordlerimizi kullanmak istiyorsak;
+ 
+ var positiveValue : Int = 0 {
+ willSet(yenideger){
+     // değer atanmadan önce çalışır.Bu kod bloğu çalıştıktan sonra değer atanır
+     print("Positive variable value : \(positiveValue) will be \(yenideger)")
+ }
+ didSet(eskideger){
+     // değer atandıktan sonra çalışır
+     print("Positive variable value : \(eskideger) will be \(positiveValue)")
+ }
+}
+ 
+şeklinde kendi keywordlerimizi de kullanabiliriz.
+ 
+*/
+
+// Property Observer First Sample
+class Positive{
+    var positiveValue : Int = 0 {
+        willSet{
+            // değer atanmadan önce çalışır.Bu kod bloğu çalıştıktan sonra değer atanır
+            print("The value \(positiveValue) has been updated to the value \(newValue).")
+        }
+        didSet{
+            // değer atandıktan sonra çalışır
+            if positiveValue < 0 {
+                positiveValue = oldValue
+                print("You can not enter a negative value.")
+            }else{
+                print("The value \(oldValue) has been updated to the value \(positiveValue).")
+            }
+            
+            
+        }
+    }
+}
+
+var sample : Positive = Positive()
+sample.positiveValue = 10
+
+
+// Property Observer Second Sample
+class Message{
+    var messageToBeSent : String = "default message"{
+        
+        willSet{
+            print("The message value \(messageToBeSent) has been updated to the value \(newValue).")
+        }
+        didSet{
+            if messageToBeSent.count == 0 {
+                messageToBeSent = oldValue
+                print("Message section can not be empty!")
+            }else{
+                numberOfCharacterInMessage = messageToBeSent.count
+                numberOfCharacterChanges += 1
+            }
+        }
+    }
+    
+    var numberOfCharacterInMessage : Int = 9
+    var numberOfCharacterChanges : Int = 0
+    func showInformation() {
+        print("Message value : \(messageToBeSent) Number of character : \(numberOfCharacterInMessage) Number of character changes : \(numberOfCharacterChanges)")
+    }
+}
+
+var _message : Message = Message()
+_message.showInformation()
+_message.messageToBeSent = "Hi , What's up!"
+_message.showInformation()
+_message.messageToBeSent = ""
+_message.showInformation()
+
+
+
+// 9.)  Protection Level --> c# daki Access Modifiers //
+
+// open , public , internal , fileprivate , private
+// Konu ile ilgili uzun uzun kod yazmak yerine https://stackoverflow.com/questions/24003918/does-swift-have-access-modifiers linkini inceleyiniz.
+
+class Customers{
+    // internal = default protection level --> c# ile aynı yani aşağıdaki değişkenlerin,fonksiyonların önünde aslında gizli 'internal' keyword ü vardır.Hatta birinde biz başına yazalım ilkine zaten default 'u.
+    internal var name : String
+    open var yearOfBirth : Int // en özgür
+    public var phoneNumber : String
+    
+    init(name : String ,yearOfBirth : Int , phoneNumber : String) {
+        self.name = name
+        self.yearOfBirth = yearOfBirth
+        self.phoneNumber = phoneNumber
+    }
+}
+
+// private değişkenlere computed property ile kullanmak --> encapsulation yapmak
+class Computer{
+    private var _brandName : String?
+    private var _releseYear : Int?
+    private var _serialNo : Int?
+    private var _modelNo : String?
+    
+    init(brandName : String , releaseYear : Int , serialNo : Int , modelNo : String) { // DİKKAT! init ile doğrudan field variable lara değer atamıyorum 'setter' larını kullanarak dolaylı yoldan değer atıyorum.
+        self.brandName = brandName // değer atarken setter üzerinden değerleri atıyoruz.Dikkat dogrudan değişkene erişmiyoruz.
+        self.releaseYear = releaseYear // değer atarken setter üzerinden değerleri atıyoruz.Dikkat dogrudan değişkene erişmiyoruz.
+        self.serialNo = serialNo // değer atarken setter üzerinden değerleri atıyoruz.Dikkat dogrudan değişkene erişmiyoruz.
+    }
+    
+    var brandName : String {
+        get{
+            return _brandName!.uppercased()
+        }
+        set{
+            if newValue.count > 0 {
+                _brandName = newValue.lowercased()
+            }
+        }
+    }
+    
+    var releaseYear : Int {
+        get{
+            return _releseYear!
+        }
+        set{
+            if newValue > 2021 || newValue < 1900 {
+                _releseYear = 2021
+            }
+            else{
+                _releseYear = newValue
+            }
+        }
+    }
+    
+    
+    var serialNo : Int {
+        get{
+            return _serialNo!
+        }
+        set{
+            if newValue < 0 || newValue > 1000 {
+                _serialNo = 0
+            }
+            else{
+                _serialNo = newValue
+            }
+        }
+    }
+    
+    // Read Only Property
+    var modelNo : String {
+        get{
+            return _modelNo!
+        }
+    }
+}
+
+class MacosX : Computer{
+    
+    var operatingSystem : String
+    var osXVersion : String
+    
+    init(operatingSystem : String , osXVersion : String , brandName: String, releaseYear: Int, serialNo: Int, modelNo: String) {
+        self.operatingSystem = operatingSystem
+        self.osXVersion = osXVersion
+        super.init(brandName: brandName, releaseYear: releaseYear, serialNo: serialNo, modelNo: modelNo)
+    }
+}
+
+
+// Note : Swift de c# daki protected Access Modifiers ının karsılıgı yoktur.
+// MacosX --> Computer sınıfından kalıtım almasına ragmen Computer a ait private fields ve functions lara erişemez ancak internal olarak tanımlı ise kullanabilir.
+// Unutmadan field alanı private olarak tanımlı olmasına ragmen eger getter ve setter ları varsa o zaman getter setter üzerinden değişkene erişebiliriz.
+
+
+// 10.)  Reference Types and Value Types
+
+/*
+
+ Swift Value Types --> Int , Double , String , Array , Dictionary , Set , Struct , Enum , Tuple
+ Swift Reference Types --> Functions , Closures , Class
+ 
+ c# Value Types --> bool , byte , char , decimal , double , enum , float , int , long , sbyte , short , struct , uint, ulong , ushort
+ c# Reference Types --> String , Arrays (even if their elements are value types) , Class , Delegate
+ 
+*/
+
+// 1. Refence Karşılaştırma Örneği --> Konu ile ilgili swap operasyonlarını swift ve c# da yazdım incele Difference.swift dosyasında.
+
+// DİKKAT 2. Refence Karşılaştırma Örneği. --> ilk c# kodunu aşağıda yazdık , daha sonrada swift de yazdık farklılıkları inceleyiniz.
+
+/*
+ 
+ internal class Program
+     {
+         public static void Main(string[] args)
+         {
+             string[] arr1 = new[] {"ayse","fatma","hayriye"};
+             string[] arr2 = arr1;
+             foreach (var val in arr2)
+             {
+                 Console.WriteLine(val); // output : ayse , fatma , hayriye
+             }
+             arr1[0] = "abdulkerim";
+             foreach (var val in arr2)
+             {
+                 Console.WriteLine(val); // output : abdulkerim , fatma , hayriye
+             }
+         }
+         // Array ' ler reference type oldugundan arr1 array imizdeki değişiklikler ona bağlı olan değişkenleride etkiler.
+       
+     }
+
+*/
+// Şimdi yukarıdaki örneği swift ile yapalım.
+
+var arr1 : [String] = ["ayse","fatma","hayriye"]
+var arr2 : [String] = arr1
+
+print(arr2) // output : "["ayse", "fatma", "hayriye"]\n"
+arr1[0] = "abdulkerim"
+print(arr2) // output : "["ayse", "fatma", "hayriye"]\n"
+
+// Görüldüğü gibi arr1 de yapılan değişikliğe rağmen arr2 array imiz bundan etkilenmedi fakat c# da Array ler Reference type oldugundan onda etkileniyordu.
+
+
+// Swift de Reference ve Value Types Kullanımı Örneklerine Devam Edelim
+
+class RaceCar{
+    var speed : Double
+    var power : Double
+    
+    init(speed : Double , power : Double) {
+        self.speed = speed
+        self.power = power
+    }
+    
+    func showInformation() {
+        print("speed : \(speed) power : \(power)")
+    }
+}
+
+struct RaceTruck{
+    var speed : Double
+    var power : Double
+    
+    init(speed : Double , power : Double) {
+        self.speed = speed
+        self.power = power
+    }
+    
+    func showInformation() {
+        print("speed : \(speed) power : \(power)")
+    }
+}
+
+var racecar1 : RaceCar = RaceCar(speed: 2.2, power: 4.3)
+var racecar2 : RaceCar = racecar1
+racecar1.speed = 3.12
+racecar1.power = 7.77
+racecar2.showInformation() // Class lar Referans Tip Oldugundan racecar1 de yapılan değişiklikten racecar2 de etkilendi.
+
+
+var racetruck1 : RaceTruck = RaceTruck(speed: 1.1, power: 5.1)
+var racetruck2 : RaceTruck = racetruck1
+racetruck1.speed = 5.12
+racetruck1.power = 9.88
+racetruck2.showInformation() // Struct lar Value Tip Oldugundan racetruck1 de yapılan değişiklikten racetruck2  ETKİLENMEDİ.
+
+
+// Struct (Value Type) ile Class (Reference Type) arasında Ufak ama Önemli bir nüansdan da bahsedelim.
+
+let raceTruckStruct = racetruck1
+// raceTruckStruct.power = 3.8 --> Bize hata verir çünkü 'raceTruckStruct' let ile tanımlanmış ve ilk değerini 'racetruck1' dan almıştır. let ile tanımlanmış değişkenin değeri değiştirilemez.
+
+// Peki Yukarıdaki Örneği Struct ile değil Referans tip olan Class ile yaparsak ne olur
+let racecarClass = racecar1
+racecarClass.power = 9.1 // Hata Vermez let ile tanımlanan 'racecarClass' değişkeni 'racecar1' nesnesinin adres değerini tutuyor 'racecarClass.power = 9.1' ataması yaparken adres değerinde değişiklik yapmıyoruz. Aynı adres değerini kullanarak değişkene erişiyoruz.
+
+// racecarClass = racecar2 // --> Bize hata verir çünkü 'racecarClass' adres değeri tutuyor ve biz let olarak tanımlanan bu değişkendeki adres değerini değiştirmeye çalışıyoruz.
+
+
+// 11.) Type Casting İşlemi (Upcasting and Downcasting) --> is and as operatorlerinin kullanımı
+
+class Media{
+    var name : String
+    init(name : String) {
+        self.name = name
+    }
+}
+
+class Book : Media{
+    var author : String
+    var releseYear : Int
+    init(name : String ,author : String , releseYear : Int) {
+        self.author = author
+        self.releseYear = releseYear
+        super.init(name: name)
+    }
+}
+
+class Movie : Media{
+    var director : String
+    var awardWinning : Bool
+    
+    init(name : String ,director : String , awardWinning : Bool) {
+        self.director = director
+        self.awardWinning = awardWinning
+        super.init(name: name)
+    }
+}
+
+// Upcasting
+let myarchive : [Media] = [
+    Book(name: "War and Peace", author: "John Tommas", releseYear: 1938),
+    Movie(name: "Big Bang Theory", director: "Fauble Mordan", awardWinning: true),
+    Book(name: "Catch me if you can", author: "Steven Spieldberg", releseYear: 1840),
+    Movie(name: "Two Broke Girls", director: "Roseline Abcard", awardWinning: false)
+]
+
+var num : (numberOfBook : Int , numberOfMovie : Int) = (0,0)
+
+for media in myarchive {
+    if media is Movie {
+        num.numberOfMovie += 1
+    }else if media is Book{
+        num.numberOfBook += 1
+    }
+}
+
+print("Number of the movie : \(num.numberOfMovie) and Number of the book : \(num.numberOfBook)")
+
+// Downcasting
+for media in myarchive {
+    if let movie = media as? Movie{
+        print("\(movie.director) and \(movie.awardWinning)")
+    }else if let book = media as? Book{
+        print("\(book.author) and \(book.releseYear)")
+    }
+}
+
+// Typecasting e primitive types lar da nasıl kullanılır ona bakalım.
+
+var varietyValues : [Any] = [Any]()
+varietyValues.append(2)
+varietyValues.append(2.0)
+varietyValues.append("How are you?")
+varietyValues.append(Movie(name: "Black Jack", director: "Sam Boldstar", awardWinning: false))
+
+for val in varietyValues {
+    switch val {
+    case 2 as Int:
+        print("Int 2")
+    case 2 as Double:
+        print("Double 2")
+    case let integerNumber as Int :
+        print("Integer Value \(integerNumber)")
+    case let doubleNumber as Double :
+        print("Double Value \(doubleNumber)")
+    case let stringValue as String :
+        print("String Value \(stringValue)")
+    case let movie as Movie :
+        print("Movie Value \(movie)")
+    default:
+        print("unknown request")
+    }
+}
+
+
+// 12.) static , final ve class Kavramları ///////////
+
+class Staff{
+    var name : String
+    var department : String
+    var startYear : Int
+    
+    init(name : String , department : String , startYear : Int) {
+        self.name = name
+        self.department = department
+        self.startYear = startYear
+        Staff.numberOfStaff += 1
+    }
+    
+    var exprience : Int {
+        get {
+            return 2021 - startYear
+        }
+    }
+    
+    static var numberOfStaff : Int = 0
+    static var additionalExpenses : Int = 0
+    static var monthlyExpenses : Int {
+        get{
+            return (numberOfStaff * 5000) + additionalExpenses
+        }
+        set{
+            let difference = newValue - monthlyExpenses
+            if difference > 0 {
+                additionalExpenses = difference
+            }
+        }
+    }
+    
+    class var monthlyExpensesWithClass : Int {
+        get{
+            return (numberOfStaff * 5000) + additionalExpenses
+        }
+        set{
+            let difference = newValue - monthlyExpenses
+            if difference > 0 {
+                additionalExpenses = difference
+            }
+        }
+    }
+    
+    // UNUTMA Static bir fonksiyon içerisinden static bir property ' e direk adı ile erişebilirken eğer static olmayan bir fonksiyon içerisinde static bir property e erişmek istersen o zaman SınıfAdi.PropertyName şeklinde erişmelisin.
+    static func staffInformationStatic(){
+        print("The number of staff : \(numberOfStaff) \n monthly expenses : \(monthlyExpenses) \n additional expenses : \(additionalExpenses)")
+    }
+    class func staffInformationClass(){
+        print("The number of staff : \(numberOfStaff) \n monthly expenses : \(monthlyExpenses) \n additional expenses : \(additionalExpenses)")
+    }
+    func staffInformationNormal(){
+        print("The number of staff : \(Staff.numberOfStaff) \n monthly expenses : \(Staff.monthlyExpenses) \n additional expenses : \(Staff.additionalExpenses)")
+    }
+    
+    // Final olarak tanımlanan method u da bu class dan kalıtım alan class override edemez! Static de de override edemiyordu Fark Ne ?
+    // Fark şu static variable class a ait özellik ClassName.Method şeklinde erişilebilirken , final ile tanımlasak bile override ı engelledik bu method hala nesneye ait bir methoddur yani her nesne için özeldir ortak değil.
+    final func staffInformationNormalWithFinal(){
+        print("The number of staff : \(Staff.numberOfStaff) \n monthly expenses : \(Staff.monthlyExpenses) \n additional expenses : \(Staff.additionalExpenses)")
+    }
+}
+
+var staff1 : Staff = Staff(name: "Roselin", department: "Accounting", startYear: 1998)
+print(staff1.exprience)
+Staff.staffInformationStatic()
+Staff.staffInformationClass()
+
+
+class GeneralManager : Staff{
+    var position : String
+    static var salary : Int = 8000
+    
+    init(name : String , department : String , startYear : Int , position : String) {
+        self.position = position
+        super.init(name: name, department: department, startYear: startYear)
+    }
+    // STATIC İLE CLASS ARASINDAKİ FARK ŞUDUR ; Yukarıda tanımladığımız ,
+    // static olan -> staffInformationStatic() methodu kalıtım alan sınıf tarafından override edilemez iken class tipinden tanımlanan staffInformationClass() methodu kalıtım alınan sınıf tarafından override edilebilir.
+    override class func staffInformationClass() {
+        print("The number of staff : \(numberOfStaff) \n monthly expenses : \(monthlyExpenses) \n additional expenses : \(additionalExpenses)")
+    }
+    
+    // Computed Property ' lerde Override Edilebilir!!! --> Tabi static olarak tanımlanmamıssa!
+    override var exprience: Int{
+        print("Computed Property lerde override edilebilir.")
+        return 9000
+    }
+    
+    override class var monthlyExpensesWithClass: Int{
+        get{
+            return 9000
+        }
+        set{
+            print("Computed Property ne static yerine class ön eki verirseniz bunları da override edilebilirsiniz.")
+        }
+    }
+}
+
+
+// 13.) deinit Yapısı ///////////
+// deinit yapısı --> nesneyi tutugumuz referansı = nil atarsak o zaman ARC (Automatic Reference Counting) değerini 0 yapar ve referans tarafından refere edilmeyen nesne anında RAM den silinir.
+
+// Birinci Örnek
+var myValue : Int = 32
+
+class Dolly{
+    init() {
+        print("object was created from A")
+        myValue = 31
+    }
+    deinit {
+        print("object was deleted.")
+        myValue = -1
+    }
+}
+
+print(myValue)
+var n1 : Dolly? = Dolly()
+print(myValue)
+n1 = nil
+print(myValue)
+
+
+
+// İkinci Örnek
+class Bank{
+    static var balance : Int = 1000
+    
+    
+    static func withdrawalMoney(withdrawalmoney balanceAmount : Int) -> Int{
+        guard balanceAmount > 0 else {
+            print("amount must be grater than 0.")
+            return -1
+        }
+        if balanceAmount > balance {
+            print("no balance")
+            return -1
+        }else if balanceAmount == balance{
+            print("you took all the money")
+            balance -= balanceAmount
+            return balanceAmount
+        }else{
+            balance -= balanceAmount
+            print("You have withdrawn $\(balanceAmount) from your account.Your remaining balance is $\(balance).")
+            return balanceAmount
+        }
+    }
+    
+    // Label Kullandık parametre olarak DİKKAT!
+    static func depositMoney(amounToMoneyToBeDeposited deposit : Int){
+        guard deposit > 0 else {
+            print("The amount to be deposited cannot be negative.")
+            return
+        }
+        balance += deposit
+    }
+    
+}
+
+class Family{
+    var hasAmountMoney : Int
+    var name : String
+    init(name : String ,money : Int) {
+        self.name = name
+        hasAmountMoney = Bank.withdrawalMoney(withdrawalmoney: money)
+        print("\(self.name) was joined with \(self.hasAmountMoney)")
+    }
+    
+    func getMoney(amount : Int){
+        hasAmountMoney += Bank.withdrawalMoney(withdrawalmoney: amount)
+    }
+    
+    deinit {
+        Bank.depositMoney(amounToMoneyToBeDeposited: hasAmountMoney)
+        print("\(self.name) wasted!")
+    }
+}
+
+var family : Family? = Family(name: "Jane", money: 100)
+family?.getMoney(amount: 200)
+family = nil
+
+// 3.Örnek Retain Cycle, Automatic Reference Counting, Memory Leak
+
+class SoftwareDeveloper{
+    let name : String
+    var macbook : MacBook?
+    
+    init(name : String , macbook : MacBook?) {
+        self.name = name
+        self.macbook = macbook
+    }
+    
+    deinit {
+        print("\(name) is being deinitialized!")
+    }
+}
+
+class MacBook{
+    let name : String
+    var owner : SoftwareDeveloper?
+    
+    init(name : String , owner : SoftwareDeveloper?) {
+        self.name = name
+        self.owner = owner
+    }
+    
+    deinit {
+        print("Macbook named \(name) is being deinitialized!")
+    }
+}
+
+var sean : SoftwareDeveloper?
+var matilda : MacBook?
+
+sean = SoftwareDeveloper(name: "sean", macbook: nil)
+matilda = MacBook(name: "matilda", owner: nil)
+
+sean?.macbook = matilda
+matilda?.owner = sean
+sean = nil
+matilda = nil
+
+
+
+
+```
 
