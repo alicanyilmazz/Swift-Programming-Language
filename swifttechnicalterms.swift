@@ -13,3 +13,4 @@
 // 11.) Protection Level --> c# daki Access Modifiers
 // 12.) static , final ve class Kavramları
 // 13.) deinit yapısı
+// 14.) String(cast edilecek değer) veya .toString()
