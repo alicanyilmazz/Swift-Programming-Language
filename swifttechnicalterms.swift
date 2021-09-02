@@ -14,3 +14,4 @@
 // 12.) static , final ve class Kavramları
 // 13.) deinit yapısı
 // 14.) String(cast edilecek değer) veya .toString()
+// 15.) Any vs. AnyObject in Swift 3.0 --> https://medium.com/@mimicatcodes/any-vs-anyobject-in-swift-3-b1a8d3a02e00
