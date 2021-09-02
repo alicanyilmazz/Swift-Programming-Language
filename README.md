@@ -3352,7 +3352,7 @@ class SoftwareDeveloper{
 
 class MacBook{
     let name : String
-    var owner : SoftwareDeveloper?
+    weak var owner : SoftwareDeveloper?
     
     init(name : String , owner : SoftwareDeveloper?) {
         self.name = name
