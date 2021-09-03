@@ -201,3 +201,35 @@ internal class Program
             arr[1] = swap;
         }
     }
+
+// c# da delegate yapısının kurgulanması
+
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            var _repairService = new RepairService();
+            var _repairManager = new RepairManager();
+
+            _repairManager.repairService = _repairService;
+            _repairManager.repairService.repairTool("x86 error");
+        }
+
+        interface IRepairService
+        {
+            void repairTool(String tool);
+        }
+
+        class RepairManager
+        {
+            public IRepairService repairService;
+        }
+
+        class RepairService : IRepairService
+        {
+            public void repairTool(string tool)
+            {
+                Console.WriteLine($"{tool} is repairing...");
+            }
+        }
+    }
