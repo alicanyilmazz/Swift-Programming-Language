@@ -3381,6 +3381,321 @@ matilda = nil
 ```
 
 ```diff
+@@ Protocol at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+```swift
+
+
+//  There are no abstract classes in Swift (just like Objective-C). Your best bet is going to be to use a Protocol, which is like a Java Interface.
+
+// 1.Örnek
+protocol Citizen{
+    var name : String {get set}
+    var identityNumber : String {get set}
+    func isCitizen(identityNumber : String) -> Bool
+}
+
+class Person : Citizen{
+    var name: String
+    
+    var identityNumber: String
+    
+    init(name : String , identityNumber : String) {
+        self.name = name
+        self.identityNumber = identityNumber
+    }
+    
+    func isCitizen(identityNumber: String) -> Bool {
+        return true
+    }
+}
+
+protocol Employee : Citizen{
+    var isMale : Bool {get set}
+    func isActive()
+}
+
+protocol GeneralManager{
+    var managerId : String {get set}
+}
+
+class Alican : Employee{
+    var isMale: Bool
+    
+    func isActive() {
+        print("Active")
+    }
+    
+    var name: String
+    
+    var identityNumber: String
+    
+    func isCitizen(identityNumber: String) -> Bool {
+        return true
+    }
+    
+    init(isMale : Bool , name : String , identityNumber : String) {
+        self.isMale = isMale
+        self.name = name
+        self.identityNumber = identityNumber
+    }
+    
+    
+}
+
+class Jane : Employee , GeneralManager{
+    var isMale: Bool
+    
+    init(isMale : Bool , name : String , identityNumber : String , managerId : String) {
+        self.isMale = isMale
+        self.name = name
+        self.identityNumber = identityNumber
+        self.managerId = managerId
+    }
+    
+    func isActive() {
+        print("Active")
+    }
+    
+    var managerId: String
+    
+    var name: String
+    
+    var identityNumber: String
+    
+    func isCitizen(identityNumber: String) -> Bool {
+        return false
+    }
+}
+
+// 2.Örnek
+protocol CalculateGeometricShape{
+    func calculateArea() -> Double
+    func calculateEnvironment() -> Double
+}
+
+class Square : CalculateGeometricShape{
+    var edge : Double
+    
+    init(edge : Double) {
+        self.edge = edge
+    }
+    
+    func calculateArea() -> Double {
+        return edge * edge
+    }
+    
+    func calculateEnvironment() -> Double {
+        return 4 * edge
+    }
+    
+    
+}
+
+class Circle : CalculateGeometricShape{
+    var radius : Double
+    
+    init(radius : Double) {
+        self.radius = radius
+    }
+    
+    func calculateArea() -> Double {
+        return Double.pi * radius * radius
+    }
+    
+    func calculateEnvironment() -> Double {
+        return 2 * Double.pi * radius
+    }
+    
+    
+}
+
+// 3.Örnek
+
+@objc protocol Time{
+    var day : Int {get set}
+    var month : Int {get set}
+    var year : Int {get set}
+    
+    @objc optional var hour : Int {get}
+    @objc optional var minute : Int {get}
+    @objc optional var second : Int {get}
+    func toString() -> String
+    
+}
+
+class ShortTime : Time{
+    var day: Int
+    
+    var month: Int
+    
+    var year: Int
+    
+    init(day : Int , month : Int , year : Int) {
+        self.day = day
+        self.month = month
+        self.year = year
+    }
+    
+    func toString() -> String {
+        return "\(day)/\(month)/\(year)"
+    }
+}
+
+class LongTime : ShortTime{
+    
+     var hour: Int = 0
+     var minute: Int = 0
+     var second: Int = 0
+    
+    convenience init(day : Int , month : Int , year : Int , hour : Int , minute : Int , second : Int) {
+        self.init(day: day, month: month, year: year)
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+    }
+    
+    override func toString() -> String {
+        return super.toString() + " \(hour):\(minute):\(second)"
+    }
+}
+
+var time1 : ShortTime = ShortTime(day: 13, month: 9, year: 1995)
+var time2 : LongTime = LongTime(day: 21, month: 4, year: 2001, hour: 13, minute: 45, second: 29)
+
+var dates : [AnyObject] = [time1,time2]
+for item in dates {
+    let date = item as! Time
+    print(date.toString())
+    
+    if let hour = date.hour{
+        print("hour : \(hour) second : \(date.second!)")
+    }
+}
+
+// SWIFT HAZIR PROTOKOLLER
+
+// 1.) Equatable Protocol 'ü
+
+class Student : Equatable{
+    
+    var name : String
+    var age : Int
+    var identityNumber : String
+    
+    init(name : String , age : Int , identityNumber : String) {
+        self.name = name
+        self.age = age
+        self.identityNumber = identityNumber
+    }
+    
+    static func == (lhs: Student, rhs: Student) -> Bool {
+        if lhs.name == rhs.name && lhs.age == rhs.age && lhs.identityNumber == rhs.identityNumber {
+            return true
+        }
+        return false
+    }
+    
+}
+
+var student1 : Student = Student(name: "Jane", age: 23, identityNumber: "212121")
+var student2 : Student = Student(name: "Jane", age: 23, identityNumber: "212121")
+
+if student1 == student2 {
+    print("Equal")
+}else{
+    print("Not Equal!")
+}
+
+
+// 2.) Comparable Protocol 'ü
+
+class Rectangle : Comparable{
+    static func == (rectangle1: Rectangle, rectangle2: Rectangle) -> Bool {
+        return (rectangle1.width*rectangle1.height) == (rectangle2.width*rectangle2.height)
+    }
+    
+    static func < (rectangle1: Rectangle, rectangle2: Rectangle) -> Bool {
+        return (rectangle1.width*rectangle1.height) < (rectangle2.width*rectangle2.height)
+    }
+    
+    var width : Int
+    var height : Int
+    
+    init(width : Int , height : Int) {
+        self.width = width
+        self.height = height
+    }
+}
+
+var d1 : Rectangle = Rectangle(width: 34, height: 21)
+var d2 : Rectangle = Rectangle(width: 22, height: 11)
+
+if d1 > d2 {
+    print("d1 is grater than d2.")
+}else if (d1 < d2){
+    print("d2 is grater than d1.")
+}else if(d1==d2){
+    print("d1 equals to d2.")
+}
+
+// Protocol Delegate Pattern ////
+
+protocol IRepairService{
+    func repairTool(tool : String);
+}
+
+class RepairManager{
+    var repairService : IRepairService?
+}
+
+class RepairService : IRepairService{
+    func repairTool(tool: String) {
+        print("\(tool) is solving...")
+    }
+}
+
+var _repairService : RepairService = RepairService()
+var _repairManager : RepairManager = RepairManager()
+
+_repairManager.repairService = _repairService
+_repairManager.repairService?.repairTool(tool: "x86 error")
+
+
+// Protocol Data Source ////
+
+protocol MessageSenderDataSource{
+    func Order(order : String) -> Bool
+}
+
+class Customer{
+    var dataSource : MessageSenderDataSource?
+}
+
+let _customer : Customer = Customer()
+_customer.dataSource?.Order(order: "first order!")
+
+class DataSource : MessageSenderDataSource{
+    func Order(order: String) -> Bool {
+        print("Sended order : \(order)")
+        print("We will send!")
+        return true
+    }
+}
+
+let _customer2 : Customer = Customer()
+let _dataSource : DataSource = DataSource()
+_customer2.dataSource = _dataSource
+let result = _customer2.dataSource?.Order(order: "Cake")
+print(result!)
+
+
+```
+
+```diff
 @@ Swift Tricky Notes @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3467,4 +3782,3 @@ let shuffledSequence = sequence.shuffled()
 
 
 ```
-
