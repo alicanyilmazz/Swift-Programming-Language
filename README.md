@@ -3696,10 +3696,155 @@ print(result!)
 ```
 
 ```diff
-@@ Swift Tricky Notes @@
+@@ Extensions on Swift @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+```swift
+
+
+// Extension Kavramı
+class Person {
+    var name : String?
+    var surname : String?
+    var age : Int?
+}
+
+extension Person{
+    func getInformation()  {
+        print("name : \(name!) surname : \(surname!)")
+    }
+}
+
+var person : Person = Person()
+person.name = "alican"
+person.surname = "yilmaz"
+person.getInformation()
+
+// Yukarıdaki örnekte Person sınıfına getInformation() adında bir methoda sahip olmasını sağladık. Peki neden bunu sınıf içeirsinde tanımlamak yerine sınıfa dısarıdan extension ile bu özelliği kazandırma gereği
+// gereği duyduk derseniz sınıfın içerisinde yuzlerce method ve props olabilir extension ile ayrı ayrı işlere yarayan methodları ve property leri ayrı ayrı yerlerde tanımlayarak kod takibini daha kolay hale getirebiliriz.
+// Yada elinde string sınıfı var sen buna source kodda değişiklik yapmadan bu sınıfa bir yetenek kazandırmak istiyorsun bunu extension ile yapabiliriz.
+
+// Örneğin extension ile Int primitive type ' ına yeni özellikler kazandıralım.
+extension Int{
+    var square : Int{
+        return self * self
+    }
+    
+    var nextNumber : Int{
+        return self + 1
+    }
+    
+    func factoriel() -> Int {
+        var result = 1
+        for i in 1...self {
+            result *= i
+        }
+        return result
+    }
+    
+    func multiplyWith(number : Int , text : String) -> Int {
+        let result = self * number * text.count
+        return result
+    }
+}
+print(5.factoriel())
+var res = 3.multiplyWith(number: 2, text: "alican")
+print(res)
+
+// Baska bir extension örneği yapalım bu sefer değişiklik değişkenin de değerini değiştirsin.
+extension Double{
+   mutating func calculateArea() {
+        let pi = 3.14
+        self = pi * (self * self)
+    }
+    
+    func returnArea() -> Double {
+        return self * self
+    }
+}
+
+
+
+class Circle{
+    var radius : Double
+    init(radius : Double) {
+        self.radius = radius
+    }
+}
+
+var _circle : Circle = Circle(radius: 4.5)
+print(_circle.radius)
+_circle.radius.calculateArea()
+print(_circle.radius)
+_circle.radius.returnArea()
+
+extension String{
+    func customReverse() -> String {
+        var character = [Character]()
+        for _character in self {
+            character.insert(contentsOf: _character.lowercased(), at: 0)
+        }
+        return String(character)
+    }
+}
+
+var myName : String = "Alican"
+print(myName.customReverse())
+
+
+// Collections ' lar Üzerinde Extensions Kullanımı
+
+extension Collection{
+    func evenMembers() -> [Iterator.Element] {
+      var currentIndex = startIndex
+        var results : [Iterator.Element] = []
+        var i = 0
+        repeat{
+            if i % 2 == 0{
+                results.append(self[currentIndex])
+            }
+            currentIndex = self.index(after: currentIndex)
+            i += 1
+        }while(currentIndex != endIndex)
+        return results
+    }
+    
+    func shuffleItems() -> [Iterator.Element] {
+        return sorted(){firstMember , secondMember in
+            return arc4random() < arc4random()
+        }
+    }
+}
+
+var numbers = [10,20,30,40,50,60,70]
+
+var newNumbers = numbers.evenMembers()
+
+var shuffledNumbers = numbers.shuffled()
+
+var personAges : [String : Int] = ["Jack" : 31 , "Rose" : 21 , "Michael" : 33 , "Laura" : 38 , "James" : 41]
+var personAgeEvenMembers = personAges.evenMembers()
+for person in personAgeEvenMembers {
+    print(person)
+}
+
+// Dictionary Yapısını unordered biz extension yazarak bunu array gibi aşağıdaki yapılar ile ordered yapıya çevirebiliriz.
+extension Collection where Self : ExpressibleByArrayLiteral{
+    
+}
+
+extension Collection where Iterator.Element : Comparable{
+    
+}
+
+
+```
+
+```diff
+@@ Swift Tricky Notes @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ```swift
 // Fonksiyonlarda parametre basına underscore koymak.
@@ -3782,3 +3927,4 @@ let shuffledSequence = sequence.shuffled()
 
 
 ```
+
