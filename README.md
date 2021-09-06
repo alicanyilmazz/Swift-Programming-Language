@@ -3842,6 +3842,559 @@ extension Collection where Iterator.Element : Comparable{
 ```
 
 ```diff
+@@ Enums at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+
+// Enum ' lara giriş
+enum carTypes{
+    
+    case Hatchback
+    case sedan
+    case Station_Vagon
+    case Cabrio
+    case Pick_Up
+    case SUV
+}
+
+enum carColors{
+    case pink
+    case blue
+    case green
+    case black
+}
+
+class Car{
+    var brand : String
+    var color : carColors
+    var year : Int
+    var mil : Double
+    var carType : carTypes
+    
+    init(brand : String , color : carColors , year : Int , mil : Double , carType : carTypes) {
+        self.brand = brand
+        self.color = color
+        self.year = year
+        self.mil = mil
+        self.carType = carType
+    }
+    
+    func showInformation() {
+        print("\(brand) \(color) \(year) \(mil) \(carType)")
+    }
+}
+
+var car : Car = Car(brand: "mercedes", color: carColors.blue, year: 2011, mil: 212, carType: carTypes.Hatchback)
+
+
+// Enum Yapısının Switch-Case ile kullanımı
+
+enum Directions{
+    case North
+    case South
+    case East
+    case West
+}
+
+var myDirection : Directions = Directions.East
+
+switch myDirection {
+case .North :
+    print("Your direction is North")
+case .South :
+    print("Your direction is South")
+case .East :
+    print("Your direction is East")
+case .West :
+    print("Your direction is West")
+}
+
+// Enum RawValue Kavramı --> Swift RawValue olarak Int , FLoat , String ve Bool değerleri kabul ediyor.
+
+enum MovieCategory : Float{
+    case Action
+    case Science_Fiction
+    case Emotional
+    case Comedy
+}
+
+let _movie : MovieCategory = MovieCategory.Comedy
+print(_movie.rawValue) // Output : 3.0
+
+enum Days : Int{
+    case Mondey
+    case Tuesday
+    case Wednesday
+    case Thursday
+    case Friday
+    case Saturday
+    case Sunday
+}
+
+var _day : Days = Days.Thursday
+print(_day.rawValue) // Output : 3
+
+enum Months : Int{
+    case January = 1
+    case February = 2
+    case March = 33
+    case April = 4
+    case May = 45
+    case June = 6
+    case July = 7
+    case August = 8
+    case September = 9
+    case October = 11
+    case November = 12
+    case December = 13
+}
+
+var _months : Months = Months.May
+print(_months)  // Output : May
+print(_months.rawValue) // Output : 45
+
+// Değer atarken Raw value kullanarakta atama yapabiliriz fakat değerin olmamasına karsıda default value olarak 'January' i belirliyoruz.
+var myMonth : Months = Months.init(rawValue: 99) ?? Months.January
+
+//
+var _days : Days = Days.Saturday
+
+// DİKKAT : Switch - Case yapısında birden fazla durumda olabilir aşağıdaki gibi Sunday veya Saturday ise hafta sonundasın gibi.
+switch _days {
+case .Sunday , .Saturday:
+    print("You are on the weekend.")
+default:
+    print("You are in the week.")
+}
+
+// if let case yapısı ile Enum yapısının Birlikte Kullanımı
+enum DateOfBirth{
+    case Date(Day : Int , Month : Int , Year : Int)
+    case Day(Days)
+}
+
+var dateTime1 = DateOfBirth.Date(Day: 15, Month: 20, Year: 2000)
+var datetime2 = DateOfBirth.Day(.Saturday)
+
+if case let DateOfBirth.Date(day, month, year) = dateTime1{
+    print("day : \(day) month : \(month) year : \(year)")
+}
+
+if case let DateOfBirth.Day(value) = datetime2{
+    print("This is a valid day.")
+    print(value)
+}
+
+switch dateTime1 {
+case .Date(let day , let month , let year) :
+    print("\(day) \(month) \(year)")
+case .Day(let day):
+    print("\(day)")
+}
+
+
+// Enum yapısında property tanımlama //
+enum ComputerComponents : String{
+    case GPU
+    case CPU
+    case RAM
+    case SSD
+    case HDD
+    
+    var identifier : String{
+        return self.rawValue.lowercased()
+    }
+    
+    var piority : Int{
+        return identifier.count
+    }
+}
+
+let gpu = ComputerComponents.GPU
+print(gpu.identifier)
+print(gpu.piority)
+
+
+// 2. Örnek enum içerisinde function ' tanımlama. //
+
+enum DegreeOfLike : String{
+    case excellent
+    case funkiness
+    case well
+    case tolerable
+    case unwell
+    case awful
+    
+    mutating func likeMore() {
+        print("Your like degree is \(self.rawValue).")
+        
+        switch self {
+        case .excellent: print("You do not like it any more!")
+        case .funkiness: self = .excellent
+        case .well: self = .funkiness
+        case .tolerable: self = .well
+        case .unwell: self = .tolerable
+        case .awful: self = .unwell
+    }
+  }
+    
+    static var numberOfItem : Int{
+        return 6
+    }
+}
+
+var _like : DegreeOfLike = DegreeOfLike.well
+print(_like) // Output : well
+_like.likeMore() // Output : Your like degree is well.
+print(_like) // Output : funkiness
+print(DegreeOfLike.numberOfItem) // Output : 6
+
+
+// Nested Enum Kullanımı //
+
+enum CharacterInformation{
+    enum Weapon{
+        case arrow
+        case sword
+        case knife
+        case ax
+    }
+    
+    enum Helmet{
+        case silver_helmet
+        case iron_helmet
+        case wooden_helmet
+    }
+    
+    case thief
+    case warrior
+    case halberdier
+    case civil
+}
+
+var _character : CharacterInformation = CharacterInformation.warrior
+var _weapon : CharacterInformation.Weapon = .arrow // CharacterInformation.Weapon.arrow
+var _helmet : CharacterInformation.Helmet = .iron_helmet
+
+print("\(_character) \(_weapon) \(_helmet)")
+
+
+// Enum yapısında static fonksiyon tanımlama
+
+enum AppleProducts{
+    case MacbookPro , IMac , Iphone , IWatch
+    static func getProduct(name : String) -> AppleProducts?{
+        let name = name.lowercased()
+        switch name {
+        case "phone": return .Iphone
+        case "watch": return .IWatch
+        case "Computer": return .IMac
+        case "laptop": return .MacbookPro
+        default: print("Product does not exist.")
+            return nil
+        }
+    }
+}
+
+if let _product = AppleProducts.getProduct(name: "phone"){
+    print(_product)
+}else{
+    print("Product request is not valid!")
+}
+
+
+// Enum ' larda init Özelliği //
+
+enum Product{
+    case phone , laptop , tablet , watch // Dikkat et her birine case yazmak yerine tümünü tek case de de tanımlayabiliriz.(Değişkenlerle aynı yani)
+    init(productName : String) {
+        switch productName {
+        case "iphone": self = .phone
+        case "macbook": self = .laptop
+        case "ipad": self = .tablet
+        case "iwatch": self = .watch
+        default: self = .phone
+        }
+    }
+}
+
+let product1 = Product.laptop
+print(product1)
+let product2 = Product(productName: "macbook")
+print(product2)
+
+
+// Enum yapısında init özelliği -> 2
+
+enum Length{
+    case Long
+    case Middle
+    case Short
+    init(lenght : Int) {
+        switch lenght {
+        case 0..<150 : self = .Short
+        case 150..<180 : self = .Middle
+        case 180..<250 : self = .Long
+        default: self = .Short
+            print("Unknow value!")
+        }
+    }
+}
+
+var b1 = Length.Middle
+var b2 = Length(lenght: 170)
+print("b1 : \(b1) b2 : \(b2)")
+
+
+// Class <--> Enum İlişkisi
+
+class CharacterProfile{
+    
+    enum CharacterType{
+        case Priest
+        case Warrior
+        case Mage
+    }
+    
+    enum Ability{
+        case Strengh
+        case Intelligence
+        case Power
+        case Spirit
+    }
+    
+    enum Skill{
+        case Climb
+        case Hiding
+        case Tracker
+        case Forest_Lore
+    }
+    
+    var characterType : CharacterType
+    var skill : Skill
+    var ability : Ability
+    
+    init(characterType : CharacterType , skill : Skill , ability : Ability) {
+        self.characterType = characterType
+        self.skill = skill
+        self.ability = ability
+    }
+}
+
+var myCharacter : CharacterProfile = CharacterProfile(characterType: CharacterProfile.CharacterType.Mage, skill: CharacterProfile.Skill.Hiding, ability: CharacterProfile.Ability.Power)
+
+print("\(myCharacter.characterType) \(myCharacter.ability) \(myCharacter.skill)")
+
+
+
+// Başka bir nested Enum Örneği
+
+enum GameStuff{
+    
+    enum Charge : Int {
+        case Bow = 10
+        case Iron = 5
+        case Knife = 9
+        case Gun = 12
+    }
+    
+    enum DamageLevel : Int {
+        case Low
+        case Medium
+        case High
+    }
+    
+    case Weapon(damageLevel : DamageLevel , charge : Charge)
+    
+    func getProfile() -> String {
+        switch self {
+        case let .Weapon(damageLevel , charge):
+            return "Damage Level \(damageLevel)\n Charge : \(charge)"
+        }
+    }
+}
+
+let _gameStuff = GameStuff.Weapon(damageLevel: GameStuff.DamageLevel.Low, charge: GameStuff.Charge.Knife)
+print(_gameStuff.getProfile())
+
+
+// Protocol <--> Enum İlişkisi
+
+protocol CharacterHealth{
+    var health : Int {get}
+    mutating func collectHealt()
+    mutating func gatherAttackPower()
+}
+
+enum Gamer : CharacterHealth {
+    var health: Int {
+        switch self {
+        case .dead : return 0
+        case let .alive(heal) :
+            if heal > 100 {
+                return 100
+            }else{
+                return heal
+            }
+        }
+    }
+    
+    mutating func collectHealt() {
+        switch self {
+        case let .alive(heal): self = .alive(currentHealth: heal + 1)
+        case .dead : print("Came back to life.")
+            self = .alive(currentHealth: 1)
+        }
+    }
+    
+    mutating func gatherAttackPower() {
+        switch self {
+        case let .alive(currentHealth: heal):
+            if heal <= 1 {
+                self = .dead
+                print("Person dead.")
+            }else{
+                self = .alive(currentHealth: heal - 1)
+                print("Character's healt decreased by one. Healt value is \(heal - 1)")
+            }
+        case .dead : print("Character already dead.")
+        }
+    }
+    
+    case dead
+    case alive(currentHealth : Int)
+    
+}
+
+var gamerStatus = Gamer.dead
+gamerStatus = Gamer.alive(currentHealth: 4)
+var healthValue = Gamer.alive(currentHealth: 190).health
+
+gamerStatus.collectHealt()
+print(gamerStatus.health)
+gamerStatus.gatherAttackPower()
+gamerStatus.gatherAttackPower()
+print(gamerStatus.health)
+
+
+// Enum ile Tuple ' ın ileri seviye Kullanımları
+
+enum HumanActivities{
+    case walk
+    case run
+    case takeBreath
+    case jump(height : Int)
+}
+
+func == (left : HumanActivities , right : HumanActivities) -> Bool{
+    switch (left , right) {
+    case (.walk, .walk) , (.run , .run) , (.takeBreath , .takeBreath) : return true
+    case let (.jump(leftHeight) , .jump(rightHeight)) : return leftHeight == rightHeight // Parametre alıyor ise 'let' kullanmak zorundasın.
+    default: return false
+    }
+}
+
+var activity1 : HumanActivities = HumanActivities.run
+var activity2 : HumanActivities = HumanActivities.run
+activity1 = .jump(height: 2)
+activity2 = .jump(height: 3)
+
+if activity1 == activity2 {
+    print("Same activity.")
+}else{
+    print("Different activity.")
+}
+
+// Recursive Enum // ---->
+
+indirect enum MathematicalExpressions{
+    case number(value : Double)
+    case Sum(number1 : MathematicalExpressions , number2 : MathematicalExpressions)
+    case Subtract(number1 : MathematicalExpressions , number2 : MathematicalExpressions)
+    case Divide(number1 : MathematicalExpressions , number2 : MathematicalExpressions)
+    case Multiply(number1 : MathematicalExpressions , number2 : MathematicalExpressions)
+}
+
+
+var number : MathematicalExpressions = MathematicalExpressions.number(value: 10)
+
+if case let .number(value) = number {
+    print("Number is : \(value)")
+}
+
+MathematicalExpressions.Sum(number1: .number(value: 10), number2: .number(value: 17))
+
+func calculate(_ exp : MathematicalExpressions) -> Double{
+    switch exp {
+    case let .number(value): return value
+    case let .Sum(value1, value2) : return calculate(value1) + calculate(value2)
+    case let .Subtract(value1, value2) : return calculate(value1) - calculate(value2)
+    case let .Divide(value1, value2) : return calculate(value1) / calculate(value2)
+    case let .Multiply(value1, value2) : return calculate(value1) * calculate(value2)
+    }
+}
+
+
+let num1 : MathematicalExpressions = MathematicalExpressions.number(value: 4)
+print(calculate(num1))
+
+let num2 : MathematicalExpressions = MathematicalExpressions.Subtract(number1: .number(value: 97), number2: .number(value: 17))
+print(calculate(num2))
+
+let num3 : MathematicalExpressions = MathematicalExpressions.Sum(
+    number1: MathematicalExpressions.Sum(number1: .number(value: 4), number2: .number(value: 6)),
+    number2: MathematicalExpressions.Multiply(number1: .number(value: 22), number2: .number(value: 11))
+)
+print(calculate(num3))
+
+
+// Yukarıdaki Örneği Recursive Kullanmadan Nasıl Yapardık Ona Bakalım --->
+
+enum Operators{
+    case Sum(num1 : Double , num2 : Double)
+    case Subtract(num1 : Double , num2 : Double)
+    case Divide(num1 : Double , num2 : Double)
+    case Multiply(num1 : Double , num2 : Double)
+    
+    var result : Double{
+        switch self {
+        case let .Sum(val1 , val2) : return val1 + val2
+        case let .Subtract(val1 , val2) : return val1 - val2
+        case let .Divide(val1 , val2) : return val1 / val2
+        case let .Multiply(val1 , val2) : return val1 * val2
+       }
+    }
+}
+
+print(Operators.Sum(num1: 10, num2: 20).result)
+print(Operators.Multiply(num1: 10, num2: 20).result)
+
+
+// Yukarıdaki Örneği de Enum yerine Class Kullanarak Nasıl Yapardık Ona Bakalım --->
+
+class Calculator{
+    
+    static var sum : (Double , Double) -> Double = {$0 + $1}
+    static var subract : (Double , Double) -> Double = {$0 - $1}
+    static var divide : (Double , Double) -> Double = {$0 / $1}
+    static var multiply : (Double , Double) -> Double = {$0 * $1}
+}
+
+
+var res = Calculator.multiply(14.0,21.4)
+print(res)
+
+// Pattern matching in Swift --> https://www.swiftbysundell.com/articles/pattern-matching-in-swift/
+// Enum kısmında oldukca case let  gibi pattern matching olaylarını kullandık
+
+
+
+```
+
+```diff
 @@ Swift Tricky Notes @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3927,4 +4480,5 @@ let shuffledSequence = sequence.shuffled()
 
 
 ```
+
 
