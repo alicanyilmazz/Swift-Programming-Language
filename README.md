@@ -4477,7 +4477,14 @@ let shuffledSequence = sequence.shuffled()
 // Are you using a Swift version lower than 4.2? Then use the random number functions in the chapters below.
 // Please check this website for example : https://learnappmaking.com/random-numbers-swift/
 
-
+// BEST PRACTICE
+if a==b{
+    return true
+}else{
+    return false
+}
+// yerine asagıdaki kodu kullanabilirsin.
+return a == b
 
 ```
 
