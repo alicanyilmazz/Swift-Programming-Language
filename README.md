@@ -4395,6 +4395,696 @@ print(res)
 ```
 
 ```diff
+@@ Generics at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+// Generics Öncesi Örnekler
+
+func swapInt(number1 : inout Int , number2 : inout Int){
+    (number1 , number2) = (number2 , number1)
+}
+
+var number1 : Int = 5
+var number2 : Int = 6
+
+swapInt(number1: &number1, number2: &number2)
+
+func swapDouble(number1 : inout Double , number2 : inout Double){
+    (number1 , number2) = (number2 , number1)
+}
+
+var number3 : Double = 7.0
+var number4 : Double = 9.0
+
+swapDouble(number1: &number3, number2: &number4)
+
+// ÖNEMLİ 1.) Yukarıdaki iki veritipini de tek fonksiyonda gönderebilmek için Any kullanarak yapalım.
+
+func swapAny(number1 : inout Any , number2 : inout Any){
+    (number1 , number2) = (number2 , number1)
+}
+
+var number5 : Any = 5.3
+var number6 : Any = 7.5
+
+swapAny(number1: &number5, number2: &number6)
+
+// Peki neden Generic Yerine Any ile işlem yapmıyoruz neden Any ' ihtiyacımız var.
+// 1.)
+// swapAny(number1: &number1, number2: &number2) --> Hata verir cunku number1 ve number2 Int olarak tanımlanmıs fakat number5 ve number6 Any olarak tanımlanmıs değer atamasıyla birlikle Int oluyor.
+// 2.)
+var number7 : Any = "onbir"
+print("number5 : \(number5) -- number7 : \(number7)")
+swapAny(number1: &number5, number2: &number7)
+print("number5 : \(number5) -- number7 : \(number7)")
+/*
+ Output :
+ number5 : 7.5 -- number7 : onbir
+ number5 : onbir -- number7 : 7.5
+*/
+// Görüldüğü gibi parametre olarak verilen değişkenlerden biri Int diğer String tipinde ve bunları Swap işlemine tabi tuttu. Fakat ben gönderilen iki parametreninde aynı tipten olmasını istiyorsam Generic kullanmalıyım.
+
+// Generics Giriş
+
+// Yukarıdaki örnekleri Generic Kullanarak yapalım.
+
+func swapGeneric<T>(number1 : inout T , number2 : inout T){
+    (number1 , number2) = (number2 , number1)
+}
+
+var number8 : Double = 2.4
+var number9 : Double = 5.1
+var name1 : String = "jack"
+var name2 : String = "Johns"
+
+swapGeneric(number1: &number8, number2: &number9)
+swapGeneric(number1: &name1, number2: &name2)
+
+
+// Generic Type Constraint
+
+func swapAll<T : Numeric>(number1 : inout T , number2 : inout T){ // Numeric Protocol --> Int , Float , Double kabul eder zira bunlar bu protocol ' ü uygular.
+    (number1 , number2) = (number2 , number1)
+}
+
+// Örneğin Parametre olarak kendisine gelen iki değerin birbirine eşit olup olmadıgını kontrol eden bir fonksiyon yazalım.
+
+func isEqual <T : Equatable> (value1 : T , value2 : T) -> Bool{
+    if value1 == value2 {
+        print("value1 is eqaual to value2")
+        return true
+    }else{
+        print("value1 is not equal to value2")
+        return false
+    }
+}
+
+var result1 : Bool = isEqual(value1: "mahmut", value2: "tuncer")
+var result2 : Bool = isEqual(value1: 41, value2: 22)
+var result3 : Bool = isEqual(value1: 3.2, value2: 3.2)
+
+// Kendisine Parametre olarak gelen iki değerden büyük olanı döndüren generic fonksiyonu yazalım.
+
+func findMaxValue<T : Comparable> (value1 : T , value2 : T) -> T{
+    if value1 > value2 {
+        print("Value1 is bigger than value2")
+        return value1
+    }else if value1 == value2 {
+        print("value1 is equal to value2")
+        return value1
+    }else{
+        print("value2 is bigger than value2")
+        return value2
+    }
+}
+
+var max1 : Int = findMaxValue(value1: 13, value2: 24)
+var max2 : Double = findMaxValue(value1: 2.4, value2: 5.3)
+var max3 : String = findMaxValue(value1: "alican", value2: "alican")
+
+
+
+func findMax<T : Comparable> (value1 : T , value2 : T) -> T? {
+    print(type(of: T.self))
+    
+    // Aşağıdaki kod blogu ile String ifade girişini nasıl engelleriz onu kodladık.
+    /*
+    guard type(of: T.self) != type(of: String.self) else{
+        print("The entered value cannot be a string!")
+        return nil
+    }
+    */
+    
+    // Aşağıda gelen değer tipimiz String ise bunları T -> den String e cast ettik ve kelime uzunluguna göre hangisinin daha uzun oldugunu hesapladık.
+    if type(of: T.self) == type(of: String.self) {
+        let str1 : String = value1 as! String
+        let str2 : String = value2 as! String
+        
+        if str1.count > str2.count {
+            print("Value1 is longer than value2")
+            return value1
+        }else if str1.count == str2.count {
+            print("value1 lenght is equal to value2")
+            return value1
+        }else{
+            print("value2 is bigger than value2")
+            return value2
+        }
+    }
+    return nil
+}
+
+var max5 : Int? = findMax(value1: 31, value2: 34)
+var max6 : Double? = findMax(value1: 2.3, value2: 56.2)
+var max7 : String? = findMax(value1: "asdasdas", value2: "dwqqr")
+
+
+// Generic Kavramının Kullanımı Daha İyi Anlamak İçin Search Methodu Yazalım. //
+
+func searchData<T : Equatable>(value : T , array : [T]) -> Bool{
+    var index : Int = 0
+    var isFinded = false
+    while (index < array.count && isFinded == false) {
+        if value == array[index] {
+            isFinded = true
+        }else{
+            index = index + 1
+        }
+    }
+    if isFinded {
+        return true
+    }else{
+        return false
+    }
+}
+
+var integerNumbers = [1,2,3,5,7,8,11,45,52,12,65]
+var persons = ["Jack","Michael","James","Rose","Orlando"]
+var floatNumbers = [3.1,4.2,1.2,4.8,7.9,4.4,3.3]
+
+print(searchData(value: 45, array: integerNumbers))
+print(searchData(value: "Rose", array: persons))
+print(searchData(value: 7.9, array: floatNumbers))
+
+
+// Yukarıdaki Örneği Daha Kısa bir yol kullanarak kodladık.
+
+func findIndex<T : Equatable>(searchedValue : T , array : [T]) -> Int? {
+    for (index,item) in array.enumerated() {
+        if item == searchedValue {
+            return index
+        }
+    }
+    return nil
+}
+
+print(findIndex(searchedValue: "Orlando", array: persons)!) // print(-->eleman bulunamaz ise method Optional oldugundan nil dönebilir o yuzden ide ye print içinde hata almamak için elemanın bulunacagını garanti ettik.
+
+
+// Generic Kavramının Struct ve Class ' larda Kullanımı
+
+class Calculate<T>{
+    var value : T?
+    init() {
+        
+    }
+    init(value : T) {
+        self.value = value
+    }
+}
+
+var h1 : Calculate = Calculate<Int>()
+var h2 : Calculate = Calculate<Double>(value: 2.4)
+var h3 : Calculate = Calculate<Bool>(value: false)
+print("\(h1.value) \(h2.value!) \(h3.value!)")
+
+
+struct MyList<T>{
+    var values = [T]()
+    mutating func add(value : T){
+        values.append(value)
+    }
+    
+    func getValue(index : Int) -> T? {
+        guard index > 0 else {return nil}
+        if values.count > index {
+            return values[index]
+        }else{
+            return nil
+        }
+    }
+}
+
+var l1 : MyList = MyList<String>()
+l1.add(value: "IOS")
+l1.add(value: "ANDROID")
+l1.add(value: "WINDOWS")
+
+print(l1.getValue(index: 1)!)
+
+
+// Generic Protocol 'ler ile Kullanımı
+
+protocol Human{
+    var fullName : String {get set}
+    var age : Int {get set}
+}
+
+class AndroidDeveloper : Human{
+    var fullName: String = "James Cordon"
+    var age: Int = 21
+}
+
+protocol GenericHuman{
+    associatedtype mytype1  // Dikkat et! associatedtype keyword ü ile belirlediğim tip ile age variable ının tipini mytype1 tipinden verdim.
+    var fullName : String {get set}
+    var age : mytype1 {get set}
+}
+
+// Yukarıdaki Generic Protocol implicity ve explicity olarak class larda kullanılabilir ikisini de göstereceğiz.
+
+// Implicitly bir şekilde mytype1 tipinin Int oldugunu belirttik.
+class Customer1 : GenericHuman{
+    var fullName: String = "Alican Yilmaz"
+    var age: Int = 26
+}
+
+// Explicitly bir şekilde mytype1 tipinin Int oldugunu belirttik.
+class Customer2 : GenericHuman{
+    typealias mytype1 = Int  // typealies ile de istenilen tipe mevcut tip cast edilebilir.
+    var fullName: String = "Michael Corsar"
+    var age: Int = 24
+}
+
+// ------------- Örnek 2 ---------------------------//
+
+protocol Screen{
+    associatedtype ScreenContentType
+    func shareScreen(content : ScreenContentType)
+    associatedtype RefreshRate
+    var rates : [RefreshRate] {get set}
+}
+
+class OnBoardScreen: Screen {
+    typealias ScreenContentType = String
+    func shareScreen(content : String) {
+        print("Onboard screen content is \(content)")
+    }
+    
+    typealias RefreshRate = String
+    var rates = [String]()
+}
+
+class SplashScreen : Screen{
+    typealias ScreenContentType = [String]
+    func shareScreen(content : [String]){
+        for _content in content {
+            print("Splash screen content is \(_content)")
+        }
+    }
+
+    typealias RefreshRate = Double
+    var rates = [Double]()
+}
+
+let screen1 : OnBoardScreen = OnBoardScreen()
+screen1.shareScreen(content: "utf8")
+screen1.rates = ["12","23","32"]
+
+var codec = ["utf9","utf11","utf34","utf96"]
+let screen2 : SplashScreen = SplashScreen()
+screen2.shareScreen(content: codec)
+screen2.rates = [21.4,23.6,55.3]
+
+
+// Yukarıdaki senaryoya ek olarak bu sefer class ımızda enum da kullanalım ve Generic - Protocol - Class - Enum Yapısını Kullanmış Olalım.
+class ErrorScreen : Screen{
+    enum ScreenContentType : String{
+        case info
+        case warning
+        case notification
+        case danger
+        case error
+    }
+    func shareScreen(content: ScreenContentType) {
+        switch content {
+        case .info : print("Information")
+        case .warning : print("warning")
+        case .notification : print("notification")
+        case .danger : print("danger")
+        case .error : print("error")
+        }
+    }
+
+    typealias RefreshRate = String
+    var rates = [String]()
+}
+
+let screen3 : ErrorScreen = ErrorScreen()
+screen3.shareScreen(content: .warning)
+
+
+
+// Generic <--> Protocol <--> Extension
+
+protocol Ingredient{
+    associatedtype SaltType
+    var AmountOfSalt : SaltType {get set}
+}
+
+enum Amount : String{
+    case absent
+    case Low
+    case Mid
+    case High
+}
+
+struct Soup : Ingredient{
+    typealias SaltType = Int
+    var AmountOfSalt: Int
+    init(amount : Int) {
+        AmountOfSalt = amount
+    }
+}
+
+class Pizza : Ingredient{
+    typealias SaltType = Amount
+    var AmountOfSalt: Amount
+    init(amount : Amount) {
+        AmountOfSalt = amount
+    }
+}
+
+extension Ingredient{
+    static func saltRate(){
+        print("Salt Rate is unknown!")
+    }
+}
+
+
+// Bu extension 'SaltType' veri tipi Int olarak tanımlanmış sınıf veya yapılarda bu extension kullanılabilecek.(Soup -> SaltType => Int oldugundan calısır , Pizza -> SaltType => Amount oldugundan calısmaz.)
+extension Ingredient where SaltType == Int{
+    func SaltAmountControl(){
+        if AmountOfSalt > 10 {
+            print("Very Salt!")
+        }else if AmountOfSalt == 0{
+            print("No Salt!")
+        }else{
+            print("Low Salt!")
+        }
+    }
+}
+
+var _soup : Soup = Soup(amount: 0)
+_soup.SaltAmountControl()
+
+var _pizza : Pizza = Pizza(amount: .High)
+
+
+// Bu extension 'SaltType' veri tipi Amount olarak tanımlanmış sınıf veya yapılarda bu extension kullanılabilecek.(Soup -> SaltType => Int oldugundan calısmaz , Pizza -> SaltType => Amount oldugundan calısır.)
+extension Ingredient where SaltType == Amount{
+    func SaltAmountRate(){
+        switch AmountOfSalt {
+        case .High: print("Salt amount is high.")
+        case .Mid: print("Salt amount is mid.")
+        case .Low: print("Salt amount is low.")
+        case .absent: print("Salt amount is absent.")
+        }
+    }
+}
+
+_pizza.SaltAmountRate()
+
+// ----------- 2. Örnek ------------
+
+// UNUTMA ! : Class ' larda property değiştirirken mutaiting kullanmaya gerek yoktur fakat struct ' larda property ' i değiştirirken mutating koymalıyız kafamız karısmasın.
+class Data <T> {
+    var values = [T]()
+    func add(data : T){
+        values.append(data)
+    }
+    
+    func delete(index : Int) -> T?{
+        guard values.count > index else {
+            print("index is wrong!")
+            return nil
+        }
+        
+        return values.remove(at: index)
+    }
+    
+    func deleteLastItem() -> T{
+        let deletedItem : T = values.removeLast()
+        return deletedItem
+    }
+}
+
+let _data : Data<String> = Data<String>()
+_data.add(data: "swift")
+_data.add(data: "c#")
+_data.add(data: "java")
+_data.add(data: "python")
+_data.add(data: "kotlin")
+print(_data.values)
+
+_data.delete(index: 2)
+_data.deleteLastItem()
+print(_data.values)
+
+// Önceki Örneklerde Protocol ' extension yazmıstık şimdide de class a extension yazalım.
+
+extension Data{
+    var lastMember : T? {
+        return values.isEmpty ? nil : values[values.count-1]
+    }
+}
+
+if let last = _data.lastMember{
+    print("The last member is \(last)")
+}
+
+/*
+ 
+ "==" yerine ":" ifadesi kullandıgımız için aslında yaptımgız sey type constraint oluyor. Type constraint(tip kısıtlaması) yaparken "==" diyemezsiniz. İlk yaptıgımız örnekte "==" ile tip kontrolü yaptık ve sadece o tip olan
+ class ve struct ' lara uygulanacaktır. Ama tip kısıtlaması yaparak o protocol ' ü uygulamış olanlara dediğimizden dolayı birden fazla tipe erişebiliriz. Aradaki en önemli fark bu.
+ 
+ * == ---> Tip Kontrolü
+ * :  ---> Tip Kısıtlaması
+ 
+ Kısaca :
+ 
+ extension Ingredient where SaltType == Amount{    --> SaltType ' ın tipini Amount olarak belirten class ve struct ' lar bu extension ' a erişebilir.
+     
+ }
+
+ extension DataSource where T : Equatable{         --> Yani T tipi Equatable Protocol ' ü uygulanmış bir tip olması gerekiyor.
+
+ }
+ 
+ Aralarındaki Farkdan bahsediyoruz.
+ 
+ */
+
+extension Data where T : Equatable{
+    func isFirstMember(value : T) -> Bool {
+        guard values.isEmpty == false else{
+            print("Array is empty!")
+            return false
+        }
+        let _first = values.first
+        return _first == value
+    }
+}
+
+if _data.isFirstMember(value: "swift") {
+    print("yes , firtst member!")
+}else{
+    print("no , wrong guess!")
+}
+ 
+// ------- Protocol İçerisinde Tanımlanan bir tipi override etmek ---------
+
+protocol UpperLowerBound{
+    associatedtype MemberType
+    var members : [MemberType] {get set}
+    var upperBound : MemberType {get set}
+    var lowerBound : MemberType {get set}
+    func findUpperBound() -> MemberType?
+    func findLowerBound() -> MemberType?
+}
+
+class Numbers : UpperLowerBound{
+    var members: [Int]
+    
+    var upperBound: Int
+    
+    var lowerBound: Int
+    
+    func findUpperBound() -> Int? {
+        guard members.isEmpty == false else {
+            print("There is no members.")
+            return nil
+        }
+        var max : Int = members[0]
+        for num in members {
+            if num > max {
+                max = num
+            }
+        }
+        return max
+    }
+    
+    func findLowerBound() -> Int? {
+        guard members.isEmpty != true else {
+            print("There is no members.")
+            return nil
+        }
+        var min : Int = members[0]
+        for num in members {
+            if num < min {
+                min = num
+            }
+        }
+        return min
+    }
+    
+    init(members : [Int]) {
+        self.members = members
+        self.upperBound = -1
+        self.lowerBound = -1
+        
+        if let max = self.findUpperBound(){
+            self.upperBound = max
+        }
+        if let min = self.findLowerBound(){
+            self.lowerBound = min
+        }
+    }
+    
+    typealias MemberType = Int
+    
+}
+
+var s1 : Numbers = Numbers(members: [1,2,5,53,1,2,4,522,12,45,213,55,24,51,42])
+print(s1.findLowerBound()!)
+print(s1.findUpperBound()!)
+
+
+class Words : UpperLowerBound{
+    var members: [String]
+    
+    var upperBound: String
+    
+    var lowerBound: String
+    
+    func findUpperBound() -> String? {
+        guard members.isEmpty == false else {
+            print("There is no members.")
+            return nil
+        }
+        var max = members[0]
+        for letter in members {
+            if letter.count > max.count {
+                max = letter
+            }
+        }
+        return max
+    }
+    
+    func findLowerBound() -> String? {
+        guard members.isEmpty == false else {
+            print("There is no members.")
+            return nil
+        }
+        var min = members[0]
+        for letter in members {
+            if letter.count < min.count {
+                min = letter
+            }
+        }
+        return min
+    }
+    
+    init(members : [String]) {
+        self.members = members
+        self.upperBound = ""
+        self.lowerBound = ""
+        
+        if let max = self.findUpperBound(){
+            self.upperBound = max
+        }
+        if let min = self.findLowerBound(){
+            self.lowerBound = min
+        }
+    }
+    
+    typealias MemberType = String
+}
+
+var s2 : Words = Words(members: ["jack","John","Michael","Laura","Rosetta","Mia"])
+print(s2.findLowerBound()!)
+print(s2.findUpperBound()!)
+
+/*
+ !!! Unutma Aşağıdaki gibi bir tanımlamayı normalde func olarak yapabilirsin FAKAT Protocol içerisinde aşağıdaki gibi bir generic func tanımı yapılamaz bunun için "associatedtype" reserved keyword ' ünü kullanıyorduk.
+ protocol A{
+     func xCode(version : T) -> T?
+ }
+ 
+
+// Yukarıdaki classic Interface e Generic func yazma gibi olayı swift de associatedtype ile yapabiliriz.
+protocol A{
+    associatedtype T
+    func xCode(version : T) -> T?
+}
+
+class B : A{
+    func xCode(version: Int) -> Int? {
+        return 0
+    }
+    
+    typealias T = Int
+}
+ */
+
+// ------------------- Generic Enums ----------------------
+
+enum Result<T>{
+    case Succesful(T)
+    case Failure(T)
+}
+
+var m1 = Result.Succesful(Int())
+let m2 = Result.Failure(Int())
+print(m1)
+m1 = Result.Succesful(Int(43))
+print(m1)
+
+//Tip Boş Geçme
+// 1.Yol
+var s3 = Result.Failure(())
+print(s3)
+// 2.Yol
+var s4 : Result<Void> = Result.Succesful(())
+print(s4)
+
+
+// 2.Örnek
+
+enum PersonInformation<T,E>{
+    case Name(T)
+    case Height(E)
+    case Age(E)
+}
+
+let value1 = PersonInformation<String , Int>.Height(12)
+
+
+// Farklı Bir Bakış Açısı Kazanalım
+
+let _name1 : String? = "ali"
+print(name1)
+let _name2 = Optional("ali")
+print(name2)
+
+enum MyOptional <E>{
+    case one
+    case some(E)
+    init(_ value : E) {
+        self = .some(value)
+    }
+}
+
+print(Optional("Rose")) // Optional("Rose"
+print(MyOptional("Rose")) // some("Rose")
+
+
+```
+
+```diff
 @@ Swift Tricky Notes @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
