@@ -5085,6 +5085,865 @@ print(MyOptional("Rose")) // some("Rose")
 ```
 
 ```diff
+@@ Closure at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+
+// -------------------- Section 1 ---------------------------------
+
+// Neden Closure yapısına ihtiyac duyarız?
+
+// Closure lar fonksiyonların daha kısaltılmış halidir diyebiliriz closure ile ilgili.
+// Closure ' lar değişkenlerde saklanabilirler ve aynı zamanda bir fonksiyona parametre olarak geçilebilirler.
+
+/*
+ 
+Swift de normalde bir fonksiyon aşağıdaki gibi tanımlanır.
+ 
+func functionName(parameterName : ParameterType) -> ReturnType{
+    return returnValue
+}
+*/
+
+// 1. Örnek
+
+func multiply(s1 : Double , s2 : Double) -> Double{
+    return s1 * s2
+}
+
+func average(s1 : Double , s2 : Double) -> Double{
+    return (s1 + s2) / 2
+}
+
+// Burda kullandıgımız Yapı ile Calculator fonksiyonuna 2 tane Double Parametre alan ve Double döndüren fonksiyonları istediğimiz gibi parametre olarak geçip kullanabiliriz. (**1)
+func Calculator(number1 : Double , number2 : Double , process : (Double , Double) -> Double) -> Double{
+    let result = process(number1 , number2)
+    return result
+}
+
+print(Calculator(number1: 7, number2: 6, process: multiply))
+print(Calculator(number1: 124, number2: 119, process: average))
+
+
+// Yukarıdaki örneği aşağıda closure yapısı ile tekrardan yazacagız.
+
+// En temel Closure Yapısını Tanımlayalım Öncelikle
+/*
+ 
+{ (value1 : Double , value2 : Double) -> Double in
+    return (value1 + value2) /
+ }
+ 
+*/
+// şeklinde yukarıdaki gibi en temel hali ile tanımlayabiliriz. Şimdi daha açıklayıcı örneklerle devam edelim.
+
+// Aynı Örnek 1.Closure
+// Aşağıda , yukarıdaki (**1) kodlu örneği Closure yapısı kullanarak nasıl yapabiliriz onu görmüş olduk. (**2)
+let res : Double = Calculator(number1: 100, number2: 16, process: {(n1 : Double , n2 : Double) -> Double in
+    return n1.squareRoot() * n2.squareRoot()
+})
+
+print(res)
+
+// Aynı Örnek 2.Closure
+// (**2) Closure Yapısını nasıl daha kısa bir hale getirebiliriz aşağıda bunu kodladık.
+// Yukarıdaki Closure u daha da kısaltabiliriz , parametre tiplerini girmeyerek zira tipin Double oldugunu Swift gönderilen paramerenin tipinden Implicityly olarak anlayabilir. (**3)
+let res2 : Double = Calculator(number1: 100, number2: 16, process: {(n1 , n2) in
+    return n1.squareRoot() * n2.squareRoot()
+})
+
+print(res2)
+
+// Aynı Örnek 3.Closure
+// (**3) Closure unu daha da nasıl kısaltabiliriz bunu aşağıda kodladık.
+// Gördünüz gibi yukardaki ifadede bulunan return ifadesini de closure dan cıkabiliyoruz. (**4)
+let res3 : Double = Calculator(number1: 100, number2: 16, process: {(n1 , n2) in
+    n1.squareRoot() * n2.squareRoot()
+})
+print(res3)
+
+// ÖNEMLİ Yukarıda (**4) versiyonda return kullanmadık fakat eğer 2 satır olsaydı aşağıdaki gibi o zaman hata alırdık çünkü
+/*
+ let res3 : Double = Calculator(number1: 100, number2: 16, process: {(n1 , n2) in
+     n1 + n2
+     n1.squareRoot() * n2.squareRoot()
+ })
+ 
+ Hata verirdi! Çünkü ifade daha da kısalsın diye return kullanmadık tek sorun eğer tek satır yazarsak derleyici diyordu bunu return ederim ama birden fazla satır yazarsan hangisini return edeceğini
+ bilemediğinden dolayı hata veriyor.
+*/
+
+// Aynı Örnek 4.Closure
+// (**4) Closure unu daha farklı nasıl kodlayabileceğimizi aşağıda gösterdik.
+let res4 : Double = Calculator(number1: 100, number2: 16, process: { // --> Parametre isimlendirmesi yapmadığımız durumlarda 'in' reserved keyword ' ünü kullanmamıza gerekyok.
+    $0.squareRoot() * $1.squareRoot()
+})
+// 'in' ifadesi ile ben alacagım parametrelere şu şu isimleri vereceğim ve 'in' yazarak içeride bu adları kullanacağınızı belirtiyorsunuz.
+
+
+
+
+// FARKLI BİR CLOSURE ÖRNEĞİ YAPALIM //
+
+let grades : [Int] = [91,2,32,41,50,61,72,48,53,77,13,69,100,91,17]
+
+func FailedGrades(passingGrade : Int , grades : [Int]) -> [Int]{
+    var failed : [Int] = [Int]()
+    for _grade in grades {
+        if _grade < passingGrade {
+            failed.append(_grade)
+        }
+    }
+    return failed
+}
+
+let failedGrades = FailedGrades(passingGrade: 60, grades: grades)
+print(failedGrades)
+
+
+// Yukarıdaki örneği Closure Kullanarak Yapalım.
+
+func FailedGradesClosure(prc : (Int) -> Bool , grades : [Int]) -> [Int]{
+    var failed : [Int] = [Int]()
+    for _grade in grades {
+        if prc(_grade){
+            failed.append(_grade)
+        }
+    }
+    return failed
+}
+
+let failedGrades2 = FailedGradesClosure(prc: {(gradeValue) -> Bool in
+    return gradeValue < 50
+}, grades: grades)
+
+print(failedGrades2)
+
+
+func isPrimeControl(number : Int) -> Bool{
+    guard number != 2 else {return true}
+    for i in (2...number-1) {
+        if number % i == 0 {
+            return false
+        }
+    }
+    return true
+}
+
+let primeNumbers = FailedGradesClosure(prc: isPrimeControl, grades: grades)
+print(primeNumbers)
+
+
+// -------------------- Section 2 ---------------------------------
+
+// Fonksiyonu Değişkene aktarmak!
+
+func showMessage(message : String){
+    print("You have a message! Message is : \(message)")
+}
+
+showMessage(message: "The weather is rainy today.")
+var m1 = showMessage
+m1("The weather is sunny tomorrow.")
+
+// Başka bir örnek yapalım! //
+
+func _average(_ s1 : Double , _ s2 : Double) -> Double{
+    return (s1 + s2) / 2
+}
+
+let avg : Double = _average(5, 67)
+print(avg)
+
+let avg_fnc : (Double , Double) -> Double = _average
+let avg2 : Double = avg_fnc(5,67)
+print(avg2)
+
+// Başka bir Örnek Yapalım
+
+func isOddOrEven(_ num : Int){
+    if num % 2 == 1 {
+        print("even")
+    }else{
+        print("odd")
+    }
+}
+
+isOddOrEven(4)
+
+let f1 : (Int) -> () = isOddOrEven
+let f2 : (Int) -> Void = isOddOrEven
+let f3 = isOddOrEven
+
+f1(3)
+f2(4)
+f3(5)
+
+
+// -------------------- Section 3 ---------------------------------
+// Closure Extension İlişkisi
+
+//  "self" dediğimizde işlem uygulanacak değeri kastediyoruz. Amacımız bu değeri prototipine uyan bir closure'a veya fonksiyona göndermek. Bu yüzden işlem prototipinde 1 tane int tipinde parametre var.
+
+
+func factoriel(_ number : Int) -> Int{
+    var result : Int = 1
+    var temp : Int = number
+    while temp > 0 {
+        result *= temp
+        temp -= 1
+    }
+    return result
+}
+print(factoriel(5))
+
+
+// Closure ve Extension Kullanarak Yukarıdaki İşlemin Aynısını Yapalım.
+extension Int{
+    func applyProcess(_ process : (Int) -> Int) -> Int{
+        return process(self)
+    }
+}
+
+let _res : Int = 5.applyProcess({(number) -> Int in
+    var result : Int = 1
+    var temp : Int = number
+    while temp > 0{
+        result *= temp
+        temp -= 1
+    }
+    return result
+})
+
+
+var _rNumber : Int = 64
+var _rNumber2 : Int = 99
+
+_rNumber = _rNumber.applyProcess({(value) -> Int in
+    let tmp = value % 10
+    if tmp < 5 {
+        return (value - tmp)
+    }else{
+        return (value + 10 - tmp)
+    }
+})
+
+print(_rNumber)
+print(_rNumber2)
+
+
+// -------------------- Section 4 ---------------------------------
+// Closure ' u değişkene atamak!
+// Section 2 Fonksiyonu Değişkene Nasıl Atarız Görmüştük Şimdi Aşağıda da Closure ' u Değişkene Nasıl Atarız Onu Göstereceğiz.
+
+var calculatePow : (Int , Int) -> Int = { base , pow in
+    var i = 0
+    var res : Int = 1
+    while i < pow {
+        res *= base
+        i += 1
+    }
+    return res
+}
+
+print(calculatePow(3,4))
+
+// 2. Örnek
+
+let _sum = {(number1 : Int , number2 : Int) -> Int in
+    number1 + number2
+}
+
+print(_sum(3,4))
+
+// Yukarıdaki _sum 'ı daha öncede göstermiştik kısaltabiliriz hadi yapalım.
+
+let _sum2 = {(number1 , number2) -> Int in
+    number1 + number2
+}
+
+print(_sum2(3,5))
+
+
+// -------------------- Section 5 ---------------------------------
+// Fonksiyonun Fonksiyon veya Closure Döndürmesi
+
+var powerOfPi : (Int) -> Double = {
+    Double($0) * Double.pi
+}
+
+var getMessage : (String) -> String = {
+    "You have a message : \($0)"
+}
+
+print(powerOfPi(2))
+print(getMessage("Big Sale!"))
+
+// Fonksiyondan Closure Döndürmek 1. ADIM
+var geometricAvg = {(number1 : Double , number2 : Double) in // Buda farklı bir closure yazılım şekli , return type yok fakat geriye değer donduruyoruz return ile.
+    return number1.squareRoot() * number2.squareRoot()
+}
+
+print(geometricAvg(4,9))
+
+// Closure Döndürdük!
+func getClosure() -> ((Double , Double) -> Double){
+    return geometricAvg
+}
+
+let funcResult = getClosure()
+print(funcResult(4,9))
+
+
+// Fonksiyondan Fonksiyon Döndürmek 2. ADIM
+
+typealias takeNumber = (Int) -> ()
+
+func _counter() -> takeNumber{
+    
+    func calculateAge(yearOfBirth : Int){
+        print("She/He age is \(2021 - yearOfBirth)")
+    }// End of the calculateAge function
+    return calculateAge // Lütfen DİKKAT!!! -> calculateAge() demiyoruz calculateAge diyoruz lütfen dikkat çünkü biz calculateAge yı değer olarak döndürüyorum gelipte method olarak çalıştırmıyorum.
+}
+
+let x1 = _counter()
+print(x1(2000))
+
+
+// Closure Yapısını Döndüren Fonksiyon 3. ADIM
+
+func getAvgClosure() -> (Double , Double) -> Double {
+    return {(number1 , number2) in
+        (number1 + number2) / 2
+    }
+}
+
+let c1 : (Double , Double) -> Double = getAvgClosure()
+print(c1(20,30))
+
+/*
+Dikkat et neden  getAvgClosure fonksiyonu parametre almıyor deme , o fonksiyon aşağıdaki gibi aslında bize closure ' ı dönüyor aslında ve biz onu bir değişkene atayıp kullanıyoruz.
+let c2 = {(number1 , number2) in
+    (number1 + number2) / 2
+}
+
+print(c2(20,30))
+*/
+
+
+// getAvgClosure() Fonksiyonunu daha kısa bir şekilde yazalım.
+
+func getAvgClosure2() -> (Double , Double) -> Double{
+    return {($0 + $1) / 2}
+}
+
+let c2 = getAvgClosure2()
+print(c2(30,30))
+
+
+// --- Fonksiyona Closure Göndermek ve Bunu Tip Olarak Tanımlamak --- //
+typealias type1 = () -> String // Paramete almayıp String Değer döndürecek!
+
+func favouriteGuitarist(_ closureValue : type1) -> String{
+    return closureValue() // closureValue fonksiyonu string bir değer döndürecek.
+}
+
+let guitarist : () -> String = {"Eric Clapton"}
+
+var g1 = favouriteGuitarist(guitarist)
+print(g1)
+
+g1 = favouriteGuitarist({() in return "Morgon James"})
+print(g1)
+
+g1 = favouriteGuitarist({ return "Jimmy Fallon"})
+print(g1)
+
+g1 = favouriteGuitarist({"Morgot Robie"})
+print(g1)
+
+// Yukarıda Kac Farklı Sekilde Kullanılabilineceğini görüyorsunuz.
+
+
+// -------------------- Section 6 ---------------------------------
+
+// 1.) Map Fonksiyonu
+
+let ordinaryNumbers = [3,5,7,9]
+
+// 1.YOL KLASIK
+// Yukaridaki 'ordinaryNumbers' Array ' indeki herbir elemanın karesini alıp 'squares' array 'ine atalım klasik yöntem ile.
+
+var squares : [Int] = [Int]()
+
+for num in ordinaryNumbers {
+    squares.append(num * num)
+}
+
+print(squares) // Output : [9, 25, 49, 81]
+
+// 2.YOL Map Kullanarak
+
+func getSquare(_ value : Int) -> Int{
+    return value * value
+}
+
+// Map Kullanımı 1.Yol
+// Fonksiyon Göndererek yapacağız.
+let takedSquare = ordinaryNumbers.map(getSquare)
+print(takedSquare) // Output : [9, 25, 49, 81]
+
+// Map Kullanımı 2.Yol
+// 3.YOL Fonksiyon yerine Closure Göndereceğiz.
+let takedSquare2 = ordinaryNumbers.map{ number in // map() -> () lerini silebiliriz FAKAT Eğer ' PARAMETRE OLARAK TEK BİR CLOSURE YAPISI ALIYORSA !!!
+    return number * number
+}
+
+// Map Kullanımı 3.Yol
+// 3.Yine Closure Göndereceğiz Fakat Daha da Kısaltacağız Closure Yapımızı.
+let takedSquare3 = ordinaryNumbers.map{ $0 * $0}
+print(takedSquare3)
+
+
+// Hadi Gelin Kendi map yapımızı olusturalım Aşağıda !!! //
+
+func alican_map(numbers : [Int] , process : (Int) -> Int) -> [Int]{
+    var results : [Int] = [Int]()
+    for num in numbers {
+        results.append(process(num))
+    }
+    return results
+}
+
+print(alican_map(numbers: [2,4,6,7,9,11], process: {(number) -> Int in
+    number * number
+}))
+ 
+
+// Şimdide alican_map fonksiyonunu Generic Halini kodlayalım.
+
+func generic_alican_map<T>(_ numbers : [T] , process : (T) -> T) -> [T]{
+    var results : [T] = [T]()
+    for num in numbers {
+        results.append(process(num))
+    }
+    return results
+}
+
+let cities = ["london" , "istanbul" , "paris" , "toronto" , "new york"]
+var newCities = generic_alican_map(cities, process: {$0.uppercased()})
+print(newCities) // Output : ["LONDON", "ISTANBUL", "PARIS", "TORONTO", "NEW YORK"]
+
+// Bu sefer closure yerine fonksiyon yazalım ve onu gönderelim.
+func makeLowercased(_ value : String) -> String{ return value.lowercased()}
+newCities = generic_alican_map(cities, process: makeLowercased)
+print(newCities) // Output : ["london", "istanbul", "paris", "toronto", "new york"]
+
+
+// generic_alican_map fonksiyonunu function overloading yapalım.
+
+func generic_alican_map<T,U>(_ numbers : [T] , process : (T,T) -> U) -> [U]{
+    var results : [U] = [U]()
+    for (index , value) in numbers.enumerated(){
+        let indexT : T = index as! T
+        results.append(process(indexT , value))
+    }
+    return results
+}
+
+let myNumbers : [Int] = [10,20,30,40,50,60,70,80]
+let newNumbers = generic_alican_map(myNumbers){ index , value in
+     return "\(index + 1). value : \(value)"
+}
+print(newNumbers)
+
+
+
+// Map Fonksiyonu Uygulama Örnekleri
+
+var numberOfCharacter : Int = 0
+func findNumberOfCharacter(_ name : String) -> Int {
+    numberOfCharacter += name.count
+    return name.count
+}
+
+var customerNames = ["Jack","Rose","Michael","Beritta","Mua"]
+
+var _numberOfCh = customerNames.map(findNumberOfCharacter)
+print(_numberOfCh)
+print(numberOfCharacter)
+
+
+// 2.Yol findNumberOfCharacter fonksiyonunu daha kısa bir şekilde yazalım
+numberOfCharacter = 0
+_numberOfCh = customerNames.map{
+    numberOfCharacter += $0.count
+    return $0.count
+}
+print(_numberOfCh)
+print(numberOfCharacter)
+
+
+//---------- Dictionary ' ile map Kullanımı ----------//
+
+var costOfBooks : [String : Int] = ["çalıkuşu" : 20 , "vadideki zambak" : 27 , "sefiller" : 22 , "Milenaya mektuplar" : 23]
+
+var nameOfBooks = costOfBooks.map{ (key , value) in
+    return key.lowercased()
+}
+
+print(nameOfBooks)
+
+var newCostOfBooks = costOfBooks.map{ (key , value) in
+    return [key.capitalized : value + 5]  // key.capitalized ile kitap isimlerinin baş harflerini büyük harfe çeviriyoruz. value + 5 ile de fiyatlara 5 lira ekleme yaptık.
+}
+
+print(newCostOfBooks)
+
+
+//---------- Set ' ile map Kullanımı ----------//
+
+let cmLengths : Set<Double> = [5,6,10,20,10]
+let inchLenghts = cmLengths.map{ cm in
+    cm * 2.54
+}
+
+print(inchLenghts)
+
+
+//---------- struct ' ile map Kullanımı ----------//
+
+enum MaritalStatus{
+    case married
+    case divorced
+    case single
+}
+
+struct Person{
+    var name : String
+    var surname : String
+    var age : Int
+    var maritalStatus : MaritalStatus
+    var salary : Int
+}
+
+var _persons : [Person] = [Person]()
+
+_persons.append(Person(name: "Jack", surname: "Mardan", age: 21, maritalStatus: MaritalStatus.single, salary: 2000))
+_persons.append(Person(name: "Morgot", surname: "Robie", age: 28, maritalStatus: MaritalStatus.married, salary: 4000))
+_persons.append(Person(name: "Jack", surname: "Mardan", age: 21, maritalStatus: MaritalStatus.single, salary: 2200))
+
+var _personNames = _persons.map{ (person) -> String in
+    return "\(person.name) and \(person.surname)"
+}
+
+print(_personNames)
+
+var salaries = _persons.map{ $0.salary }
+print(salaries)
+
+
+// -------------------- Section 7 ---------------------------------
+
+// 1.) ****************** flatMap Fonksiyonu ***********************
+
+var sampleNumbers = [10,15,20,25,30,35,40]
+
+var standartMapResult = sampleNumbers.map{ (number) -> Int? in
+    if number % 10 == 0 {
+        return number
+    }else{
+        return nil
+    }
+}
+
+print(standartMapResult) // Output : [Optional(10), nil, Optional(20), nil, Optional(30), nil, Optional(40)]
+
+var flatMapResult : [Int] = sampleNumbers.flatMap{ number in
+    if number % 10 == 0 {
+        return number
+    }else{
+        return nil
+    }
+}
+
+print(flatMapResult) // Output : [10, 20, 30, 40]
+
+var _city : [String : Int] = ["İstanbul" : 15 , "İzmir" : 4 , "Ankara" : 5 , "Konya" : 2 , "Diyarbakır" : 1]
+var crowdedCities : [String] = _city.flatMap{ city in
+    if city.value >= 5 {
+        return city.key
+    }else{
+        return nil
+    }
+}
+
+print(crowdedCities)
+
+// Başka bir Örnek
+
+let numbersArray : [Double] = [20,30,15,40,-10,20,15,40]
+var sumArray : Double = 0
+
+numbersArray.map{
+    sumArray += $0
+}
+
+let _avg : Double = sumArray / (Double(numbersArray.count))
+
+// Şimdide ortalamanın altında kalan değerleri almaya çalışalım.
+
+let belowAverage : [Double] = numbersArray.flatMap{ number in
+    if number < _avg{
+        return number
+    }else{
+        return nil
+    }
+}
+
+print(belowAverage)
+
+// Bir örnek daha yapalım iç içer dizinin elamanlarını tek bir diziye atalım.
+let nestedArray = [[4,6,9],[3,4,2],[10,15,20,25]]
+let allNumbers = nestedArray.flatMap({$0})
+print(allNumbers) // Output : [4, 6, 9, 3, 4, 2, 10, 15, 20, 25]
+
+// 2.) ****************** compactMap Fonksiyonu ***********************
+
+let neighborName : [String?] = ["James","Rocky",nil,"Morgan",nil,"Susan"]
+// Yukaridaki nil ifadelerini almak istemiyoruz bunu compactMap ile nasıl alabiliriz onu kodlayalım.
+let notNilNames = neighborName.compactMap{$0}
+print(notNilNames) // Output : ["James", "Rocky", "Morgan", "Susan"]
+
+
+// Aşağıdaki mixedNumber da sayi olarak rakamları ifade eden string 'leri alalım yazı ile belirtilen numaraları yazmayalım.
+let mixedNumber = ["one","2","three","4","five","6"]
+let realNames = mixedNumber.compactMap{Int($0)} // Int($0) ile Integer a cast edilemeyen text olarak verilen sayılar nil dönecek diğerleri sayıları dönecek ve biz nil olmayanları compactMap ile aldık.
+print(realNames) // [2, 4, 6]
+
+struct Human{
+    let cars : [String]?
+    let name : String
+    let surname : String
+    let age : Int
+}
+
+let h1 = Human(cars: nil, name: "Susan", surname: "Lauren", age: 19)
+let h2 = Human(cars: ["Mercedes","Audi"], name: "Rosetta", surname: "Doralabre", age: 32)
+let h3 = Human(cars: ["Fiat","Ford","Audi"], name: "Rosetta", surname: "Doralabre", age: 32)
+
+let people = [h1,h2,h3]
+
+let compactCars = people.compactMap{$0.cars}
+print(compactCars) // Output : [["Mercedes", "Audi"], ["Fiat", "Ford", "Audi"]]
+
+// Yukarıdaki iç içe yapıyı da tek yapıya cevirelim.
+let compactFlatCars = people.compactMap{$0.cars}.flatMap{$0}
+print(compactFlatCars) // Output : ["Mercedes", "Audi", "Fiat", "Ford", "Audi"]
+
+
+// 3.) ****************** filter ve sorted Fonksiyonu ***********************
+
+// A.) Filter Fonksiyonu
+
+var studyNumbers = [1,2,3,4,5,6,7,8,9,10]
+var animals = ["lion","bear","bird","snake","bee"]
+
+// studyNumbers daki 5 ten küçük olan sayıları getirir.
+let lowNumber = studyNumbers.filter{ (number) -> Bool in
+    return number < 5
+}
+print(lowNumber) // Output : [1, 2, 3, 4]
+
+let evenNumbers = studyNumbers.filter({ return $0 % 2 == 0})
+print(evenNumbers) // Output : [2, 4, 6, 8, 10]
+ 
+var conditionalAnimal = animals.filter({return $0.contains("be") == true}) // ilk iki harfi "be" ile başlayan hayvanları alacak.
+print(conditionalAnimal) // Output : ["bear", "bee"]
+
+var animalNameLengt = animals.filter({ return $0.count >= 5 }) // animals Array i içerisinde karakter sayısı 5 veya 5 ten buyuk olan hayvan isimlerini filtreledik.
+print(animalNameLengt) // Output : ["snake"]
+
+// B.) Sorted Fonksiyonu
+
+let ingredients = ["onion","tomato","paper","garlic","cucumber","salt","blackpepper"]
+let sortedIngredients = ingredients.sorted{ return $0 < $1} // malzemeleri alfabetik olarak sıralar. Eğer < yerine > koysaydık tersten alfabetik olarak sıralar.
+print(sortedIngredients)
+
+let sortedNumberOfCharacter = ingredients.sorted{ return $0.count > $1.count}
+print(sortedIngredients)
+
+struct Song{
+    var scoreOfSong : Int
+}
+
+let so1 = Song(scoreOfSong: 3)
+let so2 = Song(scoreOfSong: 1)
+let so3 = Song(scoreOfSong: 6)
+let so4 = Song(scoreOfSong: 9)
+let songs = [so1,so2,so3,so4]
+
+let orderedSongs = songs.sorted{ (song1 , song2) -> Bool in
+    return song1.scoreOfSong > song2.scoreOfSong
+}
+
+for song in orderedSongs {
+    print(song)
+}
+
+
+// 4.) ****************** foreach ve reduce Fonksiyonu ***********************
+
+let _numbers = [10,5,3,7,9,2,4,8,6,1]
+var _sumOfNumbers = 0
+for number in _numbers {
+    _sumOfNumbers += number
+}
+
+// 2.Yöntem --> forEach kullanarak
+var _sumOfNumbers2 = 0
+_numbers.forEach{ _sumOfNumbers2 += $0}
+print("Sum of the value is : \(_sumOfNumbers2)")
+
+// 3.Yöntem --> reduce kullanarak
+var _sumOfNumbers3 = _numbers.reduce(0){(result , comedValue) -> Int in
+    return result + comedValue
+}
+print("Sum of the value is : \(_sumOfNumbers3)")
+
+// Farklı bir örnek yapalım
+/*
+ 
+ reduce(0){(result , comedValue) -> Int in
+     return result + comedValue
+ }
+ 
+ yapısında birinci parametreyi 0 verdikten sonra closure yapısını ayrıyetten girdik şimdi ise aşağıdaki örnekte daha da kısa yazıp closure yapısınıda reduce da parametre kısmına gireceğim.
+ 
+ */
+
+// Not Toplam Örnek 1.Yol Reduce + Closure ile
+let studentGrades : [Double] = [90,55,76]
+let sumOfStudentGrades = studentGrades.reduce(0,{$0 + $1})
+print(sumOfStudentGrades)
+
+// Not Toplam Örnek 2.Yol forEach + Closure ile
+var gradeOfStudent6 : Double = 0
+studentGrades.forEach{gradeOfStudent6 += $0}
+print(gradeOfStudent6)
+
+
+
+
+// Reduce Kullanarak Multiply İşlemi Yapalım
+
+let _magicnumbers = [10,5,3,7,9,2,4,8,6,1]
+
+// 1. Yol forEach ile
+var res1 = 1
+_magicnumbers.forEach{res1 *= $0}
+print(res1)
+
+// 2. Yol reduce ile
+let res8 = _magicnumbers.reduce(1,{$0 * $1})
+print(res8)
+
+// Başka bir örnek yapalım //
+
+let factoriyelArray = Array(1...6)
+print(factoriyelArray) // Output : [1, 2, 3, 4, 5, 6]  --> 1 den 6 ya kadar elemanları olan array olusturur
+
+// forEach ile yapalım.
+var _f1 = 1
+factoriyelArray.forEach{_f1*=$0}
+print(_f1)
+
+// reduce ile yapalım.
+let _f2 = factoriyelArray.reduce(1,{$0 * $1})
+print(_f2)
+
+
+// Başka bir örnek yapalım //
+// Kelimeleri birleştirip cümle haline getirelim.
+
+// 1.Yol forEach ile
+let words = ["Hi",",","the","weather","is","sunny","today","."]
+var _sentence = ""
+words.forEach{_sentence += $0 + " "}
+print(_sentence)
+
+
+// 2.Yol reduce ile
+var _sentence2 = words.reduce("",{$0 + $1 + " "})
+print(_sentence2)
+
+
+
+// Lazy Variable (Code Optimizasyonu)
+
+struct BackendService{
+    var starterCode = 12
+    
+    lazy var starterCodeGenerator : Int = {
+        return generateCode(of: self.starterCode)
+    }()
+    
+    func generateCode(of number : Int) -> Int{
+        let rndNumber = number + 10
+        return rndNumber
+    }
+}
+
+var _backendService = BackendService()
+print(_backendService.starterCodeGenerator)
+_backendService.starterCode = 50 // Bu değeri değiştirmene ragmen 'starterCodeGenerator' değeri değişmez çünkü lazy variable 1 kere çalıştırılır ve değerler RAM e alınır ve bir daha çalışmaz.
+print(_backendService.starterCodeGenerator)
+
+/*
+LAZY PROPERT
+1.) Compoted propery bloc code halinde yani swift file ' ımız her caliştiğinda derlenir ve hafızaya yüklenir fakat lazy propert sadece bir kere çalışır bundan dolayı computed property nin değeri bağlı oldugu
+ değişkenin değeri değiştikçe değişirken lazy property nin değeri değişmez.
+*/
+
+
+struct Comment{
+    init() {
+        print("there is 3 comment!")
+    }
+}
+
+struct Like{
+    init() {
+        print("there is 124 like!")
+    }
+}
+
+
+struct Product{
+    var name : String
+    var comment = Comment()
+    lazy var like = Like()
+    
+    init(name : String) {
+        self.name = name
+    }
+}
+
+var product = Product(name: "Macbook") // Ekrana sadece "there is 3 comment!" i basar çünkü "lazy var like = Like()" lazy olarak belirtilmiştir çalıştırmak için aşağıdaki gibi
+product.like // Bu şekilde erişmelisiniz lazy olarak belirtildiğinden biz ona erişene kadar çalışmaz.
+
+// Lazy Kullanımı ile ilgili kaynaklara göz atınız
+// https://medium.com/turkishkit/swift-lazy-3eb1c9acfe00
+// https://halilozel1903.medium.com/swift-lazy-belirteci-cae7e5e4519a
+
+
+```
+
+```diff
 @@ Swift Tricky Notes @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -5177,5 +6036,4 @@ if a==b{
 return a == b
 
 ```
-
 
