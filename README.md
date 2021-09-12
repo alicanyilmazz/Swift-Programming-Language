@@ -5944,6 +5944,113 @@ product.like // Bu şekilde erişmelisiniz lazy olarak belirtildiğinden biz ona
 ```
 
 ```diff
+@@ Exception Handling at Swift @@
+```
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```swift
+
+
+// Exception Handling
+// c# gibi programlama dillerinde try - catch yapısının swift de do - catch olarak gecmektedir.
+
+
+enum ageError : Error{
+    case maxAge
+    case minAge
+}
+
+func registerCommunity(age : Int) throws{
+    if age > 30 {
+        print("Your age to old!")
+        throw ageError.maxAge
+    }else if age < 18{
+        print("Your age to young!")
+        throw ageError.minAge
+    }else{
+        print("You registered to system!")
+    }
+}
+
+do{
+    try registerCommunity(age: 12)
+}catch ageError.maxAge{
+    print("very old!")
+}catch{
+    print("very young!")
+}
+
+
+
+
+struct Friend{
+    let name : String
+    let age : String
+    let address : String?
+}
+
+func createFriend(from data : [String : String]) -> Friend?{
+    guard let name = data["name"] , let age = data["age"] else {return nil}
+    let address = data["address"] // adress değeri girilmediyse nil değeri atanacaktır.
+    return Friend(name: name, age: age, address: address)
+}
+
+let friend : [String : String] = ["name" : "Jack" , "age" : "23" , "address" : "Amsterdam"]
+
+enum CustomerError : Error{
+    case invalidData(description : String)
+}
+
+struct Customer{
+    let name : String
+    let age : String
+    let address : String?
+}
+
+func createCustomer(from data : [String : String]) throws -> Customer{
+    /*
+    guard let name = data["name"] , let age = data["age"] else {
+        throw CustomerError.invalidData
+    }
+    */
+    guard let name = data["name"] else {
+        throw CustomerError.invalidData(description: "name value not exist!")
+    }
+    guard let age = data["age"] else {
+        throw CustomerError.invalidData(description: "age value not exist!")
+    }
+    let address = data["address"] // adress değeri girilmediyse nil değeri atanacaktır.
+    return Customer(name: name, age: age, address: address)
+}
+
+let customer : [String : String] = ["name" : "Jack" , "age" : "23" , "address" : "Amsterdam"]
+
+let f1 = try createCustomer(from: customer)
+print(f1)
+
+let customer1 : [String : String] = ["nameAA" : "Jack" , "age" : "23" , "address" : "Amsterdam"] // ilk parametre name değil bozduk nameAA
+
+do{
+    let f2 = try createCustomer(from: customer1) // invalidData(description: "name value not exist!")
+}catch let err{
+    print(err)
+}
+
+
+func sendMessage(message : String , to friend : Customer){}
+
+do{
+    let f3 = try createCustomer(from: customer1)
+    sendMessage(message: "hello guys!", to: f3)
+}catch CustomerError.invalidData(let desc){
+    print(desc)
+}
+
+
+```
+
+
+```diff
 @@ Swift Tricky Notes @@
 ```
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
