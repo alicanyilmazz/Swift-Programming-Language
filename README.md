@@ -1,5 +1,4 @@
 ### IOS DEVELOPMENT NOTES
--> Control + Command + Space
 
 #### Swift Programming Language Syntax ####
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -6141,6 +6140,8 @@ if a==b{
 }
 // yerine asagıdaki kodu kullanabilirsin.
 return a == b
+
+// Shortcut : Control + Command + Space
 
 ```
 
