@@ -62,3 +62,10 @@ extension TodoExplanationViewController{
         return dateFormatter.date(from: date)!
     }
 }
+/*
+
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, h:mm a" // MMM d, h:mm a // yyyy-MM-dd-HH-mm-ss
+        var date = dateFormatter.string(from: presentation.date as Date)
+
+*/
