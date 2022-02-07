@@ -6143,5 +6143,31 @@ return a == b
 
 // Shortcut : Control + Command + Space
 
+
+// Getter ve Setter Restriction In Class
+
+class Car{
+   public private(set) var brand : String
+   public private(set) var color : String
+   public private(set) var price : Double
+   public var year : Int
+    
+    init(brand : String , color : String , price : Double , year : Int){
+        self.brand = brand
+        self.color = color
+        self.price = price
+        self.year = year
+    }
+}
+
+
+let car : Car = Car(brand: "ssdad", color: "asdsad", price: 21, year: 21)
+
+car.color = "black" // Cannot assign to property: 'color' setter is inaccessible // set yapmaya kapattık sadece get yapabiliriz.
+print(car.color) // get yapılabilir
+
+car.year = 123 // car ise hem getter hem setter yapılabilir durumda cunku onun set ini private yapmadık.
+print(car.year)
+
 ```
 
